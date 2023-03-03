@@ -7,7 +7,7 @@ const Results = ({navigation}) => {
         <View style={styles.container}>
             <Button
               title= "Play Again!"
-              onPress={() => navigation.navigate('Load')}
+              onPress={() => navigation.push('Load')}
             />
             <Button
               title= "New Category!"
