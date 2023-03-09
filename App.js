@@ -17,31 +17,26 @@ const Stack = createNativeStackNavigator();
 const App = () => {
   return (
     <NavigationContainer>
-      <Stack.Navigator>
+      <Stack.Navigator screenOptions={{headerShown:false}}>    
         <Stack.Screen
           name="Home"
           component={HomeScreen}
-          options={{title: 'Welcome'}}
         />
         <Stack.Screen 
           name="Selection" 
           component={SelectionScreen} 
-          options={{title: 'Selection'}}
         />
         <Stack.Screen 
           name="Game" 
           component={GameScreen} 
-          options={{title: 'Game'}}
         />
         <Stack.Screen 
           name="Load" 
           component={LoadScreen} 
-          options={{title: 'Loading'}}
         />
         <Stack.Screen 
           name="Results" 
           component={ResultsScreen} 
-          options={{title: 'Results'}}
         />
       </Stack.Navigator>
     </NavigationContainer>
