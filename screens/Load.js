@@ -5,12 +5,15 @@ import PlayButton from '../components/PlayButton';
 import CountDown from 'react-native-countdown-fixed';
 
 
-const Load = ({navigation}) => {
+const Load = ({route, navigation}) => {
+  const {set, firstWord} = route.params;
+  let copySet = new Set(set);
+  let fWord = firstWord;
 
     return (
         <View style={styles.container}>
             <CountDown 
-            onFinish = {() => navigation.push('Game')}
+            onFinish = {() => navigation.push('Game', {set: copySet, firstWord: fWord})}
             timeToShow = {['S']}
             until = {3}
             size = {30}/>

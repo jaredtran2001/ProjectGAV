@@ -7,47 +7,62 @@ import { Gyroscope } from 'expo-sensors';
 import { DeviceMotion } from 'expo-sensors';
 import * as ScreenOrientation from 'expo-screen-orientation';
 
-let wordSet = new Set();
+// let wordSet = new Set();
 let correct = new Set();
 let incorrect = new Set();
 let number = 0;
-wordSet.add("one piece").add("naruto").add("blue lock").add("hunterxhunter").add("AOT").add("Dragon Ball Z").add("SpyxFamily").add("Haikyu").add("My Hero Academia").add("JoJo's Bizarre Adventure");
-const generateWord = () => {
-  let items = Array.from(wordSet);
-  let word = items[Math.floor(Math.random() * items.length)];
-  wordSet.delete(word);
-  console.log(word);
-  return word;
-}
-let firstWord = generateWord();
-const Game = ({navigation}) => {
-  //States 
-  // const [subscription, setSubscription] = useState(null);
+const Game = ({route, navigation}) => {
+
+  //Grabbing the provided word set and function to produce a new word from it
+  const { set, firstWord } = route.params;
+  // let currSet = new Set(set);
+  const generateWord = () => {
+    let items = Array.from(set);
+    let word = items[Math.floor(Math.random() * items.length)];
+    set.delete(word);
+    return word;
+  }
+
+  //states
   const [output, setOutput] = useState(firstWord);
   const [data, setData] = useState({});
   const [flip, setFlip] = useState(false);
 
-  //Immediate function 
+
+  //Immediate function that rotates the screen
   async function lockScreen() {
     await ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.LANDSCAPE_RIGHT);
   }
   lockScreen();
-  const handleOnPress = () => {
-    setOutput(generateWord());
-  }
-  
+
+  // Required to start listener
   useEffect(() => {
     _subscribe();
     return () => {
       _unsubscribe();
     };
   }, []);
-  
 
+  //Handles when the timer runs out of time
+  const handleFinish = ()=> {
+    let fWord = generateWord();
+    let currSet = new Set(set);
+    _unsubscribe();
+    navigation.push('Results', {
+      right: correct,
+      wrong: incorrect,
+      num: number,
+      currSet: currSet,
+      fWord: fWord
+    });
+  }
+
+  //Slows down how often we are reading the motion so it isn't so sensitive
   const _setInterval = () => {
     DeviceMotion.setUpdateInterval(77);
   };
 
+  //Subscription listeners
   const _subscribe = () => {
     DeviceMotion.addListener((devicemotionData) => {
       setData(devicemotionData.rotation);
@@ -59,9 +74,9 @@ const Game = ({navigation}) => {
     DeviceMotion.removeAllListeners();
   };
 
+  // Functions to handle getting a new word when motion is detected
   useEffect(() => {
     let { gamma } = data;
-    console.log(gamma);
     if(gamma > -0.8 && !flip) {
       //Yess
       correct.add(output);
@@ -82,10 +97,7 @@ const Game = ({navigation}) => {
   return (
       <View style={styles.container}>
           <CountDown 
-          onFinish={() => navigation.navigate('Results', {
-            right: correct,
-            wrong: incorrect
-          })}
+          onFinish={handleFinish}
           timeToShow = {['S']}
           until = {30}
           size = {30}/>
