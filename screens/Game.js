@@ -17,6 +17,7 @@ const Game = ({route, navigation}) => {
   const { set, firstWord } = route.params;
   // let currSet = new Set(set);
   const generateWord = () => {
+    if(set.size == 0) return "Ran out of words :(";
     let items = Array.from(set);
     let word = items[Math.floor(Math.random() * items.length)];
     set.delete(word);
