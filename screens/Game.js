@@ -11,6 +11,7 @@ import * as ScreenOrientation from 'expo-screen-orientation';
 let correct = new Set();
 let incorrect = new Set();
 let number = 0;
+
 const Game = ({route, navigation}) => {
 
   //Grabbing the provided word set and function to produce a new word from it
@@ -46,13 +47,21 @@ const Game = ({route, navigation}) => {
 
   //Handles when the timer runs out of time
   const handleFinish = ()=> {
-    let fWord = generateWord();
+    let fWord = generateWord() + "";
+    console.log("first word on game screen is " + fWord);
     let currSet = new Set(set);
+    let tempCorrect = new Set(correct);
+    let tempIncorrect = new Set(incorrect);
+    let tempNum = number + "";
+    //resetting values
+    number = 0;
+    correct.clear();
+    incorrect.clear();
     _unsubscribe();
     navigation.push('Results', {
-      right: correct,
-      wrong: incorrect,
-      num: number,
+      right: tempCorrect,
+      wrong: tempIncorrect,
+      num: tempNum,
       currSet: currSet,
       fWord: fWord
     });
@@ -100,7 +109,7 @@ const Game = ({route, navigation}) => {
           <CountDown 
           onFinish={handleFinish}
           timeToShow = {['S']}
-          until = {30}
+          until = {10}
           size = {30}/>
           <Text style = {styles.text}>{output}</Text>
       </View>

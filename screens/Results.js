@@ -2,22 +2,22 @@ import { Component, React } from 'react';
 import { StyleSheet, Text, View, Button } from 'react-native';
 
 const Results = ({route, navigation}) => {
-    const { right, wrong, num, currSet, firstWord} = route.params;
+    const { right, wrong, num, currSet, fWord} = route.params;
     const rightStr = [...right].join(', ');
     const wrongStr =  [...wrong].join(', ');
     let copySet = new Set(currSet);
-    let fWord = firstWord;
+    let word = fWord;
 
     return (
         <View style={styles.container}>
             <Text>The number you got right is {num}</Text>
-            <Text> The words you got correct: {rightStr}</Text>
-            <Text> The words you got wrong: {wrongStr}</Text>
+            <Text> The ones you got correct: {rightStr}</Text>
+            <Text> The ones you got wrong: {wrongStr}</Text>
             <Button
               title= "Play Again!"
               onPress={() => navigation.push('Load',{
                 set: copySet,
-                firstWord: fWord
+                firstWord: word
               })}
             />
             <Button
