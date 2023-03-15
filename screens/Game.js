@@ -14,7 +14,7 @@ let number = 0;
 const Game = ({route, navigation}) => {
 
   //Grabbing the provided word set and function to produce a new word from it
-  const { set, firstWord } = route.params;
+  const { set } = route.params;
   // let currSet = new Set(set);
   const generateWord = () => {
     if(set.size == 0) return "Ran out of words :(";
@@ -25,10 +25,14 @@ const Game = ({route, navigation}) => {
   }
 
   //states
-  const [output, setOutput] = useState(firstWord);
+  const [output, setOutput] = useState();
   const [data, setData] = useState({});
   const [flip, setFlip] = useState(false);
   const [color, setColor] = useState("white");
+
+  if(output == null) {
+    setOutput(generateWord());
+  }
 
 
   //Immediate function that rotates the screen
@@ -47,7 +51,6 @@ const Game = ({route, navigation}) => {
 
   //Handles when the timer runs out of time
   const handleFinish = ()=> {
-    let fWord = generateWord() + "";
     console.log("first word on game screen is " + fWord);
     incorrect.add(output);
     let currSet = new Set(set);
@@ -65,7 +68,6 @@ const Game = ({route, navigation}) => {
       wrong: tempIncorrect,
       num: tempNum,
       currSet: currSet,
-      fWord: fWord
     });
   }
 

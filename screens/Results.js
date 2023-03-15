@@ -2,11 +2,10 @@ import { Component, React } from 'react';
 import { StyleSheet, Text, View, Button } from 'react-native';
 
 const Results = ({route, navigation}) => {
-    const { right, wrong, num, currSet, fWord} = route.params;
+    const { right, wrong, num, currSet} = route.params;
     const rightStr = [...right].join(', ');
     const wrongStr =  [...wrong].join(', ');
     let copySet = new Set(currSet);
-    let word = fWord;
 
     return (
         <View style={styles.container}>
@@ -16,8 +15,7 @@ const Results = ({route, navigation}) => {
             <Button
               title= "Play Again!"
               onPress={() => navigation.push('Load',{
-                set: copySet,
-                firstWord: word
+                set: copySet
               })}
             />
             <Button

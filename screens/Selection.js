@@ -11,13 +11,7 @@ function populateSet(set, json ) {
 }
 
 const Selection = ({navigation}) => {
-  
-  function generateFirstWord(wordSet){
-    let items = Array.from(wordSet);
-    let word = items[Math.floor(Math.random() * items.length)];
-    wordSet.delete(word);
-    return word;
-  }
+
 
   //Initialize Sets
   let animeSet = new Set();
@@ -35,21 +29,14 @@ const Selection = ({navigation}) => {
   sexSet.add("Doggy").add("Missionary").add("Cowgirl").add("Reverse Cowgirl").add("BJ").add("69").add("Choke").add("Anal").add("Saddling").add("Scissoring").add("Squat").add("Reverse Squat").add("Sucking Toes").add("Sucking Fingers").add("G-Spot").add("Clitoris").add("Balls").add("Sucking Ears").add("Handjob").add("Threesome").add("Foursome").add("Orgy").add("Orgasm").add("Nutting").add("Facial").add("Creampie");
   populateSet(leagueSet, Champions);
 
-  //Create first words
-  let firstAnimeWord = generateFirstWord(animeSet);
-  let firstAnimalWord = generateFirstWord(animalsSet);
-  let kPopFirstWord = generateFirstWord(kPopSet);
-  let pokemonFirstWord = generateFirstWord(pokemonSet);
-  let sexFirstWord = generateFirstWord(sexSet);
-  let leagueFirstWord = generateFirstWord(leagueSet);
   return (
     <View style={styles.container}>
-        <PlayButton onPress = {() => navigation.navigate('Load', {set: animeSet, firstWord: firstAnimeWord})} title = 'Anime'/>
-        <PlayButton onPress = {() => navigation.navigate('Load', {set: animalsSet, firstWord: firstAnimalWord})} title = 'Animals'/>
-        <PlayButton onPress = {() => navigation.navigate('Load', {set: kPopSet, firstWord: kPopFirstWord})} title = 'K-Pop Stars'/>
-        <PlayButton onPress = {() => navigation.navigate('Load', {set: pokemonSet, firstWord: pokemonFirstWord} )} title = 'Pokemon'/>
-        <PlayButton onPress = {() => navigation.navigate('Load', {set: sexSet, firstWord: sexFirstWord} )} title = 'S*x'/>
-        <PlayButton onPress = {() => navigation.navigate('Load', {set: leagueSet, firstWord: leagueFirstWord} )} title = 'LOL'/>
+        <PlayButton onPress = {() => navigation.navigate('Load', {set: animeSet})} title = 'Anime'/>
+        <PlayButton onPress = {() => navigation.navigate('Load', {set: animalsSet})} title = 'Animals'/>
+        <PlayButton onPress = {() => navigation.navigate('Load', {set: kPopSet})} title = 'K-Pop Stars'/>
+        <PlayButton onPress = {() => navigation.navigate('Load', {set: pokemonSet} )} title = 'Pokemon'/>
+        <PlayButton onPress = {() => navigation.navigate('Load', {set: sexSet} )} title = 'S*x'/>
+        <PlayButton onPress = {() => navigation.navigate('Load', {set: leagueSet} )} title = 'LOL'/>
     </View>
     
   );
