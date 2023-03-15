@@ -3,7 +3,6 @@ import { StyleSheet, Text, View, Button } from 'react-native';
 // import Header from './components/Header';
 import Word from '../components/Word';
 import CountDown from 'react-native-countdown-fixed';
-import { Gyroscope } from 'expo-sensors';
 import { DeviceMotion } from 'expo-sensors';
 import * as ScreenOrientation from 'expo-screen-orientation';
 
@@ -29,6 +28,7 @@ const Game = ({route, navigation}) => {
   const [output, setOutput] = useState(firstWord);
   const [data, setData] = useState({});
   const [flip, setFlip] = useState(false);
+  const [color, setColor] = useState("white");
 
 
   //Immediate function that rotates the screen
@@ -49,6 +49,7 @@ const Game = ({route, navigation}) => {
   const handleFinish = ()=> {
     let fWord = generateWord() + "";
     console.log("first word on game screen is " + fWord);
+    incorrect.add(output);
     let currSet = new Set(set);
     let tempCorrect = new Set(correct);
     let tempIncorrect = new Set(incorrect);
@@ -58,6 +59,7 @@ const Game = ({route, navigation}) => {
     correct.clear();
     incorrect.clear();
     _unsubscribe();
+    ScreenOrientation.unlockAsync();
     navigation.push('Results', {
       right: tempCorrect,
       wrong: tempIncorrect,
@@ -87,25 +89,29 @@ const Game = ({route, navigation}) => {
   // Functions to handle getting a new word when motion is detected
   useEffect(() => {
     let { gamma } = data;
-    if(gamma > -0.8 && !flip) {
+    if(gamma > -0.75 && !flip) {
+      //NOOO
+      incorrect.add(output);
+      setFlip(true);
+      setOutput("Naurrr");
+      setColor("#E14749");
+    } else if (gamma < -2.25 && !flip) {
       //Yess
       correct.add(output);
       number +=1;
       setFlip(true);
-      setOutput(generateWord());
-    } else if (gamma < -2.2 && !flip) {
-      //NOOO
-      incorrect.add(output);
-      setFlip(true);
-      setOutput(generateWord());
-    }else if( gamma < -1.1 && gamma > -1.9 && flip) {
+      setOutput("Correct");
+      setColor("#3CAE75");
+    } else if( gamma < -1.1 && gamma > -1.9 && flip) {
       setFlip(false);
+      setOutput(generateWord());
+      setColor("white");
     } 
   }, [data]);
   
   
   return (
-      <View style={styles.container}>
+      <View style={[styles.container, { backgroundColor: color}]}>
           <CountDown 
           onFinish={handleFinish}
           timeToShow = {['S']}

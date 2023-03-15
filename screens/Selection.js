@@ -3,9 +3,9 @@ import { StyleSheet, Text, View } from 'react-native';
 import PlayButton from '../components/PlayButton';
 import Champions from '../assets/lolChampions.json';
 
+
 function populateSet(set, json ) {
   for(let i = 0; i < json.length; i++) {
-    console.log("Populating " +json[i].name);
     set.add(json[i].name);
   }
 }
@@ -16,7 +16,6 @@ const Selection = ({navigation}) => {
     let items = Array.from(wordSet);
     let word = items[Math.floor(Math.random() * items.length)];
     wordSet.delete(word);
-    console.log(word);
     return word;
   }
 
