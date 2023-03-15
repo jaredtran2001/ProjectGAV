@@ -7,15 +7,13 @@ import { DeviceMotion } from 'expo-sensors';
 import * as ScreenOrientation from 'expo-screen-orientation';
 
 // let wordSet = new Set();
-let correct = new Set();
-let incorrect = new Set();
 let number = 0;
+let result = [];
 
 const Game = ({route, navigation}) => {
 
   //Grabbing the provided word set and function to produce a new word from it
   const { set } = route.params;
-  // let currSet = new Set(set);
   const generateWord = () => {
     if(set.size == 0) return "Ran out of words :(";
     let items = Array.from(set);
@@ -51,11 +49,10 @@ const Game = ({route, navigation}) => {
 
   //Handles when the timer runs out of time
   const handleFinish = ()=> {
-    console.log("first word on game screen is " + fWord);
-    incorrect.add(output);
+    let input = [output, 0];
+    result.push(input);
     let currSet = new Set(set);
-    let tempCorrect = new Set(correct);
-    let tempIncorrect = new Set(incorrect);
+    console.log(result);
     let tempNum = number + "";
     //resetting values
     number = 0;
@@ -64,8 +61,7 @@ const Game = ({route, navigation}) => {
     _unsubscribe();
     ScreenOrientation.unlockAsync();
     navigation.push('Results', {
-      right: tempCorrect,
-      wrong: tempIncorrect,
+      result: result,
       num: tempNum,
       currSet: currSet,
     });
@@ -93,13 +89,15 @@ const Game = ({route, navigation}) => {
     let { gamma } = data;
     if(gamma > -0.75 && !flip) {
       //NOOO
-      incorrect.add(output);
+      let input = [output, 0];
+      result.push(input);
       setFlip(true);
       setOutput("Naurrr");
       setColor("#E14749");
     } else if (gamma < -2.25 && !flip) {
       //Yess
-      correct.add(output);
+      let input = [output, 1];
+      result.push(input);
       number +=1;
       setFlip(true);
       setOutput("Correct");
@@ -117,7 +115,7 @@ const Game = ({route, navigation}) => {
           <CountDown 
           onFinish={handleFinish}
           timeToShow = {['S']}
-          until = {60}
+          until = {10}
           size = {30}/>
           <Text style = {styles.text}>{output}</Text>
       </View>
