@@ -5,6 +5,7 @@ import Word from '../components/Word';
 import CountDown from 'react-native-countdown-fixed';
 import { DeviceMotion } from 'expo-sensors';
 import * as ScreenOrientation from 'expo-screen-orientation';
+import * as Haptics from 'expo-haptics';
 
 // let wordSet = new Set();
 let number = 0;
@@ -95,6 +96,7 @@ const Game = ({route, navigation}) => {
       setFlip(true);
       setOutput("Incorrect");
       setColor("#E14749");
+      Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Heavy)
     } else if (gamma < -2.25 && !flip) {
       //Yess
       let input = [output, 1];
@@ -103,6 +105,9 @@ const Game = ({route, navigation}) => {
       setFlip(true);
       setOutput("Correct");
       setColor("#3CAE75");
+      Haptics.notificationAsync(
+        Haptics.NotificationFeedbackType.Success
+      )
     } else if( gamma < -1.1 && gamma > -1.9 && flip) {
       setFlip(false);
       setOutput(generateWord());

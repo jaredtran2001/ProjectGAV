@@ -1,4 +1,3 @@
-import { StatusBar } from 'expo-status-bar';
 import { React } from 'react';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
@@ -23,11 +22,11 @@ const PlayButton = (props) => {
 
 const styles = StyleSheet.create({
   container: {
-    height: 250,
+    height: 240,
     width: 200,
     borderRadius: 10,
     margin:5,
-    backgroundColor: '#dc3d4b',
+    backgroundColor: '#526174',
     justifyContent: 'center',
   },
   text: {
