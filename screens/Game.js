@@ -52,9 +52,10 @@ const Game = ({route, navigation}) => {
     let input = [output, 0];
     result.push(input);
     let currSet = new Set(set);
-    console.log(result);
+    let tempResult = new Array(result);
     let tempNum = number + "";
     //resetting values
+    result = [];
     number = 0;
     _unsubscribe();
     ScreenOrientation.unlockAsync();

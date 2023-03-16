@@ -1,11 +1,11 @@
 import { Component, React } from 'react';
 import { StyleSheet, Text, View, Button, ScrollView } from 'react-native';
 
+
 const Results = ({route, navigation}) => {
     const { result, num, currSet} = route.params;
     let copySet = new Set(currSet);
-    console.log(result);
-
+    
     // let test = [["test", 0], ["test", 1], ["test", 1], ["test", 0], ["test", 1], ["test", 1], ["test", 1], ["test", 1], ["test", 1], ["test", 1], ["test", 1], ["test", 1], ["test", 1], ["test", 1], ["test", 1]]
 
     return (
