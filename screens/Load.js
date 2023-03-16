@@ -16,6 +16,7 @@ const Load = ({route, navigation}) => {
             timeToShow = {['S']}
             until = {3}
             size = {30}/>
+            <Text>Place on your forehead</Text>
         </View>
     );
 }

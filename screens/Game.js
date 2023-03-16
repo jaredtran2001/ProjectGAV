@@ -49,8 +49,10 @@ const Game = ({route, navigation}) => {
 
   //Handles when the timer runs out of time
   const handleFinish = ()=> {
-    let input = [output, 0];
-    result.push(input);
+    if(output !== "Naurrr" && output !== "Correct") {
+      let input = [output, 0];
+      result.push(input);
+    }
     let currSet = new Set(set);
     let tempResult = [...result];
     let tempNum = number + "";
