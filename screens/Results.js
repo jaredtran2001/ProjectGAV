@@ -5,7 +5,7 @@ import { StyleSheet, Text, View, Button, ScrollView } from 'react-native';
 const Results = ({route, navigation}) => {
     const { result, num, currSet} = route.params;
     let copySet = new Set(currSet);
-    
+    console.log(result);
     // let test = [["test", 0], ["test", 1], ["test", 1], ["test", 0], ["test", 1], ["test", 1], ["test", 1], ["test", 1], ["test", 1], ["test", 1], ["test", 1], ["test", 1], ["test", 1], ["test", 1], ["test", 1]]
 
     return (
@@ -16,29 +16,28 @@ const Results = ({route, navigation}) => {
             <View style={[styles.line, {marginTop: "2%"}]}/>
             <ScrollView contentContainerStyle={styles.scrollContainer} style={styles.body}>
               {result.map((word, index) => {
-                console.log(index);
                 if (word[1] == 0 && index == 0) {
                   return (
-                    <Text style={[styles.resultText, {marginTop: 30, color: "gray"}]}>{word[0]}</Text>
+                    <Text key={word} style={[styles.resultText, {marginTop: 30, color: "gray"}]}>{word[0]}</Text>
                   )
                 } else if (word[1] == 1 && index == 0) {
                   return (
-                    <Text style={[styles.resultText, {marginTop: 30}]}>{word[0]}</Text>
+                    <Text key={word} style={[styles.resultText, {marginTop: 30}]}>{word[0]}</Text>
                   )
                 } else if (word[1] == 0) {
                   return (
-                    <Text style={[styles.resultText, {color: "gray"}]}>{word[0]}</Text>
+                    <Text key={word} style={[styles.resultText, {color: "gray"}]}>{word[0]}</Text>
                   )
                 } else {
                   return (
-                    <Text style={styles.resultText}>{word[0]}</Text>
+                    <Text key={word} style={styles.resultText}>{word[0]}</Text>
                   )
                 }
                 
               })}
             </ScrollView>
             <View style={[styles.line, {marginBottom: "2%"}]}/>
-            <View style={styles.header}>
+            <View style={[styles.header, {justifyContent: "flex-start"}]}>
               <Button
                 title= "Play Again!"
                 onPress={() => navigation.push('Load',{

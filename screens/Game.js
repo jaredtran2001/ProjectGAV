@@ -52,7 +52,7 @@ const Game = ({route, navigation}) => {
     let input = [output, 0];
     result.push(input);
     let currSet = new Set(set);
-    let tempResult = new Array(result);
+    let tempResult = [...result];
     let tempNum = number + "";
     //resetting values
     result = [];
@@ -60,7 +60,7 @@ const Game = ({route, navigation}) => {
     _unsubscribe();
     ScreenOrientation.unlockAsync();
     navigation.push('Results', {
-      result: result,
+      result: tempResult,
       num: tempNum,
       currSet: currSet,
     });
