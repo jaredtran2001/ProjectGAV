@@ -84,6 +84,7 @@ const styles = StyleSheet.create({
     },
     form: {
       flexDirection: 'row',
+      justifyContent: 'center',
       flexWrap: 'wrap',
       width: "100%",
     },

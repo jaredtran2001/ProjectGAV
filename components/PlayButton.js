@@ -23,7 +23,7 @@ const PlayButton = (props) => {
 const styles = StyleSheet.create({
   container: {
     height: 240,
-    width: 200,
+    width: "45%",
     borderRadius: 10,
     margin:5,
     backgroundColor: '#526174',
