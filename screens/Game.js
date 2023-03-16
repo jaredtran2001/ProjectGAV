@@ -114,7 +114,7 @@ const Game = ({route, navigation}) => {
           <CountDown 
           onFinish={handleFinish}
           timeToShow = {['S']}
-          until = {10}
+          until = {2}
           size = {30}/>
           <Text style = {styles.text}>{output}</Text>
       </View>
