@@ -56,8 +56,6 @@ const Game = ({route, navigation}) => {
     let tempNum = number + "";
     //resetting values
     number = 0;
-    correct.clear();
-    incorrect.clear();
     _unsubscribe();
     ScreenOrientation.unlockAsync();
     navigation.push('Results', {
