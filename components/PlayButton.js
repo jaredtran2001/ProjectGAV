@@ -23,16 +23,17 @@ const PlayButton = (props) => {
 
 const styles = StyleSheet.create({
   container: {
-    height: 60,
+    height: 250,
     width: 200,
     borderRadius: 10,
     margin:5,
-    backgroundColor: '#c2bad8',
+    backgroundColor: '#b3bed1',
     justifyContent: 'center',
   },
   text: {
-    color: 'darkslateblue',
+    color: 'white',
     fontSize: 20,
+    fontWeight: 'bold',
     textAlign: 'center',
   }
 });
