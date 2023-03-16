@@ -49,7 +49,7 @@ const Game = ({route, navigation}) => {
 
   //Handles when the timer runs out of time
   const handleFinish = ()=> {
-    if(output !== "Naurrr" && output !== "Correct") {
+    if(output !== "Incorrect" && output !== "Correct") {
       let input = [output, 0];
       result.push(input);
     }
@@ -93,7 +93,7 @@ const Game = ({route, navigation}) => {
       let input = [output, 0];
       result.push(input);
       setFlip(true);
-      setOutput("Naurrr");
+      setOutput("Incorrect");
       setColor("#E14749");
     } else if (gamma < -2.25 && !flip) {
       //Yess
