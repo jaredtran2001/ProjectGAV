@@ -47,13 +47,12 @@ const Results = ({route, navigation}) => {
                 onPress={() => navigation.push('Load',{
                   set: copySet
                 })}
-                color="#2c4877"
+                color="#fa4445"
               />
               <ResultButton
                 onPress={() => navigation.navigate('Selection')}
                 title="All Desks"
-                color="#466594"
-
+                color="#dc3d4b"
               />
             </View>
             
@@ -66,7 +65,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: "#2f405c"
+    backgroundColor: "#364966"
   },
   scrollContainer: {
     flexGrow: 1,
@@ -76,12 +75,12 @@ const styles = StyleSheet.create({
   },
   horiLine: {
     borderBottomWidth: 1,
-    borderColor: "white",
+    borderColor: "#b38c8f",
     width: "60%",
   },
   vertLine: {
     borderLeftWidth: 1,
-    borderColor: "white",
+    borderColor: "#b38c8f",
     height: "80%",
   },
   header: {
@@ -98,7 +97,7 @@ const styles = StyleSheet.create({
     flexWrap: 'wrap',
     alignItems: 'center',
     justifyContent: 'center',
-    // backgroundColor: "#69a69e"
+    // backgroundColor: "#042e27"
   },
   headerText: {
     fontSize: 37,

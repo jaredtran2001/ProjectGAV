@@ -35,10 +35,11 @@ const Selection = ({navigation}) => {
 
   return (
     <View style={styles.container}>
-      <ScrollView showsVerticalScrollIndicator={false}>
+      <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={styles.scrollContainer}>
           <View style={styles.header}>
             <Text style={styles.headerText}>Choose a Deck</Text>
           </View>
+          <View style={[styles.horiLine, {marginBottom: 20}]}/>
           <View style={styles.form}>
             <PlayButton onPress = {() => navigation.navigate('Load', {set: animeSet})} title = 'Anime'/>
             <PlayButton onPress = {() => navigation.navigate('Load', {set: animalsSet})} title = 'Animals'/>
@@ -47,6 +48,7 @@ const Selection = ({navigation}) => {
             <PlayButton onPress = {() => navigation.navigate('Load', {set: sexSet} )} title = 'S*x'/>
             <PlayButton onPress = {() => navigation.navigate('Load', {set: leagueSet} )} title = 'LOL'/>
           </View>
+          <View style={[styles.horiLine, {marginTop: 20}]}/>
           <View style={styles.footer} />
       </ScrollView>
     </View>
@@ -58,10 +60,18 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: 'flex-start',
         alignItems: 'center',
-        backgroundColor: "#466594"
+        backgroundColor: "#364966"
+    },
+    scrollContainer: {
+      alignItems: 'center',
+    },
+    horiLine: {
+      borderBottomWidth: 1,
+      borderColor: "#b38c8f",
+      width: "60%",
     },
     header: {
-      height: 220,
+      height: 200,
       width: "100%",
       justifyContent: "flex-start",
       alignItems: 'center',

@@ -10,8 +10,6 @@ const App = ({ onPress, title, color }) => {
         width: "100%",
         height: "45%",
         justifyContent: "center",
-        // paddingVertical: 18,
-        // paddingHorizontal: 30,
     }}>
       <Text style={styles.appButtonText}>{title}</Text>
     </TouchableOpacity>

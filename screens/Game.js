@@ -26,7 +26,7 @@ const Game = ({route, navigation}) => {
   const [output, setOutput] = useState();
   const [data, setData] = useState({});
   const [flip, setFlip] = useState(false);
-  const [color, setColor] = useState("white");
+  const [color, setColor] = useState("#364966");
 
   if(output == null) {
     setOutput(generateWord());
@@ -106,19 +106,27 @@ const Game = ({route, navigation}) => {
     } else if( gamma < -1.1 && gamma > -1.9 && flip) {
       setFlip(false);
       setOutput(generateWord());
-      setColor("white");
+      setColor("#364966");
     } 
   }, [data]);
   
   
   return (
       <View style={[styles.container, { backgroundColor: color}]}>
+        <View style={{position: "absolute", top: 10, right: 30, width: 100}}>
           <CountDown 
-          onFinish={handleFinish}
-          timeToShow = {['S']}
-          until = {2}
-          size = {30}/>
-          <Text style = {styles.text}>{output}</Text>
+            onFinish={handleFinish}
+            timeToShow = {['S']}
+            until = {15}
+            size = {40}
+            timeLabels={{s: ''}}
+            digitStyle={{backgroundColor: "#b78460", width:"100%", height: 60, }}
+          />
+        </View>
+        
+        <View style={[styles.horiLine, {margin: 10}]}/>
+        <Text style = {styles.text}>{output}</Text>
+        <View style={[styles.horiLine, {margin: 10}]}/>          
       </View>
   );
 }
@@ -131,7 +139,14 @@ const styles = StyleSheet.create({
   },
   text: {
     fontSize: 50,
-  }
+    fontWeight: 'bold',
+    color: "white",
+  },
+  horiLine: {
+    borderBottomWidth: 1,
+    borderColor: "#b38c8f",
+    width: "15%",
+  },
 });
 
 export default Game;
