@@ -8,6 +8,7 @@ import Kpop from '../assets/kpop.json';
 import Pokemon from '../assets/pokemon.json';
 import Sex from '../assets/sex.json';
 
+let AnimeDescription = "Slice through this assortment of anime's ranging from all sorts of popularity!";
 
 function populateSet(set, json ) {
   for(let i = 0; i < json.length; i++) {
@@ -41,12 +42,12 @@ const Selection = ({navigation}) => {
           </View>
           <View style={[styles.horiLine, {marginBottom: 20}]}/>
           <View style={styles.form}>
-            <PlayButton onPress = {() => navigation.navigate('Load', {set: animeSet})} title = 'Anime'/>
-            <PlayButton onPress = {() => navigation.navigate('Load', {set: animalsSet})} title = 'Animals'/>
-            <PlayButton onPress = {() => navigation.navigate('Load', {set: kPopSet})} title = 'K-Pop Groups'/>
-            <PlayButton onPress = {() => navigation.navigate('Load', {set: pokemonSet} )} title = 'Pokemon'/>
-            <PlayButton onPress = {() => navigation.navigate('Load', {set: sexSet} )} title = 'S*x'/>
-            <PlayButton onPress = {() => navigation.navigate('Load', {set: leagueSet} )} title = 'LOL'/>
+            <PlayButton onPress = {() => navigation.navigate('Description', {set: animeSet, description: AnimeDescription})} title = 'Anime'/>
+            <PlayButton onPress = {() => navigation.navigate('Description', {set: animalsSet})} title = 'Animals'/>
+            <PlayButton onPress = {() => navigation.navigate('Description', {set: kPopSet})} title = 'K-Pop Groups'/>
+            <PlayButton onPress = {() => navigation.navigate('Description', {set: pokemonSet} )} title = 'Pokemon'/>
+            <PlayButton onPress = {() => navigation.navigate('Description', {set: sexSet} )} title = 'S*x'/>
+            <PlayButton onPress = {() => navigation.navigate('Description', {set: leagueSet} )} title = 'LOL'/>
           </View>
           <View style={[styles.horiLine, {marginTop: 20}]}/>
           <View style={styles.footer} />

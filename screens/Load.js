@@ -9,8 +9,7 @@ import * as Haptics from 'expo-haptics';
 let RSG = ["Ready", "Set", "Go!!"]
 
 const Load = ({route, navigation}) => {
-  const {set} = route.params;
-  let copySet = new Set(set);
+  const {set, time} = route.params;
 
   const [index, setIndex] = useState(0);
   const [display, setDisplay] = useState(RSG[0]);
@@ -23,7 +22,9 @@ const Load = ({route, navigation}) => {
   const handleFinish = () => {
     ScreenOrientation.unlockAsync();
     // Vibration.vibrate(10)
-    navigation.push('Game', {set: copySet});
+    let copySet = new Set(set);
+    let copyTime = time;
+    navigation.push('Game', {set: copySet, time: copyTime});
   }
   const handleChange = () => {
     setDisplay(RSG[index + 1])
@@ -35,7 +36,7 @@ const Load = ({route, navigation}) => {
     <View style={styles.container}>
         <CountDown 
         onFinish = {handleFinish}
-        timeToShow = {['S']}
+        timeToShow = {['M','S']}
         until = {3}
         size = {0}
         timeLabels={{s: ''}}

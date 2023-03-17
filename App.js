@@ -11,6 +11,7 @@ import SelectionScreen from'./screens/Selection';
 import GameScreen from './screens/Game';
 import LoadScreen from './screens/Load';
 import ResultsScreen from './screens/Results';
+import DescriptionScreen from './screens/Description';
 
 const Stack = createNativeStackNavigator();
 
@@ -37,6 +38,10 @@ const App = () => {
         <Stack.Screen 
           name="Results" 
           component={ResultsScreen} 
+        />
+        <Stack.Screen
+          name="Description"
+          component={DescriptionScreen}
         />
       </Stack.Navigator>
     </NavigationContainer>

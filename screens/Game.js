@@ -14,7 +14,7 @@ let result = [];
 const Game = ({route, navigation}) => {
 
   //Grabbing the provided word set and function to produce a new word from it
-  const { set } = route.params;
+  const { set, time } = route.params;
   const generateWord = () => {
     if(set.size == 0) return "Ran out of words :(";
     let items = Array.from(set);
@@ -122,8 +122,8 @@ const Game = ({route, navigation}) => {
           <CountDown 
             onFinish={handleFinish}
             timeToShow = {['S']}
-            until = {15}
-            size = {40}
+            until = {time}
+            size = {20}
             timeLabels={{s: ''}}
             digitStyle={{backgroundColor: "#b78460", width:"100%", height: 60, }}
           />
