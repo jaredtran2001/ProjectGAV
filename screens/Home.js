@@ -4,9 +4,12 @@ import { StyleSheet, Text, View, Button } from 'react-native';
 import PlayButton from '../components/PlayButton';
 
 const Home = ({navigation}) => {
+
+  setTimeout(() => navigation.navigate('Selection'), 3000);
+
   return (
     <View style={styles.container}>
-        <PlayButton onPress = {() => navigation.navigate('Selection')} title = 'Game Time'/>
+        <Text>PROJECT GAV</Text>
     </View>
   );
 }
