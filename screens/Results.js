@@ -1,10 +1,25 @@
 import { Component, React } from 'react';
 import { StyleSheet, Text, View, Button, ScrollView } from 'react-native';
 import ResultButton from '../components/ResultButton';
+import * as ScreenOrientation from 'expo-screen-orientation';
 
 const Results = ({route, navigation}) => {
     const { result, num, currSet} = route.params;
     let copySet = new Set(currSet);
+    //lock portrait
+    async function lockScreen() {
+      await ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.PORTRAIT);
+    }
+    lockScreen();
+
+    const handlePlayAgainFinish = ()=> {
+      ScreenOrientation.unlockAsync();
+      navigation.push('Load',{set: copySet});
+    }
+    const handleAllDecksFinish = ()=> {
+      ScreenOrientation.unlockAsync();
+      navigation.navigate('Selection');
+    }
     // console.log(result);
     // let test = [["test", 0], ["test", 1], ["test", 1], ["test", 0], ["test", 1], ["test", 1], ["test", 1], ["test", 1], ["test", 1], ["test", 1], ["test", 1], ["test", 1], ["test", 1], ["test", 1], ["test", 1]]
 
@@ -44,14 +59,12 @@ const Results = ({route, navigation}) => {
             <View style={[styles.header, {justifyContent: "flex-start"}]}>
               <ResultButton
                 title= "Play This Deck Again"
-                onPress={() => navigation.push('Load',{
-                  set: copySet
-                })}
+                onPress={handlePlayAgainFinish}
                 color="#fa4445"
               />
               <ResultButton
-                onPress={() => navigation.navigate('Selection')}
-                title="All Desks"
+                onPress = {handleAllDecksFinish}
+                title="All Decks"
                 color="#dc3d4b"
               />
             </View>

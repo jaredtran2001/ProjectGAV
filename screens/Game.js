@@ -60,6 +60,7 @@ const Game = ({route, navigation}) => {
     //resetting values
     result = [];
     number = 0;
+    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Heavy);
     _unsubscribe();
     ScreenOrientation.unlockAsync();
     navigation.push('Results', {
@@ -94,7 +95,7 @@ const Game = ({route, navigation}) => {
       let input = [output, 0];
       result.push(input);
       setFlip(true);
-      setOutput("Incorrect");
+      setOutput("Passed");
       setColor("#E14749");
       Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Heavy)
     } else if (gamma < -2.25 && !flip) {

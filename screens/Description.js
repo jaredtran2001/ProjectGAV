@@ -2,15 +2,12 @@ import { Component, React, useEffect, useState } from 'react';
 import { StyleSheet, Text, View, Button, ScrollView } from 'react-native';
 // import Header from './components/Header';
 import PlayButton from '../components/PlayButton';
-import CountDown from 'react-native-countdown-fixed';
-import * as ScreenOrientation from 'expo-screen-orientation';
-import * as Haptics from 'expo-haptics';
 
 
 const Description = ({route, navigation}) => {
     const {set, description} = route.params;
     let copySet = new Set(set);
-    const [time, setTime] = useState(60); 
+    const [time, setTime] = useState(30); 
 
     function handlePlus() {
         setTime(time + 5);

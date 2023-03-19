@@ -9,7 +9,7 @@ const Home = ({navigation}) => {
 
   return (
     <View style={styles.container}>
-        <Text>PROJECT GAV</Text>
+        <Text style = {styles.text}>PROJECT GAV</Text>
     </View>
   );
 }
@@ -19,6 +19,11 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
+  },
+  text: {
+    fontSize: 50,
+    fontWeight: 'bold',
+    color: "Black",
   }
 });
 
