@@ -7,6 +7,7 @@ import Animal from '../assets/animal.json';
 import Kpop from '../assets/kpop.json';
 import Pokemon from '../assets/pokemon.json';
 import Sex from '../assets/sex.json';
+import Spanish from '../assets/spanish.json';
 
 let AnimeDescription = "Slice through this assortment of anime's ranging from all sorts of popularity!";
 
@@ -25,6 +26,7 @@ const Selection = ({navigation}) => {
   let pokemonSet = new Set();
   let sexSet = new Set();
   let leagueSet = new Set();
+  let spanishSet = new Set();
   
   //Fill in Sets
   populateSet(animeSet, Anime);
@@ -33,6 +35,7 @@ const Selection = ({navigation}) => {
   populateSet(pokemonSet, Pokemon);
   populateSet(sexSet, Sex);
   populateSet(leagueSet, Champions);
+  populateSet(spanishSet, Spanish);
 
   return (
     <View style={styles.container}>
@@ -48,6 +51,7 @@ const Selection = ({navigation}) => {
             <PlayButton onPress = {() => navigation.navigate('Description', {set: pokemonSet} )} title = 'Pokemon'/>
             <PlayButton onPress = {() => navigation.navigate('Description', {set: sexSet} )} title = 'S*x'/>
             <PlayButton onPress = {() => navigation.navigate('Description', {set: leagueSet} )} title = 'LOL'/>
+            <PlayButton onPress = {() => navigation.navigate('Description', {set: spanishSet} )} title = 'Spanish'/>
           </View>
           <View style={[styles.horiLine, {marginTop: 20}]}/>
           <View style={styles.footer} />
