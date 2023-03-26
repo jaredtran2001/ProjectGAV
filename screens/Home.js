@@ -5,9 +5,10 @@ import PlayButton from '../components/PlayButton';
 
 const Home = ({navigation}) => {
   const [hidden, setHidden] = useState(false);
+  const [output, setOutput] = useState("             ");
   
   useEffect(() => {
-    setTimeout(()=> setHidden(true), 1500);
+    setTimeout(()=> setOutput("VAG"), 1500);
     setTimeout(() => navigation.navigate('Selection'), 3000);
   });
 
@@ -15,7 +16,7 @@ const Home = ({navigation}) => {
     <View style={styles.container}>
         <View>
           <Text style = {styles.text}>PROJECT</Text>
-          {hidden && <Text style = {styles.text}>GAV</Text>}
+          <Text style = {styles.text}>{output}</Text>
         </View>
     </View>
   );
