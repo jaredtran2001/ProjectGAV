@@ -1,15 +1,22 @@
-import { Component, React } from 'react';
+import { Component, React, useState, useEffect } from 'react';
 import { StyleSheet, Text, View, Button } from 'react-native';
 // import Header from './components/Header';
 import PlayButton from '../components/PlayButton';
 
 const Home = ({navigation}) => {
-
-  setTimeout(() => navigation.navigate('Selection'), 3000);
+  const [hidden, setHidden] = useState(false);
+  
+  useEffect(() => {
+    setTimeout(()=> setHidden(true), 1500);
+    setTimeout(() => navigation.navigate('Selection'), 3000);
+  });
 
   return (
     <View style={styles.container}>
-        <Text style = {styles.text}>PROJECT GAV</Text>
+        <View>
+          <Text style = {styles.text}>PROJECT</Text>
+          {hidden && <Text style = {styles.text}>GAV</Text>}
+        </View>
     </View>
   );
 }
@@ -19,11 +26,13 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
+    backgroundColor: "#364966"
   },
   text: {
-    fontSize: 50,
+    fontSize: 70,
     fontWeight: 'bold',
-    color: "Black",
+    textAlign: 'center',
+    color: "white",
   }
 });
 

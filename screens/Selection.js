@@ -1,13 +1,14 @@
 import { Component, React } from 'react';
 import { StyleSheet, Text, View, ScrollView } from 'react-native';
 import PlayButton from '../components/PlayButton';
-import Champions from '../assets/lolChampions.json';
-import Anime from '../assets/anime.json';
-import Animal from '../assets/animal.json';
-import Kpop from '../assets/kpop.json';
-import Pokemon from '../assets/pokemon.json';
-import Sex from '../assets/sex.json';
-import Spanish from '../assets/spanish.json';
+import Champions from '../assets/wordSets/lolChampions.json';
+import Anime from '../assets/wordSets/anime.json';
+import Animal from '../assets/wordSets/animal.json';
+import Kpop from '../assets/wordSets/kpop.json';
+import Pokemon from '../assets/wordSets/pokemon.json';
+import Sex from '../assets/wordSets/sex.json';
+import Spanish from '../assets/wordSets/spanish.json';
+import background from '../assets/bgImages/animalBG.jpeg'
 
 let AnimeDescription = "Slice through this assortment of anime's ranging from all sorts of popularity!";
 

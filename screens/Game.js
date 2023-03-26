@@ -6,8 +6,8 @@ import CountDown from 'react-native-countdown-fixed';
 import { DeviceMotion } from 'expo-sensors';
 import * as ScreenOrientation from 'expo-screen-orientation';
 import * as Haptics from 'expo-haptics';
+// import {Audio} from 'expo-av';
 
-// let wordSet = new Set();
 let number = 0;
 let result = [];
 
@@ -32,7 +32,6 @@ const Game = ({route, navigation}) => {
   if(output == null) {
     setOutput(generateWord());
   }
-
 
   //Immediate function that rotates the screen
   async function lockScreen() {
