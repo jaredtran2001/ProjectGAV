@@ -11,6 +11,13 @@ import Spanish from '../assets/wordSets/spanish.json';
 import background from '../assets/bgImages/animalBG.jpeg'
 
 let AnimeDescription = "Slice through this assortment of anime's ranging from all sorts of popularity!";
+let kPopDescription = "Test your knowledge on the most popular kPop groups 2000 and up!";
+let pokemonDescription = "Do you know your first gen pokemon?? Better go fast and make sure you're not a slow-poke";
+let sexDescription = "We know why you're here ;). Act these sexual topics out. No words, all mouth!!!!";
+let lolDescription = "How much more degenerate could we be if we didn't have a League of Legends category on almost all champions.";
+let spanishDescription = "You've got two ways to play this throughout the game. Give hints in English, but the guesser must guess in Spanish or give hints in Spanish and the guesser must guess in English";
+let animalDescription = "Blah blah blah. This category is boring try the other ones :(";
+
 
 function populateSet(set, json ) {
   for(let i = 0; i < json.length; i++) {
@@ -46,13 +53,13 @@ const Selection = ({navigation}) => {
           </View>
           <View style={[styles.horiLine, {marginBottom: 20}]}/>
           <View style={styles.form}>
-            <PlayButton onPress = {() => navigation.navigate('Description', {set: animeSet, description: AnimeDescription})} title = 'Anime'/>
-            <PlayButton onPress = {() => navigation.navigate('Description', {set: animalsSet})} title = 'Animals'/>
-            <PlayButton onPress = {() => navigation.navigate('Description', {set: kPopSet})} title = 'K-Pop Groups'/>
-            <PlayButton onPress = {() => navigation.navigate('Description', {set: pokemonSet} )} title = 'Pokemon'/>
-            <PlayButton onPress = {() => navigation.navigate('Description', {set: sexSet} )} title = 'S*x'/>
-            <PlayButton onPress = {() => navigation.navigate('Description', {set: leagueSet} )} title = 'LOL'/>
-            <PlayButton onPress = {() => navigation.navigate('Description', {set: spanishSet} )} title = 'Spanish'/>
+            <PlayButton onPress = {() => navigation.navigate('Description', {set: animeSet, description: AnimeDescription, category: "Anime"})} title = 'Anime'/>
+            <PlayButton onPress = {() => navigation.navigate('Description', {set: animalsSet, description: animalDescription, category: "Animals"})} title = 'Animals'/>
+            <PlayButton onPress = {() => navigation.navigate('Description', {set: kPopSet, description: kPopDescription, category: "KPOP"})} title = 'K-Pop Groups'/>
+            <PlayButton onPress = {() => navigation.navigate('Description', {set: pokemonSet, description: pokemonDescription, category: "Pokemon"} )} title = 'Pokemon'/>
+            <PlayButton onPress = {() => navigation.navigate('Description', {set: sexSet, description: sexDescription, category: "S*X"} )} title = 'S*x'/>
+            <PlayButton onPress = {() => navigation.navigate('Description', {set: leagueSet, description: lolDescription, category: "LOL"} )} title = 'LOL'/>
+            <PlayButton onPress = {() => navigation.navigate('Description', {set: spanishSet, description: spanishDescription, category: "Espanol"} )} title = 'Spanish'/>
           </View>
           <View style={[styles.horiLine, {marginTop: 20}]}/>
           <View style={styles.footer} />

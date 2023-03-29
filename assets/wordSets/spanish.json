@@ -35,5 +35,10 @@
     { "name": "Derecha: Right"},
     { "name": "Izquierda: Left"},
     { "name": "Afuera: Outside"},
-    { "name": "Adentro: Inside"}
+    { "name": "Adentro: Inside"},
+    { "name": "La Cuenta: Bill"},
+    { "name": "Al Pastor: Pork"},
+    { "name": "Casa: House"},
+    { "name": "Hermano: Man"},
+    { "name": "Senora: Lady"}
 ]

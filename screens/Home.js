@@ -8,7 +8,7 @@ const Home = ({navigation}) => {
   const [output, setOutput] = useState("             ");
   
   useEffect(() => {
-    setTimeout(()=> setOutput("VAG"), 1500);
+    setTimeout(()=> setOutput("GAV"), 1500);
     setTimeout(() => navigation.navigate('Selection'), 3000);
   });
 
