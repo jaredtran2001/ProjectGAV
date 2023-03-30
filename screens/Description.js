@@ -10,6 +10,7 @@ const Description = ({route, navigation}) => {
     const {set, description, category} = route.params;
     let copySet = new Set(set);
     const [time, setTime] = useState(30); 
+    const [displayTime, setdisplayTime] = useState("30");
 
     function handlePlus() {
         setTime(time + 5);
@@ -18,7 +19,21 @@ const Description = ({route, navigation}) => {
         if(time > 0)  {
             setTime(time - 5);
         }
-    }
+    } 
+    useEffect(() => {
+      if(time >= 60) {
+        let min = "" + Math.floor((time / 60));
+        let sec =  (time % 60);
+        if(sec < 10 ) {
+          sec = "0" + sec;
+        } else {
+          sec = "" + sec;
+        }
+        setdisplayTime(min + ":" + sec);
+      } else {
+        setdisplayTime(time + "");
+      }
+    }, [time]);
 
 
   return (
@@ -36,7 +51,7 @@ const Description = ({route, navigation}) => {
           <View style = {styles.timer}>
             <MinusButton onPress = {handleMinus}/>
             <View style={styles.timeTextBox}>
-              <Text style = {styles.timeText}>{time}</Text>
+              <Text style = {styles.timeText}>{displayTime}</Text>
             </View>
             <PlusButton onPress = {handlePlus}/>
           </View>

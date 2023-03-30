@@ -6,12 +6,34 @@ import CountDown from 'react-native-countdown-fixed';
 import { DeviceMotion } from 'expo-sensors';
 import * as ScreenOrientation from 'expo-screen-orientation';
 import * as Haptics from 'expo-haptics';
+import { Audio } from 'expo-av';
 // import {Audio} from 'expo-av';
 
 let number = 0;
 let result = [];
 
 const Game = ({route, navigation}) => {
+  
+  const [sound, setSound] = useState();
+  // const [sound2, setSound2] = useState();
+
+  async function playSuccessSound(path) {
+    console.log('Loading SUCCESS Sound');
+    const { sound } = await Audio.Sound.createAsync(path);
+    setSound(sound);
+
+    console.log('Playing Success Sound');
+    await sound.playAsync();
+  }
+
+  useEffect(() => {
+    return sound
+      ? () => {
+          console.log('Unloading Sound');
+          sound.unloadAsync();
+        }
+      : undefined;
+  }, [sound]);
 
   //Grabbing the provided word set and function to produce a new word from it
   const { set, time } = route.params;
@@ -96,7 +118,8 @@ const Game = ({route, navigation}) => {
       setFlip(true);
       setOutput("Passed");
       setColor("#E14749");
-      Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Heavy)
+      Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Heavy);
+      playSuccessSound(require('../assets/failure.mp3'));
     } else if (gamma < -2.25 && !flip) {
       //Yess
       let input = [output, 1];
@@ -108,6 +131,7 @@ const Game = ({route, navigation}) => {
       Haptics.notificationAsync(
         Haptics.NotificationFeedbackType.Success
       )
+      playSuccessSound(require('../assets/success.mp3'));
     } else if( gamma < -1.1 && gamma > -1.9 && flip) {
       setFlip(false);
       setOutput(generateWord());
@@ -125,13 +149,14 @@ const Game = ({route, navigation}) => {
             until = {time}
             size = {20}
             timeLabels={{s: ''}}
+            showSeperator = {true}
             digitStyle={{backgroundColor: "#b78460", width:"100%", height: 60, }}
           />
         </View>
         
         <View style={[styles.horiLine, {margin: 10}]}/>
         <Text style = {styles.text}>{output}</Text>
-        <View style={[styles.horiLine, {margin: 10}]}/>          
+        <View style={[styles.horiLine, {margin: 10}]}/>     
       </View>
   );
 }
