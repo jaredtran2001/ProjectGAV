@@ -9,6 +9,8 @@ import Pokemon from '../assets/wordSets/pokemon.json';
 import Sex from '../assets/wordSets/sex.json';
 import Spanish from '../assets/wordSets/spanish.json';
 import background from '../assets/bgImages/animalBG.jpeg'
+import { useFonts } from 'expo-font';
+// import TextStroke from 'react-native-textstroke';
 
 
 
@@ -21,6 +23,12 @@ function populateSet(set, json ) {
 
 const Selection = ({navigation}) => {
 
+  const [fontsLoaded] = useFonts({
+    'Valorant': require('../assets/fonts/Valorant-Font.ttf'),
+  });
+  if(!fontsLoaded) {
+    return null;
+  }
   let AnimeDescription = "Slice through this assortment of anime's ranging from all sorts of popularity!";
   let kPopDescription = "Test your knowledge on the most popular kPop groups 2000 and up!";
   let pokemonDescription = "Do you know your first gen pokemon?? Better go fast and make sure you're not a slow-poke";
@@ -51,7 +59,9 @@ const Selection = ({navigation}) => {
     <View style={styles.container}>
       <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={styles.scrollContainer}>
           <View style={styles.header}>
-            <Text style={styles.headerText}>Choose a Deck</Text>
+            {/* <TextStroke stroke= {2} color= '#white'>  */}
+              <Text style={styles.headerText}>Choose a Deck</Text>
+            {/* </TextStroke> */}
           </View>
           <View style={[styles.horiLine, {marginBottom: 20}]}/>
           <View style={styles.form}>
@@ -75,14 +85,16 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: 'flex-start',
         alignItems: 'center',
-        backgroundColor: "#364966"
+        backgroundColor: "#1f2326"
+        // backgroundColor: "#364966"
     },
     scrollContainer: {
       alignItems: 'center',
     },
     horiLine: {
       borderBottomWidth: 1,
-      borderColor: "#b38c8f",
+      borderColor: "#ff4656",
+      // borderColor: "#b38c8f",
       width: "60%",
     },
     header: {
@@ -94,8 +106,10 @@ const styles = StyleSheet.create({
     headerText: {
       fontSize: 45,
       fontWeight: "bold",
-      color: "white",
+      color: "#ff4656",
+      // color: "white",
       marginTop: "25%",
+      fontFamily: 'Valorant',
     },
     form: {
       flexDirection: 'row',

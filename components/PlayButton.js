@@ -26,10 +26,12 @@ const styles = StyleSheet.create({
     width: "45%",
     borderRadius: 10,
     margin:5,
-    backgroundColor: '#526174',
+    backgroundColor: '#505155',
+    // backgroundColor: '#526174',
     justifyContent: 'center',
   },
   text: {
+    // color: '#ff4656',
     color: 'white',
     fontSize: 20,
     fontWeight: 'bold',
