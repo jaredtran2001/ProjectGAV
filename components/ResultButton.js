@@ -1,9 +1,16 @@
 import React from "react";
 import { StyleSheet, TouchableOpacity, Text } from "react-native";
+import { useFonts } from 'expo-font';
 
 TouchableOpacity.defaultProps = { activeOpacity: 0.8 };
 
 const App = ({ onPress, title, color }) => {
+  const [fontsLoaded] = useFonts({
+    'Valorant': require('../assets/fonts/Valorant-Font.ttf'),
+  });
+  if(!fontsLoaded) {
+    return null;
+  }
   return (
     <TouchableOpacity onPress={onPress} style={{
         backgroundColor: color,
@@ -22,6 +29,7 @@ const styles = StyleSheet.create({
     color: "#FFFFFF",
     fontWeight: "bold",
     alignSelf: "center",
+    fontFamily: 'Valorant'
   }
 });
 

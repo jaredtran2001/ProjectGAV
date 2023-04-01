@@ -4,6 +4,7 @@ import PlusButton from '../components/PlusButton';
 import MinusButton from '../components/MinusButton';
 import GameTimeButton from '../components/GameTimeButton';
 import ExitButton from '../components/ExitButton';
+import { useFonts } from 'expo-font';
 
 
 const Description = ({route, navigation}) => {
@@ -11,15 +12,10 @@ const Description = ({route, navigation}) => {
     let copySet = new Set(set);
     const [time, setTime] = useState(30); 
     const [displayTime, setdisplayTime] = useState("30");
+    const [fontsLoaded] = useFonts({
+      'Valorant': require('../assets/fonts/Valorant-Font.ttf'),
+    });
 
-    function handlePlus() {
-        setTime(time + 5);
-    }
-    function handleMinus() {
-        if(time > 0)  {
-            setTime(time - 5);
-        }
-    } 
     useEffect(() => {
       if(time >= 60) {
         let min = "" + Math.floor((time / 60));
@@ -34,6 +30,19 @@ const Description = ({route, navigation}) => {
         setdisplayTime(time + "");
       }
     }, [time]);
+
+    if(!fontsLoaded) {
+      return null;
+    }
+
+    function handlePlus() {
+        setTime(time + 15);
+    }
+    function handleMinus() {
+        if(time > 15)  {
+            setTime(time - 15);
+        }
+    } 
 
 
   return (
@@ -58,7 +67,7 @@ const Description = ({route, navigation}) => {
         </View>
         
         <View style = {styles.caption}>
-          <Text style = {styles.descriptionText}>Adjust Duration</Text>
+          <Text style = {styles.descriptionText}>ADJUST DURATION</Text>
         </View>
         <View style = {styles.start}>
           <View style = {styles.startBox}>
@@ -74,13 +83,14 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: "#364966",
+    backgroundColor: "#1f2326",
   },
   displayText: {
-    color: "white",
+    color: "#ff4656",
     fontSize: 50,
     fontWeight: "bold",
-    textTransform: "uppercase"
+    textTransform: "uppercase",
+    fontFamily: 'Valorant'
   },
   description: {
     height: "50%",
@@ -151,7 +161,7 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
   },
   timeTextBox: {
-    backgroundColor: "#86C5D8",
+    backgroundColor: "#ff4656",
     width: "50%",
     justifyContent: "center",
     alignItems: "center",

@@ -1,5 +1,6 @@
 import { React } from 'react';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { useFonts } from 'expo-font';
 
 // const App = () => {
 //     const onPress = () => console.log("testtest");
@@ -12,6 +13,13 @@ import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 // };
 
 const ExitButton = (props) => {
+
+  const [fontsLoaded] = useFonts({
+    'Valorant': require('../assets/fonts/Valorant-Font.ttf'),
+  });
+  if(!fontsLoaded) {
+    return null;
+  }
     // console.log(props)
   return (
     <TouchableOpacity style={styles.container} onPress={props.onPress}>
@@ -31,6 +39,7 @@ const styles = StyleSheet.create({
     fontSize: 30,
     fontWeight: 'bold',
     textAlign: 'center',
+    fontFamily: 'Valorant'
   }
 });
 

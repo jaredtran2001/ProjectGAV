@@ -5,19 +5,27 @@ import PlayButton from '../components/PlayButton';
 import CountDown from 'react-native-countdown-fixed';
 import * as ScreenOrientation from 'expo-screen-orientation';
 import * as Haptics from 'expo-haptics';
+import { useFonts } from 'expo-font';
 
-let RSG = ["Ready", "Set", "Go!!"]
+let RSG = ["READY", "SET", "GO!!"]
 
 const Load = ({route, navigation}) => {
-  const {set, time} = route.params;
-
-  const [index, setIndex] = useState(0);
-  const [display, setDisplay] = useState(RSG[0]);
-
   async function lockScreen() {
     await ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.LANDSCAPE_RIGHT);
   }
   lockScreen();
+
+  const {set, time} = route.params;
+
+  const [index, setIndex] = useState(0);
+  const [display, setDisplay] = useState(RSG[0]);
+  const [fontsLoaded] = useFonts({
+    'Valorant': require('../assets/fonts/Valorant-Font.ttf'),
+  });
+  if(!fontsLoaded) {
+    return null;
+  }
+
 
   const handleFinish = () => {
     ScreenOrientation.unlockAsync();
@@ -52,14 +60,15 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: "#364966",
+    backgroundColor: "#1f2326",
     borderWidth: 1,
   },
   displayText: {
     color: "white",
     fontSize: 90,
     fontWeight: "bold",
-    textTransform: "uppercase"
+    textTransform: "uppercase",
+    fontFamily: 'Valorant',
   }
 });
 

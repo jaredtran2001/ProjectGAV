@@ -49,7 +49,7 @@ const Game = ({route, navigation}) => {
   const [output, setOutput] = useState();
   const [data, setData] = useState({});
   const [flip, setFlip] = useState(false);
-  const [color, setColor] = useState("#364966");
+  const [color, setColor] = useState("#1f2326");
 
   if(output == null) {
     setOutput(generateWord());
@@ -88,6 +88,7 @@ const Game = ({route, navigation}) => {
       result: tempResult,
       num: tempNum,
       currSet: currSet,
+      time: time
     });
   }
 
@@ -135,7 +136,7 @@ const Game = ({route, navigation}) => {
     } else if( gamma < -1.1 && gamma > -1.9 && flip) {
       setFlip(false);
       setOutput(generateWord());
-      setColor("#364966");
+      setColor("#1f2326");
     } 
   }, [data]);
   
@@ -150,7 +151,7 @@ const Game = ({route, navigation}) => {
             size = {20}
             timeLabels={{s: ''}}
             showSeperator = {true}
-            digitStyle={{backgroundColor: "#b78460", width:"100%", height: 60, }}
+            digitStyle={{backgroundColor: "#ff4656", width:"100%", height: 60, }}
           />
         </View>
         
@@ -171,10 +172,12 @@ const styles = StyleSheet.create({
     fontSize: 50,
     fontWeight: 'bold',
     color: "white",
+    textAlign: 'center',
+    textTransform: 'uppercase'
   },
   horiLine: {
     borderBottomWidth: 1,
-    borderColor: "#b38c8f",
+    borderColor: "#ff4656",
     width: "15%",
   },
 });

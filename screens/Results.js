@@ -4,7 +4,7 @@ import ResultButton from '../components/ResultButton';
 import * as ScreenOrientation from 'expo-screen-orientation';
 
 const Results = ({route, navigation}) => {
-    const { result, num, currSet} = route.params;
+    const { result, num, currSet, time} = route.params;
     let copySet = new Set(currSet);
     //lock portrait
     async function lockScreen() {
@@ -14,7 +14,7 @@ const Results = ({route, navigation}) => {
 
     const handlePlayAgainFinish = ()=> {
       ScreenOrientation.unlockAsync();
-      navigation.push('Load',{set: copySet});
+      navigation.push('Load',{set: copySet, time: time});
     }
     const handleAllDecksFinish = ()=> {
       ScreenOrientation.unlockAsync();
@@ -26,7 +26,7 @@ const Results = ({route, navigation}) => {
     return (
         <View style={styles.container}>
             <View style={styles.header}>
-              <Text style={styles.headerText}>You got {num} words!</Text>
+              <Text style={styles.headerText}>YOU GOT {num} WORDS!</Text>
             </View>
             <View style={[styles.horiLine, {marginTop: "5%"}]}/>
             <View style={styles.body}>
@@ -58,14 +58,14 @@ const Results = ({route, navigation}) => {
             <View style={[styles.horiLine, {marginBottom: "5%"}]}/>
             <View style={[styles.header, {justifyContent: "flex-start"}]}>
               <ResultButton
-                title= "Play This Deck Again"
+                title= "PLAY AGAIN"
                 onPress={handlePlayAgainFinish}
-                color="#fa4445"
+                color="#ff4656"
               />
               <ResultButton
                 onPress = {handleAllDecksFinish}
-                title="All Decks"
-                color="#dc3d4b"
+                title="EXIT"
+                color="#e03e4d"
               />
             </View>
             
@@ -78,7 +78,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: "#364966"
+    backgroundColor: "#1f2326"
   },
   scrollContainer: {
     flexGrow: 1,
@@ -88,12 +88,12 @@ const styles = StyleSheet.create({
   },
   horiLine: {
     borderBottomWidth: 1,
-    borderColor: "#b38c8f",
+    borderColor: "#ff4656",
     width: "60%",
   },
   vertLine: {
     borderLeftWidth: 1,
-    borderColor: "#b38c8f",
+    borderColor: "#ff4656",
     height: "80%",
   },
   header: {
@@ -122,6 +122,7 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     margin: 5,
     color: "white",
+    textTransform: 'uppercase'
   }
 });
 

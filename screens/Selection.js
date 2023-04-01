@@ -29,13 +29,13 @@ const Selection = ({navigation}) => {
   if(!fontsLoaded) {
     return null;
   }
-  let AnimeDescription = "Slice through this assortment of anime's ranging from all sorts of popularity!";
-  let kPopDescription = "Test your knowledge on the most popular kPop groups 2000 and up!";
-  let pokemonDescription = "Do you know your first gen pokemon?? Better go fast and make sure you're not a slow-poke";
-  let sexDescription = "We know why you're here ;). Act these sexual topics out. No words, all mouth!!!!";
-  let lolDescription = "How much more degenerate could we be if we didn't have a League of Legends category on almost all champions.";
-  let spanishDescription = "You've got two ways to play this throughout the game. Give hints in English, but the guesser must guess in Spanish or give hints in Spanish and the guesser must guess in English";
-  let animalDescription = "Blah blah blah. This category is boring try the other ones :(";
+  let AnimeDescription = "SLICE THROUGH THIS ASSORTMENT OF ANIME'S RANGING FROM ALL SORTS OF POPULARITY!";
+  let kPopDescription = "TEST YOUR KNOWLEDGE ON THE MOST POPULAR KPOP GROUPS 2000 AND UP!";
+  let pokemonDescription = "DO YOU KNOW YOUR FIRST GEN POKEMON?? BETTER GO FAST AND MAKE SURE YOU'RE NOT A SLOW-POKE";
+  let sexDescription = "ACT THESE SEXUAL TOPICS OUT. NO WORDS, ALL MOUTH!";
+  let lolDescription = "HOW MUCH MORE DEGENERATE COULD WE BE IF WE DIDN'T HAVE A LEAGUE OF LEGENDS CATEGORY ON ALMOST ALL CHAMPIONS";
+  let spanishDescription = "HINTS IN ENGLISH GUESS IN SPANISH";
+  let animalDescription = "BLAH BLAH BLAH. THIS CATEGORY IS BORING TRY THE OTHER ONES";
 
   //Initialize Sets
   let animeSet = new Set();
@@ -65,13 +65,13 @@ const Selection = ({navigation}) => {
           </View>
           <View style={[styles.horiLine, {marginBottom: 20}]}/>
           <View style={styles.form}>
-            <PlayButton onPress = {() => navigation.push('Description', {set: animeSet, description: AnimeDescription, category: "Anime"})} title = 'Anime'/>
-            <PlayButton onPress = {() => navigation.push('Description', {set: animalsSet, description: animalDescription, category: "Animals"})} title = 'Animals'/>
-            <PlayButton onPress = {() => navigation.push('Description', {set: kPopSet, description: kPopDescription, category: "KPOP"})} title = 'K-Pop Groups'/>
-            <PlayButton onPress = {() => navigation.push('Description', {set: pokemonSet, description: pokemonDescription, category: "Pokemon"} )} title = 'Pokemon'/>
-            <PlayButton onPress = {() => navigation.push('Description', {set: sexSet, description: sexDescription, category: "S*X"} )} title = 'S*x'/>
+            <PlayButton onPress = {() => navigation.push('Description', {set: animeSet, description: AnimeDescription, category: "ANIME"})} title = 'ANIME'/>
+            <PlayButton onPress = {() => navigation.push('Description', {set: animalsSet, description: animalDescription, category: "ANIMALS"})} title = 'ANIMALS'/>
+            <PlayButton onPress = {() => navigation.push('Description', {set: kPopSet, description: kPopDescription, category: "KPOP"})} title = 'KPOP'/>
+            <PlayButton onPress = {() => navigation.push('Description', {set: pokemonSet, description: pokemonDescription, category: "POKEMON"} )} title = 'POKEMON'/>
+            <PlayButton onPress = {() => navigation.push('Description', {set: sexSet, description: sexDescription, category: "S*X"} )} title = 'S*X'/>
             <PlayButton onPress = {() => navigation.push('Description', {set: leagueSet, description: lolDescription, category: "LOL"} )} title = 'LOL'/>
-            <PlayButton onPress = {() => navigation.push('Description', {set: spanishSet, description: spanishDescription, category: "Espanol"} )} title = 'Spanish'/>
+            <PlayButton onPress = {() => navigation.push('Description', {set: spanishSet, description: spanishDescription, category: "SPANISH"} )} title = 'SPANISH'/>
           </View>
           <View style={[styles.horiLine, {marginTop: 20}]}/>
           <View style={styles.footer} />

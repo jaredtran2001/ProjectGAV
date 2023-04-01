@@ -1,5 +1,5 @@
-import { Component, React, useState, useEffect } from 'react';
-import { StyleSheet, Text, View, Button } from 'react-native';
+import { Component, React, useState, useEffect, useRef} from 'react';
+import { StyleSheet, Text, View, Animated} from 'react-native';
 // import Header from './components/Header';
 import PlayButton from '../components/PlayButton';
 import { useFonts } from 'expo-font';
@@ -7,26 +7,37 @@ import { useFonts } from 'expo-font';
 
 
 const Home = ({navigation}) => {
+  const fadeAnim = useRef(new Animated.Value(0)).current;
   const [hidden, setHidden] = useState(false);
-  const [output, setOutput] = useState("             ");
+  const [output, setOutput] = useState("GAV");
   const [fontsLoaded] = useFonts({
     'Valorant': require('../assets/fonts/Valorant-Font.ttf'),
   });
   
   useEffect(() => {
-    setTimeout(()=> setOutput("GAV"), 1500);
-    setTimeout(() => navigation.navigate('Selection'), 3000);
+    fadeIn();
+    // setTimeout(()=> setOutput("GAV"), 1500);
+    setTimeout(() => navigation.navigate('Selection'), 3500);
   });
    if(!fontsLoaded) {
     return null;
   }
+  function fadeIn(){
+    // Will change fadeAnim value to 1 in 5 seconds
+    Animated.timing(fadeAnim, {
+      toValue: 1,
+      duration: 5000,
+      useNativeDriver: true,
+    }).start();
+  };
 
   return (
     <View style={styles.container}>
-        <View>
+        <Animated.View
+          style={[{opacity: fadeAnim,}]}>
           <Text style = {[styles.text, {color: "#efefef"}]}>PROJECT</Text>
           <Text style = {[styles.text, {color: "#ff4656"}]}>{output}</Text>
-        </View>
+        </Animated.View>
     </View>
   );
 }
