@@ -10,10 +10,9 @@ import { useFonts } from 'expo-font';
 let RSG = ["READY", "SET", "GO!!"]
 
 const Load = ({route, navigation}) => {
-  async function lockScreen() {
-    await ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.LANDSCAPE_RIGHT);
-  }
-  lockScreen();
+  ScreenOrientation.unlockAsync();
+  ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.LANDSCAPE_RIGHT);
+  
 
   const {set, time} = route.params;
 
@@ -28,7 +27,6 @@ const Load = ({route, navigation}) => {
 
 
   const handleFinish = () => {
-    ScreenOrientation.unlockAsync();
     // Vibration.vibrate(10)
     let copySet = new Set(set);
     let copyTime = time;

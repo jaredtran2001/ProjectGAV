@@ -37,6 +37,8 @@ const Game = ({route, navigation}) => {
 
   //Grabbing the provided word set and function to produce a new word from it
   const { set, time } = route.params;
+  const [min, setMin] = useState(Math.floor(time / 60));
+  const [totalSec, setTS] = useState(time);
   const generateWord = () => {
     if(set.size == 0) return "Ran out of words :(";
     let items = Array.from(set);
@@ -56,10 +58,10 @@ const Game = ({route, navigation}) => {
   }
 
   //Immediate function that rotates the screen
-  async function lockScreen() {
-    await ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.LANDSCAPE_RIGHT);
-  }
-  lockScreen();
+  // async function lockScreen() {
+  //   await ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.LANDSCAPE_RIGHT);
+  // }
+  // lockScreen();
 
   // Required to start listener
   useEffect(() => {
@@ -71,7 +73,7 @@ const Game = ({route, navigation}) => {
 
   //Handles when the timer runs out of time
   const handleFinish = ()=> {
-    if(output !== "Incorrect" && output !== "Correct") {
+    if(output !== "Passed" && output !== "Correct") {
       let input = [output, 0];
       result.push(input);
     }
@@ -83,7 +85,7 @@ const Game = ({route, navigation}) => {
     number = 0;
     Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Heavy);
     _unsubscribe();
-    ScreenOrientation.unlockAsync();
+    // ScreenOrientation.unlockAsync();
     navigation.push('Results', {
       result: tempResult,
       num: tempNum,
@@ -139,22 +141,50 @@ const Game = ({route, navigation}) => {
       setColor("#1f2326");
     } 
   }, [data]);
-  
+
+  const timeChange = () => {
+    let nTime = (totalSec - 1)
+    setTS(totalSec - 1);
+    setMin(Math.floor(nTime / 60));
+  }
   
   return (
       <View style={[styles.container, { backgroundColor: color}]}>
-        <View style={{position: "absolute", top: 10, right: 30, width: 100}}>
-          <CountDown 
-            onFinish={handleFinish}
-            timeToShow = {['S']}
-            until = {time}
-            size = {20}
-            timeLabels={{s: ''}}
-            showSeperator = {true}
-            digitStyle={{backgroundColor: "#ff4656", width:"100%", height: 60, }}
-          />
-        </View>
-        
+        {/* {renderCounter} */}
+        {min > 0 ? 
+          <>
+          <View style={{position: "absolute", top: 10, right: 30, width: 100}}>
+            <CountDown 
+              onFinish={handleFinish}
+              timeToShow = {['S']}
+              until = {time}
+              size = {20}
+              timeLabels={{s: ''}}
+              showSeperator = {true}
+              digitStyle={{backgroundColor: "#ff4656", width:"100%", height: 60, }}
+              digitTxtStyle={{left:20, color: "black"}}
+              onChange={timeChange}
+            />
+          </View>
+          <Text style={{position:"absolute", top: 26, right: 82, color: "black", fontSize: 20, fontWeight: "bold"}}>:</Text>
+          <Text style={{position:"absolute", top: 28, right: 98, color: "black", fontSize: 20, fontWeight: "bold"}}>{min}</Text>
+          </>
+          :
+          <>
+          <View style={{position: "absolute", top: 10, right: 30, width: 100}}>
+            <CountDown 
+              onFinish={handleFinish}
+              timeToShow = {['S']}
+              until = {time}
+              size = {20}
+              timeLabels={{s: ''}}
+              showSeperator = {true}
+              digitStyle={{backgroundColor: "#ff4656", width:"100%", height: 60, }}
+            />
+          </View>
+          </>
+        }
+
         <View style={[styles.horiLine, {margin: 10}]}/>
         <Text style = {styles.text}>{output}</Text>
         <View style={[styles.horiLine, {margin: 10}]}/>     

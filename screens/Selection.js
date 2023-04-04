@@ -11,6 +11,7 @@ import Spanish from '../assets/wordSets/spanish.json';
 import background from '../assets/bgImages/animalBG.jpeg'
 import { useFonts } from 'expo-font';
 // import TextStroke from 'react-native-textstroke';
+import * as ScreenOrientation from 'expo-screen-orientation';
 
 
 
@@ -22,6 +23,7 @@ function populateSet(set, json ) {
 }
 
 const Selection = ({navigation}) => {
+  ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.PORTRAIT);
 
   const [fontsLoaded] = useFonts({
     'Valorant': require('../assets/fonts/Valorant-Font.ttf'),

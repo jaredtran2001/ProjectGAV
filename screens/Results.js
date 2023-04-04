@@ -7,17 +7,13 @@ const Results = ({route, navigation}) => {
     const { result, num, currSet, time} = route.params;
     let copySet = new Set(currSet);
     //lock portrait
-    async function lockScreen() {
-      await ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.PORTRAIT);
-    }
-    lockScreen();
+    ScreenOrientation.unlockAsync();
+    ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.PORTRAIT);
 
     const handlePlayAgainFinish = ()=> {
-      ScreenOrientation.unlockAsync();
       navigation.push('Load',{set: copySet, time: time});
     }
     const handleAllDecksFinish = ()=> {
-      ScreenOrientation.unlockAsync();
       navigation.navigate('Selection');
     }
     // console.log(result);
