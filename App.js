@@ -26,22 +26,27 @@ const App = () => {
         <Stack.Screen 
           name="Selection" 
           component={SelectionScreen} 
+          options={{gestureEnabled:false}}
         />
         <Stack.Screen 
           name="Game" 
           component={GameScreen} 
+          options={{gestureEnabled:false}}
         />
         <Stack.Screen 
           name="Load" 
           component={LoadScreen} 
+          options={{gestureEnabled:false}}
         />
         <Stack.Screen 
           name="Results" 
           component={ResultsScreen} 
+          options={{gestureEnabled:false}}
         />
         <Stack.Screen
           name="Description"
           component={DescriptionScreen}
+          options={{gestureEnabled:false}}
         />
       </Stack.Navigator>
     </NavigationContainer>

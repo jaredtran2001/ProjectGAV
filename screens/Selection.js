@@ -22,8 +22,22 @@ function populateSet(set, json ) {
   }
 }
 
+let first = true;
 const Selection = ({navigation}) => {
-  ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.PORTRAIT);
+  // ScreenOrientation.unlockAsync();
+  async function fixOrientation() {
+    await ScreenOrientation.unlockAsync();
+    await ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.PORTRAIT_UP);
+  }
+  // ScreenOrientation.unlockAsync();
+  // console.log(ScreenOrientation.getOrientationLockAsync());
+  if(first) {
+    first = false;
+    fixOrientation();
+  }
+  // if(ScreenOrientation.getOrientationLockAsync() != PORTRAIT) {
+  //   fixOrientation();
+  // }
 
   const [fontsLoaded] = useFonts({
     'Valorant': require('../assets/fonts/Valorant-Font.ttf'),

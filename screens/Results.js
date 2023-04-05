@@ -3,17 +3,29 @@ import { StyleSheet, Text, View, Button, ScrollView } from 'react-native';
 import ResultButton from '../components/ResultButton';
 import * as ScreenOrientation from 'expo-screen-orientation';
 
+let first = true;
 const Results = ({route, navigation}) => {
+
+    async function fixOrientation() {
+      await ScreenOrientation.unlockAsync();
+      await ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.PORTRAIT_UP);
+    }
+    // ScreenOrientation.unlockAsync();
+    // console.log(ScreenOrientation.getOrientationLockAsync());
+    if(first) {
+      first = false;
+      fixOrientation();
+    }
     const { result, num, currSet, time} = route.params;
     let copySet = new Set(currSet);
-    //lock portrait
-    ScreenOrientation.unlockAsync();
-    ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.PORTRAIT);
+    
 
     const handlePlayAgainFinish = ()=> {
+      ScreenOrientation.unlockAsync();
       navigation.push('Load',{set: copySet, time: time});
     }
     const handleAllDecksFinish = ()=> {
+      ScreenOrientation.unlockAsync();
       navigation.navigate('Selection');
     }
     // console.log(result);

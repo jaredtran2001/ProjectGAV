@@ -9,9 +9,20 @@ import { useFonts } from 'expo-font';
 
 let RSG = ["READY", "SET", "GO!!"]
 
+let first = true;
+
 const Load = ({route, navigation}) => {
-  ScreenOrientation.unlockAsync();
-  ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.LANDSCAPE_RIGHT);
+  async function fixOrientation() {
+    await ScreenOrientation.unlockAsync();
+    await ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.LANDSCAPE_RIGHT);
+  }
+
+  if(first) {
+    first = false;
+    fixOrientation();
+  }
+  // ScreenOrientation.unlockAsync();
+  // fixOrientation();
   
 
   const {set, time} = route.params;

@@ -7,6 +7,7 @@ import { DeviceMotion } from 'expo-sensors';
 import * as ScreenOrientation from 'expo-screen-orientation';
 import * as Haptics from 'expo-haptics';
 import { Audio } from 'expo-av';
+
 // import {Audio} from 'expo-av';
 
 let number = 0;
@@ -18,18 +19,14 @@ const Game = ({route, navigation}) => {
   // const [sound2, setSound2] = useState();
 
   async function playSuccessSound(path) {
-    console.log('Loading SUCCESS Sound');
     const { sound } = await Audio.Sound.createAsync(path);
     setSound(sound);
-
-    console.log('Playing Success Sound');
     await sound.playAsync();
   }
 
   useEffect(() => {
     return sound
       ? () => {
-          console.log('Unloading Sound');
           sound.unloadAsync();
         }
       : undefined;
@@ -85,6 +82,7 @@ const Game = ({route, navigation}) => {
     number = 0;
     Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Heavy);
     _unsubscribe();
+    // ScreenOrientation.unlockAsync();
     // ScreenOrientation.unlockAsync();
     navigation.push('Results', {
       result: tempResult,
