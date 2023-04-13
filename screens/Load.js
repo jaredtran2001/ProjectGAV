@@ -1,4 +1,4 @@
-import { Component, React, useState } from 'react';
+import { Component, React, useEffect, useState } from 'react';
 import { StyleSheet, Text, View, Button } from 'react-native';
 // import Header from './components/Header';
 import PlayButton from '../components/PlayButton';
@@ -12,15 +12,17 @@ let RSG = ["READY", "SET", "GO!!"]
 let first = true;
 
 const Load = ({route, navigation}) => {
+  console.log(first);
   async function fixOrientation() {
     await ScreenOrientation.unlockAsync();
     await ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.LANDSCAPE_RIGHT);
   }
-
-  if(first) {
-    first = false;
-    fixOrientation();
-  }
+  useEffect(() => {
+    if(first) {
+      first = false;
+      fixOrientation();
+    }
+  }, []);
   // ScreenOrientation.unlockAsync();
   // fixOrientation();
   
@@ -41,6 +43,7 @@ const Load = ({route, navigation}) => {
     // Vibration.vibrate(10)
     let copySet = new Set(set);
     let copyTime = time;
+    first = true;
     navigation.push('Game', {set: copySet, time: copyTime});
   }
   const handleChange = () => {

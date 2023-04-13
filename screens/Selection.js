@@ -81,13 +81,13 @@ const Selection = ({navigation}) => {
           </View>
           <View style={[styles.horiLine, {marginBottom: 20}]}/>
           <View style={styles.form}>
-            <PlayButton onPress = {() => navigation.push('Description', {set: animeSet, description: AnimeDescription, category: "ANIME"})} title = 'ANIME'/>
-            <PlayButton onPress = {() => navigation.push('Description', {set: animalsSet, description: animalDescription, category: "ANIMALS"})} title = 'ANIMALS'/>
-            <PlayButton onPress = {() => navigation.push('Description', {set: kPopSet, description: kPopDescription, category: "KPOP"})} title = 'KPOP'/>
-            <PlayButton onPress = {() => navigation.push('Description', {set: pokemonSet, description: pokemonDescription, category: "POKEMON"} )} title = 'POKEMON'/>
-            <PlayButton onPress = {() => navigation.push('Description', {set: sexSet, description: sexDescription, category: "S*X"} )} title = 'S*X'/>
-            <PlayButton onPress = {() => navigation.push('Description', {set: leagueSet, description: lolDescription, category: "LOL"} )} title = 'LOL'/>
-            <PlayButton onPress = {() => navigation.push('Description', {set: spanishSet, description: spanishDescription, category: "SPANISH"} )} title = 'SPANISH'/>
+            <PlayButton onPress = {() => {first = true; navigation.push('Description', {set: animeSet, description: AnimeDescription, category: "ANIME"})}} title = 'ANIME'/>
+            <PlayButton onPress = {() => {first = true; navigation.push('Description', {set: animalsSet, description: animalDescription, category: "ANIMALS"})}} title = 'ANIMALS'/>
+            <PlayButton onPress = {() => {first = true; navigation.push('Description', {set: kPopSet, description: kPopDescription, category: "KPOP"})}} title = 'KPOP'/>
+            <PlayButton onPress = {() => {first = true; navigation.push('Description', {set: pokemonSet, description: pokemonDescription, category: "POKEMON"} )}} title = 'POKEMON'/>
+            <PlayButton onPress = {() => {first = true; navigation.push('Description', {set: sexSet, description: sexDescription, category: "S*X"} )}} title = 'S*X'/>
+            <PlayButton onPress = {() => {first = true; navigation.push('Description', {set: leagueSet, description: lolDescription, category: "LOL"} )}} title = 'LOL'/>
+            <PlayButton onPress = {() => {first = true; navigation.push('Description', {set: spanishSet, description: spanishDescription, category: "SPANISH"} )}} title = 'SPANISH'/>
           </View>
           <View style={[styles.horiLine, {marginTop: 20}]}/>
           <View style={styles.footer} />

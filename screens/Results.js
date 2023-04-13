@@ -21,11 +21,11 @@ const Results = ({route, navigation}) => {
     
 
     const handlePlayAgainFinish = ()=> {
-      ScreenOrientation.unlockAsync();
+      first = true;
       navigation.push('Load',{set: copySet, time: time});
     }
     const handleAllDecksFinish = ()=> {
-      ScreenOrientation.unlockAsync();
+      first = true;
       navigation.navigate('Selection');
     }
     // console.log(result);
