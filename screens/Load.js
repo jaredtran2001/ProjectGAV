@@ -12,7 +12,6 @@ let RSG = ["READY", "SET", "GO!!"]
 let first = true;
 
 const Load = ({route, navigation}) => {
-  console.log(first);
   async function fixOrientation() {
     await ScreenOrientation.unlockAsync();
     await ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.LANDSCAPE_RIGHT);
