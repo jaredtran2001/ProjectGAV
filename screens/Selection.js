@@ -13,6 +13,8 @@ import { useFonts } from 'expo-font';
 import Naruto from '../assets/wordSets/naruto.json';
 import Valorant from '../assets/wordSets/valorant.json';
 import OnePiece from '../assets/wordSets/onePiece.json';
+import kPopSong from '../assets/wordSets/kpopSong.json';
+import MyHero from '../assets/wordSets/myHero.json';
 // import TextStroke from 'react-native-textstroke';
 import * as ScreenOrientation from 'expo-screen-orientation';
 
@@ -55,7 +57,9 @@ const Selection = ({navigation}) => {
   let lolDescription = "HOW MUCH MORE DEGENERATE COULD WE BE IF WE DIDN'T HAVE A LEAGUE OF LEGENDS CATEGORY ON ALMOST ALL CHAMPIONS";
   let valorantDescription = "BLAZE THROUGH YOUR FAVORITE VALORANT CHARACTER'S ABILITIES AND RISE TO THE RANKS OF IMMORTAL";
   let narutoDescription = "IT'S MY NINJA WAY TO GUESS MY FAVORITE NARUTO CHARACTERS";
-  let onePieceDescription = "GUESS THE MOST ONE PIECE CHARACTERS TO BECOME THE PIRATE KING!"
+  let onePieceDescription = "GUESS THE MOST ONE PIECE CHARACTERS TO BECOME THE PIRATE KING!";
+  let myHeroDescription = "PLUS ULTRAAA GUESS THE VILLAINS, HEROES, AND STUDENTS OF MY HERO ACADEMIA";
+  let kPopSongDescription = "DANCE YOUR WAY INTO VICTORY! TALKING IS NOT ALLOWED"
 
   //Initialize Sets
   let animeSet = new Set();
@@ -66,6 +70,8 @@ const Selection = ({navigation}) => {
   let sexSet = new Set();
   let leagueSet = new Set();
   let valorantSet = new Set();
+  let kpopSongSet = new Set();
+  let myHeroSet = new Set();
   
   //Fill in Sets
   populateSet(animeSet, Anime);
@@ -76,6 +82,8 @@ const Selection = ({navigation}) => {
   populateSet(sexSet, Sex);
   populateSet(leagueSet, Champions);
   populateSet(valorantSet, Valorant);
+  populateSet(kpopSongSet, kPopSong);
+  populateSet(myHeroSet, MyHero);
 
   return (
     <View style={styles.container}>
@@ -90,7 +98,9 @@ const Selection = ({navigation}) => {
             <PlayButton onPress = {() => {first = true; navigation.push('Description', {set: animeSet, description: AnimeDescription, category: "ANIME"})}} title = 'ANIME'/>
             <PlayButton onPress = {() => {first = true; navigation.push('Description', {set: narutoSet, description: narutoDescription, category: "NARUTO"})}} title = 'NARUTO'/>
             <PlayButton onPress = {() => {first = true; navigation.push('Description', {set: onePieceSet, description: onePieceDescription, category: "ONE PIECE"})}} title = 'ONE PIECE'/>
+            <PlayButton onPress = {() => {first = true; navigation.push('Description', {set: myHeroSet, description: myHeroDescription, category: "MY HERO"})}} title = 'MY HERO'/>
             <PlayButton onPress = {() => {first = true; navigation.push('Description', {set: kPopSet, description: kPopDescription, category: "KPOP"})}} title = 'KPOP'/>
+            <PlayButton onPress = {() => {first = true; navigation.push('Description', {set: kpopSongSet, description: kPopSongDescription, category: "KPOP DANCES"})}} title = 'KPOP DANCES'/>
             <PlayButton onPress = {() => {first = true; navigation.push('Description', {set: pokemonSet, description: pokemonDescription, category: "POKEMON"} )}} title = 'POKEMON'/>
             <PlayButton onPress = {() => {first = true; navigation.push('Description', {set: sexSet, description: sexDescription, category: "S*X"} )}} title = 'S*X'/>
             <PlayButton onPress = {() => {first = true; navigation.push('Description', {set: leagueSet, description: lolDescription, category: "LOL"} )}} title = 'LOL'/>
