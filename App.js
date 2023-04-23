@@ -12,6 +12,7 @@ import GameScreen from './screens/Game';
 import LoadScreen from './screens/Load';
 import ResultsScreen from './screens/Results';
 import DescriptionScreen from './screens/Description';
+import InstructionScreen from './screens/Instruction';
 
 const Stack = createNativeStackNavigator();
 
@@ -22,6 +23,11 @@ const App = () => {
         <Stack.Screen
           name="Home"
           component={HomeScreen}
+        />
+        <Stack.Screen
+          name = "Instruction"
+          component = {InstructionScreen}
+          options={{gestureEnabled:false}}
         />
         <Stack.Screen 
           name="Selection" 

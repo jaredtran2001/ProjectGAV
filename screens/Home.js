@@ -17,7 +17,7 @@ const Home = ({navigation}) => {
   useEffect(() => {
     fadeIn();
     // setTimeout(()=> setOutput("GAV"), 1500);
-    setTimeout(() => navigation.navigate('Selection'), 3500);
+    setTimeout(() => navigation.navigate('Instruction'), 3500);
   });
    if(!fontsLoaded) {
     return null;
