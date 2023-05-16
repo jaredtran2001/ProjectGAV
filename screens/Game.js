@@ -112,8 +112,10 @@ const Game = ({route, navigation}) => {
   // Functions to handle getting a new word when motion is detected
   useEffect(() => {
     let { gamma } = data;
-    if(gamma > -0.75 && !flip) {
+    console.log(gamma);
+    if(((gamma > -0.75 && gamma < -0.01 )|| (gamma < 0.75 && gamma > 0.01 )) &&!flip) {
       //NOOO
+      console.log("no");
       let input = [output, 0];
       result.push(input);
       setFlip(true);
@@ -121,8 +123,9 @@ const Game = ({route, navigation}) => {
       setColor("#E14749");
       Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Heavy);
       playSuccessSound(require('../assets/failure.mp3'));
-    } else if (gamma < -2.25 && !flip) {
+    } else if (((gamma < -2.25 && gamma > -2.99) || (gamma > 2.25 && gamma < 2.99 ))&& !flip) {
       //Yess
+      console.log("yes");
       let input = [output, 1];
       result.push(input);
       number +=1;
@@ -133,7 +136,8 @@ const Game = ({route, navigation}) => {
         Haptics.NotificationFeedbackType.Success
       )
       playSuccessSound(require('../assets/success.mp3'));
-    } else if( gamma < -1.1 && gamma > -1.9 && flip) {
+    } else if( ((gamma < -1.1 && gamma > -1.9) || (gamma > 1.1 && gamma < 1.9)) && flip) {
+      console.log("Neutral and flip is equal to " + flip);
       setFlip(false);
       setOutput(generateWord());
       setColor("#1f2326");
@@ -197,7 +201,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   text: {
-    fontSize: 50,
+    fontSize: 60,
     fontWeight: 'bold',
     color: "white",
     textAlign: 'center',

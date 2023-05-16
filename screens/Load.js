@@ -14,7 +14,7 @@ let first = true;
 const Load = ({route, navigation}) => {
   async function fixOrientation() {
     await ScreenOrientation.unlockAsync();
-    await ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.LANDSCAPE_RIGHT);
+    await ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.LANDSCAPE);
   }
   useEffect(() => {
     if(first) {

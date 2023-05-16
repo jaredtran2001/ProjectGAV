@@ -60,6 +60,7 @@ const Selection = ({navigation}) => {
   let onePieceDescription = "GUESS THE MOST ONE PIECE CHARACTERS TO BECOME THE PIRATE KING!";
   let myHeroDescription = "PLUS ULTRAAA GUESS THE VILLAINS, HEROES, AND STUDENTS OF MY HERO ACADEMIA";
   let kPopSongDescription = "DANCE YOUR WAY INTO VICTORY! TALKING IS NOT ALLOWED"
+  let spanishDescription = "LOL"
 
   //Initialize Sets
   let animeSet = new Set();
@@ -72,6 +73,7 @@ const Selection = ({navigation}) => {
   let valorantSet = new Set();
   let kpopSongSet = new Set();
   let myHeroSet = new Set();
+  let spanishSet = new Set();
   
   //Fill in Sets
   populateSet(animeSet, Anime);
@@ -84,6 +86,8 @@ const Selection = ({navigation}) => {
   populateSet(valorantSet, Valorant);
   populateSet(kpopSongSet, kPopSong);
   populateSet(myHeroSet, MyHero);
+  populateSet(spanishSet, Spanish);
+
 
   return (
     <View style={styles.container}>
@@ -105,6 +109,7 @@ const Selection = ({navigation}) => {
             <PlayButton onPress = {() => {first = true; navigation.push('Description', {set: sexSet, description: sexDescription, category: "S*X"} )}} title = 'S*X'/>
             <PlayButton onPress = {() => {first = true; navigation.push('Description', {set: leagueSet, description: lolDescription, category: "LOL"} )}} title = 'LOL'/>
             <PlayButton onPress = {() => {first = true; navigation.push('Description', {set: valorantSet, description: valorantDescription, category: "VALORANT"} )}} title = 'VALORANT'/>
+            <PlayButton onPress = {() => {first = true; navigation.push('Description', {set: spanishSet, description: spanishDescription, category: "SPANISH"} )}} title = 'SPANISH'/>
           </View>
           <View style={[styles.horiLine, {marginTop: 20}]}/>
           <View style={styles.footer} />

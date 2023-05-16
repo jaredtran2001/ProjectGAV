@@ -1,7 +1,8 @@
-import { Component, React } from 'react';
+import { Component, React, useEffect } from 'react';
 import { StyleSheet, Text, View, Button, ScrollView } from 'react-native';
 import ResultButton from '../components/ResultButton';
 import * as ScreenOrientation from 'expo-screen-orientation';
+import * as Haptics from 'expo-haptics';
 
 let first = true;
 const Results = ({route, navigation}) => {
@@ -10,6 +11,11 @@ const Results = ({route, navigation}) => {
       await ScreenOrientation.unlockAsync();
       await ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.PORTRAIT_UP);
     }
+    useEffect(() => {
+      Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success)
+      setTimeout(() => Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success), 500);
+      setTimeout(() => Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success), 1000);
+    }, []);
     // ScreenOrientation.unlockAsync();
     // console.log(ScreenOrientation.getOrientationLockAsync());
     if(first) {
