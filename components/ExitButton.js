@@ -23,16 +23,19 @@ const ExitButton = (props) => {
     // console.log(props)
   return (
     <TouchableOpacity style={styles.container} onPress={props.onPress}>
-        <Text style = {styles.text}>x</Text>
+        <Text style = {styles.text}>X</Text>
     </TouchableOpacity>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    // height: "40%",
+    height: "100%",
     width: "100%",
     justifyContent: 'center',
+    alignItems: 'center',
+    // backgroundColor: 'brown',
+    zIndex: 100000,
   },
   text: {
     color: 'white',

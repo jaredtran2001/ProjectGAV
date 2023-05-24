@@ -1,5 +1,6 @@
 import { React } from 'react';
-import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { StyleSheet, Text, TouchableOpacity, View, ImageBackground} from 'react-native';
+
 
 // const App = () => {
 //     const onPress = () => console.log("testtest");
@@ -13,10 +14,17 @@ import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
 const PlayButton = (props) => {
     // console.log(props)
+  // const img = require('../assets/images/pokemon.png');
+  let PassedImg = props.img;
   return (
-    <TouchableOpacity style={styles.container} onPress={props.onPress}>
+      <TouchableOpacity style={styles.container} onPress={props.onPress}>
+        <View style = {styles.imgctr}>
+          <PassedImg width = {"100%"} height={'100%'}/>
+        </View>
+        {/* <ImageBackground source = {props.img} style={styles.image}> */}
         <Text style = {styles.text}>{props.title}</Text>
-    </TouchableOpacity>
+        {/* </ImageBackground>  */}
+      </TouchableOpacity>
   );
 };
 
@@ -29,6 +37,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#505155',
     // backgroundColor: '#526174',
     justifyContent: 'center',
+    alignItems: 'center'
   },
   text: {
     // color: '#ff4656',
@@ -36,6 +45,15 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontWeight: 'bold',
     textAlign: 'center',
+    marginBottom: 10
+  },
+  image: {
+    flex: 1,
+    justifyContent: 'flex-end',
+  },
+  imgctr: {
+    flex: 1,
+    width: '60%',
   }
 });
 

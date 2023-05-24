@@ -1,11 +1,12 @@
 import { Component, React, useState, useEffect, useRef} from 'react';
-import { StyleSheet, Text, View, Animated} from 'react-native';
+import { StyleSheet, Text, View, Animated, Image} from 'react-native';
 // import Header from './components/Header';
 import { useFonts } from 'expo-font';
 // import AppLoading from 'expo-app-loading';
-import correct from '../assets/images/CorrectInstruction.png';
 import ExitButton from '../components/ExitButton';
-import pass from '../assets/images/PassInstruction.png';
+import Turn from '../assets/images/coolturn.svg'
+import Correct from '../assets/images/coolcorrect.svg'
+import Pass from '../assets/images/coolpass.svg'
 
 
 const Instruction = ({navigation}) => {
@@ -19,25 +20,35 @@ const Instruction = ({navigation}) => {
   return (
     <View style={styles.container}>
       <View style = {styles.exit}>
-        <View style = {styles.exitBox}>
+        {/* <View style = {styles.exitBox}> */}
           <ExitButton onPress = {() => navigation.navigate('Selection')}/>
-        </View>
+        {/* </View> */}
       </View>
       <View style = {styles.header}>
           <Text style = {styles.headerText}>HOW TO PLAY</Text>
       </View>
       <View style={[styles.horiLine, {marginTop: "5%"}]}/>
-      <View>
-          <Text style = {styles.descriptionText}>SELECT A DECK, ROTATE AND HOLD YOUR PHONE UP TO YOUR FOREHEAD AND HAVE YOUR FRIENDS GIVE HINTS TO GUESS THE WORD THAT APPEARS</Text>
-      </View>
-      <View>
-          <Text style = {styles.descriptionText}>IF YOU GET IT RIGHT TILT THE PHONE DOWNARDS AND THE NEXT WORD WILL APPEAR</Text>
+      <View style={styles.description_ctnr}>
+        <View style={styles.description_box}>
+          <View style={styles.icon}>
+            <Turn width = {"100%"} height={'100%'}/>
+          </View>
+          <Text style = {styles.descriptionText}>PLACE ON FOREHEAD</Text>
+        </View>
+        <View style = {styles.description_box}>
+          <View style={styles.icon}>
+            <Correct width = {"80%"} height={'60%'}/>
+          </View>
+          <Text style = {styles.descriptionText}>TILT DOWN == CORRECT</Text>
           {/* <Image source = {correct}></Image> */}
-      </View>
-      <View>
-          <Text style = {styles.descriptionText}>IF YOU CAN'T FIGURE OUT THE ANSWER, TILT THE PHONE UPWARDS AND IT WILL MOVE ON TO THE NEXT WORD</Text>
-          {/* <Image source = {pass}></Image> */}
+        </View>
+        <View style = {styles.description_box}>
+          <View style={styles.icon}>
+            <Pass width = {"100%"} height={'60%'}/>
+          </View>
+          <Text style = {styles.descriptionText}>TILT UP == PASS</Text>
 
+        </View>
       </View>
     </View>
   );
@@ -53,32 +64,54 @@ const styles = StyleSheet.create({
   },
   header: {
     // borderWidth: 1,
-    height: "12%",
     width: "100%",
-    justifyContent: "flex-start",
+    justifyContent: "flex-end",
     alignItems: 'center',
+    // backgroundColor: 'green',
+    flex: 1
   }, 
+  description_ctnr: {
+    flexDirection: 'column',
+    // backgroundColor: 'red',
+    flex: 4,
+    justifyContent: 'space-evenly',
+    marginTop: 30,
+    marginBottom: 50
+  },
+  description_box: {
+    flex: 1,
+    // backgroundColor: 'orange'
+  },
   descriptionText: {
     textAlign: 'center',
     color: "white",
     fontSize: 20,
     fontWeight: "bold",
-    margin: 20
+    // marginBottom: 0,
+    marginLeft: 20,
+    marginRight: 20,
+    marginTop: 10
+  },
+  icon: {
+    // backgroundColor: 'green',
+    justifyContent: 'center',
+    alignItems: 'center',
+    width: '100%',
+    height: '60%',
   },
   exit: {
-    height: "10%",
-    width: "100%",
-    flexDirection: "row",
-    justifyContent: "flex-end",
-    paddingTop: 50
-    // backgroundColor: "purple"
+    position: 'absolute',
+    // backgroundColor: 'purple',
+    right: '6%',
+    top: '8%',
+    zIndex: 10000,
   },
-  exitBox: {
-    width: "15%",
-    height: "50%",
-    alightItems: 'center',
-    justifyContent: 'center',
-  },
+  // exitBox: {
+  //   width: "15%",
+  //   height: "50%",
+  //   alightItems: 'center',
+  //   justifyContent: 'center',
+  // },
   headerText: {
     fontSize: 37,
     fontWeight: "bold",

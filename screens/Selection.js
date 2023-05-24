@@ -3,7 +3,6 @@ import { StyleSheet, Text, View, ScrollView } from 'react-native';
 import PlayButton from '../components/PlayButton';
 import Champions from '../assets/wordSets/lolChampions.json';
 import Anime from '../assets/wordSets/anime.json';
-import Animal from '../assets/wordSets/animal.json';
 import Kpop from '../assets/wordSets/kpop.json';
 import Pokemon from '../assets/wordSets/pokemon.json';
 import Sex from '../assets/wordSets/sex.json';
@@ -17,6 +16,15 @@ import kPopSong from '../assets/wordSets/kpopSong.json';
 import MyHero from '../assets/wordSets/myHero.json';
 // import TextStroke from 'react-native-textstroke';
 import * as ScreenOrientation from 'expo-screen-orientation';
+//imgs
+import pokemonImg from '../assets/images/pikachu.svg';
+import leageuImg from '../assets/images/league.svg';
+import luffyImg from '../assets/images/luffy.svg';
+import kDanceImg from '../assets/images/kdance.svg';
+import kpopImg from '../assets/images/bts.svg';
+import myHeroImg from '../assets/images/midoriya.svg';
+import narutoImg from '../assets/images/naruto.svg';
+import animeImg from '../assets/images/anya.svg';
 
 
 
@@ -99,17 +107,17 @@ const Selection = ({navigation}) => {
           </View>
           <View style={[styles.horiLine, {marginBottom: 20}]}/>
           <View style={styles.form}>
-            <PlayButton onPress = {() => {first = true; navigation.push('Description', {set: animeSet, description: AnimeDescription, category: "ANIME"})}} title = 'ANIME'/>
-            <PlayButton onPress = {() => {first = true; navigation.push('Description', {set: narutoSet, description: narutoDescription, category: "NARUTO"})}} title = 'NARUTO'/>
-            <PlayButton onPress = {() => {first = true; navigation.push('Description', {set: onePieceSet, description: onePieceDescription, category: "ONE PIECE"})}} title = 'ONE PIECE'/>
-            <PlayButton onPress = {() => {first = true; navigation.push('Description', {set: myHeroSet, description: myHeroDescription, category: "MY HERO"})}} title = 'MY HERO'/>
-            <PlayButton onPress = {() => {first = true; navigation.push('Description', {set: kPopSet, description: kPopDescription, category: "KPOP"})}} title = 'KPOP'/>
-            <PlayButton onPress = {() => {first = true; navigation.push('Description', {set: kpopSongSet, description: kPopSongDescription, category: "KPOP DANCES"})}} title = 'KPOP DANCES'/>
-            <PlayButton onPress = {() => {first = true; navigation.push('Description', {set: pokemonSet, description: pokemonDescription, category: "POKEMON"} )}} title = 'POKEMON'/>
-            <PlayButton onPress = {() => {first = true; navigation.push('Description', {set: sexSet, description: sexDescription, category: "S*X"} )}} title = 'S*X'/>
-            <PlayButton onPress = {() => {first = true; navigation.push('Description', {set: leagueSet, description: lolDescription, category: "LOL"} )}} title = 'LOL'/>
-            <PlayButton onPress = {() => {first = true; navigation.push('Description', {set: valorantSet, description: valorantDescription, category: "VALORANT"} )}} title = 'VALORANT'/>
-            <PlayButton onPress = {() => {first = true; navigation.push('Description', {set: spanishSet, description: spanishDescription, category: "SPANISH"} )}} title = 'SPANISH'/>
+            <PlayButton img = {animeImg} onPress = {() => {first = true; navigation.push('Description', {set: animeSet, description: AnimeDescription, category: "ANIME"})}} title = 'ANIME'/>
+            <PlayButton img = {narutoImg} onPress = {() => {first = true; navigation.push('Description', {set: narutoSet, description: narutoDescription, category: "NARUTO"})}} title = 'NARUTO'/>
+            <PlayButton img = {luffyImg} onPress = {() => {first = true; navigation.push('Description', {set: onePieceSet, description: onePieceDescription, category: "ONE PIECE"})}} title = 'ONE PIECE'/>
+            <PlayButton img = {myHeroImg} onPress = {() => {first = true; navigation.push('Description', {set: myHeroSet, description: myHeroDescription, category: "MY HERO"})}} title = 'MY HERO'/>
+            <PlayButton img = {kpopImg} onPress = {() => {first = true; navigation.push('Description', {set: kPopSet, description: kPopDescription, category: "KPOP"})}} title = 'KPOP'/>
+            <PlayButton img = {kDanceImg} onPress = {() => {first = true; navigation.push('Description', {set: kpopSongSet, description: kPopSongDescription, category: "KPOP DANCES"})}} title = 'KPOP DANCES'/>
+            <PlayButton img = {pokemonImg} onPress = {() => {first = true; navigation.push('Description', {set: pokemonSet, description: pokemonDescription, category: "POKEMON"} )}} title = 'POKEMON'/>
+            {/* <PlayButton img = {pokemonImg} onPress = {() => {first = true; navigation.push('Description', {set: sexSet, description: sexDescription, category: "S*X"} )}} title = 'S*X'/> */}
+            <PlayButton img = {leageuImg} onPress = {() => {first = true; navigation.push('Description', {set: leagueSet, description: lolDescription, category: "LOL"} )}} title = 'LOL'/>
+            {/* <PlayButton img = {pokemonImg} onPress = {() => {first = true; navigation.push('Description', {set: valorantSet, description: valorantDescription, category: "VALORANT"} )}} title = 'VALORANT'/> */}
+            {/* <PlayButton img = {pokemonImg} onPress = {() => {first = true; navigation.push('Description', {set: spanishSet, description: spanishDescription, category: "SPANISH"} )}} title = 'SPANISH'/> */}
           </View>
           <View style={[styles.horiLine, {marginTop: 20}]}/>
           <View style={styles.footer} />
