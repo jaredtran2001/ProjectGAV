@@ -30,7 +30,7 @@ const GameTimeButton = (props) => {
 const styles = StyleSheet.create({
   container: {
     // height: "40%",
-    width: "80%",
+    width: "100%",
     borderRadius: 30,
     backgroundColor: '#ff4656',
     justifyContent: 'center',

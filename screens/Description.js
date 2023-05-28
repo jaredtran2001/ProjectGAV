@@ -8,7 +8,8 @@ import { useFonts } from 'expo-font';
 
 
 const Description = ({route, navigation}) => {
-    const {set, description, category} = route.params;
+    const {set, description, category, img} = route.params;
+    let Display = img;
     let copySet = new Set(set);
     const [time, setTime] = useState(30); 
     const [displayTime, setdisplayTime] = useState("30");
@@ -36,7 +37,10 @@ const Description = ({route, navigation}) => {
     }
 
     function handlePlus() {
+      if(time < 300) {
         setTime(time + 15);
+      }
+        
     }
     function handleMinus() {
         if(time > 15)  {
@@ -48,15 +52,20 @@ const Description = ({route, navigation}) => {
   return (
     <View style={styles.container}>
         <View style = {styles.exit}>
-          <View style = {styles.exitBox}>
             <ExitButton onPress = {() => navigation.navigate('Selection')}/>
-          </View>
         </View>
         <View style = {styles.description}>
-          <Text style = {styles.displayText}>{category}</Text>
-          <Text style = {styles.descriptionText}>{description}</Text>
+          <View style = {styles.imgctr}> 
+            <Display width = {"100%"} height={'100%'}/>
+          </View>
+          <View style = {styles.textctr}>
+            <Text style = {styles.displayText}>{category}</Text>
+            <Text style = {styles.descriptionText}>{description}</Text>
+          </View>
+          
         </View>
-        <View style={styles.timerBox}>
+        <View style={styles.timerCtr}>
+          {/* <View style={styles.timerBox}> */}
           <View style = {styles.timer}>
             <MinusButton onPress = {handleMinus}/>
             <View style={styles.timeTextBox}>
@@ -64,16 +73,18 @@ const Description = ({route, navigation}) => {
             </View>
             <PlusButton onPress = {handlePlus}/>
           </View>
-        </View>
-        
-        <View style = {styles.caption}>
-          <Text style = {styles.descriptionText}>ADJUST DURATION</Text>
-        </View>
-        <View style = {styles.start}>
-          <View style = {styles.startBox}>
-            <GameTimeButton onPress = {() => navigation.push('Load', {set: copySet, time: time} )}/>
+          {/* </View> */}
+          
+          <View style = {styles.caption}>
+            <Text style = {styles.descriptionText}>ADJUST DURATION</Text>
+          </View>
+          <View style = {styles.start}>
+            {/* <View style = {styles.startBox}> */}
+              <GameTimeButton onPress = {() => navigation.push('Load', {set: copySet, time: time} )}/>
+            {/* </View> */}
           </View>
         </View>
+       
     </View>
   );
 }
@@ -81,36 +92,82 @@ const Description = ({route, navigation}) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
+    justifyContent: 'space-evenly',
     alignItems: 'center',
     backgroundColor: "#1f2326",
+  },
+  exit: {
+    // height: "10%",
+    // width: "100%",
+    position: 'absolute',
+    right: '6%',
+    top: '8%',
+    zIndex: 10000,
+    // backgroundColor: "purple"
+  },
+  description: {
+    flex: 2,
+    height: "50%",
+    width: "100%",
+    flexDirection: "column",
+    justifyContent: "space-evenly",
+    alignItems: 'center',
+    marginTop: "10%",
+
+    // backgroundColor: "blue"
+  },
+  imgctr: {
+    width: "50%",
+    height: "40%",
+    // marginBottom: 30,
+    // backgroundColor: "blue"
+  },
+  textCtr: {
+    flexDirection: 'column',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   displayText: {
     color: "#ff4656",
     fontSize: 50,
     fontWeight: "bold",
     textTransform: "uppercase",
-    fontFamily: 'Valorant'
+    fontFamily: 'Valorant',
+    textAlign: 'center'
   },
-  description: {
-    height: "50%",
-    width: "100%",
-    justifyContent: "center",
-    alignItems: 'center',
-    // backgroundColor: "blue"
+  descriptionText: {
+    textAlign: 'center',
+    color: "white",
+    fontSize: 20,
+    fontWeight: "bold",
+    marginLeft: 30,
+    marginRight: 30,
+    //backgroundColor: "green"
   },
   timer: {
-    height: "100%",
+    height: "25%",
     flexDirection: 'row',
     justifyContent: 'center',
-    alightItems: 'center',
   },
-  timerBox: {
-    height: "10%",
-    width: "100%",
-    // backgroundColor: "green",
-    justifyContent: 'center',
-    alightItems: 'center',
+  timerCtr: {
+    flex: 1,
+    // backgroundColor: 'green',
+    flexDirection: 'column',
+    justifyContent: 'space-evenly',
+    alignItems: 'center',
+    marginBottom: '10%'
+
+  },
+  timeText: {
+    color: "white",
+    fontSize: 20,
+    fontWeight: "bold",
+  },
+  timeTextBox: {
+    backgroundColor: "#ff4656",
+    width: "60%",
+    justifyContent: "center",
+    alignItems: "center",
   },
   caption: {
     height: "10%",
@@ -120,53 +177,11 @@ const styles = StyleSheet.create({
     // backgroundColor: "black"
   },
   start: {
-    height: "10%",
-    width: "100%",
-    // backgroundColor: "red",
-    justifyContent: "center",
-    alightItems: "center"
+    height: "25%",
+    width: "90%",
+    //backgroundColor: "red",
+    flexDirection: 'row',
   }, 
-  startBox: {
-    height: "100%",
-    flexDirection: "row",
-    alightItems: 'center',
-    justifyContent: 'center',
-  },
-  descriptionText: {
-    textAlign: 'center',
-    color: "white",
-    fontSize: 20,
-    fontWeight: "bold",
-  },
-  exit: {
-    height: "10%",
-    width: "100%",
-    flexDirection: "row",
-    justifyContent: "flex-end",
-    // backgroundColor: "purple"
-  },
-  exitBox: {
-    width: "15%",
-    height: "50%",
-    alightItems: 'center',
-    justifyContent: 'center',
-  },
-  changeTime:  {
-    // backgroundColor: "red",
-    width: "10%"
-  },
-  timeText: {
-    color: "white",
-    fontSize: 20,
-    fontWeight: "bold",
-  },
-  timeTextBox: {
-    backgroundColor: "#ff4656",
-    width: "50%",
-    justifyContent: "center",
-    alignItems: "center",
-  }
-
 
 });
 

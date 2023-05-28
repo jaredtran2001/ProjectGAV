@@ -107,15 +107,15 @@ const Selection = ({navigation}) => {
           </View>
           <View style={[styles.horiLine, {marginBottom: 20}]}/>
           <View style={styles.form}>
-            <PlayButton img = {animeImg} onPress = {() => {first = true; navigation.push('Description', {set: animeSet, description: AnimeDescription, category: "ANIME"})}} title = 'ANIME'/>
-            <PlayButton img = {narutoImg} onPress = {() => {first = true; navigation.push('Description', {set: narutoSet, description: narutoDescription, category: "NARUTO"})}} title = 'NARUTO'/>
-            <PlayButton img = {luffyImg} onPress = {() => {first = true; navigation.push('Description', {set: onePieceSet, description: onePieceDescription, category: "ONE PIECE"})}} title = 'ONE PIECE'/>
-            <PlayButton img = {myHeroImg} onPress = {() => {first = true; navigation.push('Description', {set: myHeroSet, description: myHeroDescription, category: "MY HERO"})}} title = 'MY HERO'/>
-            <PlayButton img = {kpopImg} onPress = {() => {first = true; navigation.push('Description', {set: kPopSet, description: kPopDescription, category: "KPOP"})}} title = 'KPOP'/>
-            <PlayButton img = {kDanceImg} onPress = {() => {first = true; navigation.push('Description', {set: kpopSongSet, description: kPopSongDescription, category: "KPOP DANCES"})}} title = 'KPOP DANCES'/>
-            <PlayButton img = {pokemonImg} onPress = {() => {first = true; navigation.push('Description', {set: pokemonSet, description: pokemonDescription, category: "POKEMON"} )}} title = 'POKEMON'/>
+            <PlayButton img = {animeImg} onPress = {() => {first = true; navigation.push('Description', {set: animeSet, description: AnimeDescription, category: "ANIME", img: animeImg})}} title = 'ANIME'/>
+            <PlayButton img = {narutoImg} onPress = {() => {first = true; navigation.push('Description', {set: narutoSet, description: narutoDescription, category: "NARUTO", img: narutoImg})}} title = 'NARUTO'/>
+            <PlayButton img = {luffyImg} onPress = {() => {first = true; navigation.push('Description', {set: onePieceSet, description: onePieceDescription, category: "ONE PIECE", img: luffyImg})}} title = 'ONE PIECE'/>
+            <PlayButton img = {myHeroImg} onPress = {() => {first = true; navigation.push('Description', {set: myHeroSet, description: myHeroDescription, category: "MY HERO", img: myHeroImg})}} title = 'MY HERO'/>
+            <PlayButton img = {pokemonImg} onPress = {() => {first = true; navigation.push('Description', {set: pokemonSet, description: pokemonDescription, category: "POKEMON", img: pokemonImg} )}} title = 'POKEMON'/>
+            <PlayButton img = {leageuImg} onPress = {() => {first = true; navigation.push('Description', {set: leagueSet, description: lolDescription, category: "LOL", img: leageuImg} )}} title = 'LOL'/>
+            <PlayButton img = {kpopImg} onPress = {() => {first = true; navigation.push('Description', {set: kPopSet, description: kPopDescription, category: "KPOP", img:kpopImg })}} title = 'KPOP'/>
+            <PlayButton img = {kDanceImg} onPress = {() => {first = true; navigation.push('Description', {set: kpopSongSet, description: kPopSongDescription, category: "KPOP DANCES", img:kDanceImg })}} title = 'KPOP DANCES'/>
             {/* <PlayButton img = {pokemonImg} onPress = {() => {first = true; navigation.push('Description', {set: sexSet, description: sexDescription, category: "S*X"} )}} title = 'S*X'/> */}
-            <PlayButton img = {leageuImg} onPress = {() => {first = true; navigation.push('Description', {set: leagueSet, description: lolDescription, category: "LOL"} )}} title = 'LOL'/>
             {/* <PlayButton img = {pokemonImg} onPress = {() => {first = true; navigation.push('Description', {set: valorantSet, description: valorantDescription, category: "VALORANT"} )}} title = 'VALORANT'/> */}
             {/* <PlayButton img = {pokemonImg} onPress = {() => {first = true; navigation.push('Description', {set: spanishSet, description: spanishDescription, category: "SPANISH"} )}} title = 'SPANISH'/> */}
           </View>
