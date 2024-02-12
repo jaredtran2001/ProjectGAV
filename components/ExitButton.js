@@ -1,10 +1,10 @@
-import { React } from 'react';
-import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
-import { useFonts } from 'expo-font';
+import {React} from "react";
+import {StyleSheet, Text, TouchableOpacity, View} from "react-native";
+import {useFonts} from "expo-font";
 
 // const App = () => {
 //     const onPress = () => console.log("testtest");
-  
+
 //     return (
 //         <TouchableOpacity style={styles.button} onPress={onPress}>
 //           <Text>testing</Text>
@@ -13,37 +13,36 @@ import { useFonts } from 'expo-font';
 // };
 
 const ExitButton = (props) => {
-
-  const [fontsLoaded] = useFonts({
-    'Valorant': require('../assets/fonts/Valorant-Font.ttf'),
-  });
-  if(!fontsLoaded) {
-    return null;
-  }
+    const [fontsLoaded] = useFonts({
+        Valorant: require("../assets/fonts/Valorant-Font.ttf"),
+    });
+    if (!fontsLoaded) {
+        return null;
+    }
     // console.log(props)
-  return (
-    <TouchableOpacity style={styles.container} onPress={props.onPress}>
-        <Text style = {styles.text}>X</Text>
-    </TouchableOpacity>
-  );
+    return (
+        <TouchableOpacity style={styles.container} onPress={props.onPress}>
+            <Text style={styles.text}>X</Text>
+        </TouchableOpacity>
+    );
 };
 
 const styles = StyleSheet.create({
-  container: {
-    height: "100%",
-    width: "100%",
-    justifyContent: 'center',
-    alignItems: 'center',
-    // backgroundColor: 'brown',
-    zIndex: 100000,
-  },
-  text: {
-    color: 'white',
-    fontSize: 30,
-    fontWeight: 'bold',
-    textAlign: 'center',
-    fontFamily: 'Valorant'
-  }
+    container: {
+        height: "100%",
+        width: "100%",
+        justifyContent: "center",
+        alignItems: "center",
+        // backgroundColor: 'brown',
+        zIndex: 100000,
+    },
+    text: {
+        color: "white",
+        fontSize: 30,
+        fontWeight: "bold",
+        textAlign: "center",
+        fontFamily: "Valorant",
+    },
 });
 
 export default ExitButton;

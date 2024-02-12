@@ -1,24 +1,23 @@
 {
   "expo": {
-    "name": "ProjectGAV",
+    "name": "Subtle Asian Charades",
     "slug": "ProjectGAV",
-    "version": "1.0.0",
-    "orientation": "portrait",
-    "icon": "./assets/icon.png",
-    "userInterfaceStyle": "light",
+    "version": "1.0.2",
     "splash": {
-      "image": "./assets/splash.png",
+      "image": "./assets/images/splash1.png",
       "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
+      "backgroundColor": "#1f2326"
     },
+    "icon": "./assets/images/logo1.png",
+    "userInterfaceStyle": "light",
     "updates": {
       "fallbackToCacheTimeout": 0
     },
-    "assetBundlePatterns": [
-      "**/*"
-    ],
+    "assetBundlePatterns": ["**/*"],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.jaredtran2001.ProjectGAV",
+      "buildNumber": "7"
     },
     "android": {
       "adaptiveIcon": {
@@ -28,6 +27,11 @@
     },
     "web": {
       "favicon": "./assets/favicon.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "549d32d7-71c7-4d87-bd0e-4104112cd959"
+      }
     }
   }
 }

@@ -2,21 +2,27 @@
   "name": "projectgav",
   "version": "1.0.0",
   "main": "node_modules/expo/AppEntry.js",
+  "type": "module",
   "scripts": {
     "start": "expo start",
     "android": "expo start --android",
     "ios": "expo start --ios",
-    "web": "expo start --web"
+    "web": "expo start --web",
+    "format-fix": "prettier --write ."
   },
   "dependencies": {
+    "@aws-sdk/client-bedrock-runtime": "^3.511.0",
     "@react-navigation/native": "^6.1.3",
     "@react-navigation/native-stack": "^6.9.9",
+    "aws-sdk": "^2.1555.0",
     "expo": "~47.0.12",
+    "expo-app-loading": "~2.1.1",
     "expo-av": "~13.0.3",
     "expo-font": "~11.0.1",
     "expo-haptics": "^12.2.1",
     "expo-screen-orientation": "~5.0.1",
     "expo-sensors": "~12.0.1",
+    "expo-splash-screen": "~0.17.5",
     "expo-status-bar": "~1.4.2",
     "react": "18.1.0",
     "react-native": "0.70.5",
@@ -27,7 +33,8 @@
     "react-native-svg-transformer": "^1.0.0"
   },
   "devDependencies": {
-    "@babel/core": "^7.12.9"
+    "@babel/core": "^7.12.9",
+    "prettier": "^3.2.5"
   },
   "private": true
 }
