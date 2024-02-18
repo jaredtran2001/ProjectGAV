@@ -1,7 +1,15 @@
-import {BedrockRuntimeClient, InvokeModelCommand} from "@aws-sdk/client-bedrock-runtime";
+const {BedrockRuntimeClient, InvokeModelCommand} = require("@aws-sdk/client-bedrock-runtime");
+const AWS = require("aws-sdk");
+const Buffer = require("buffer/").Buffer;
+
+require("react-native-get-random-values");
 
 const client = new BedrockRuntimeClient({
     region: "us-west-2",
+    credentials: {
+        accessKeyId: "AKIAYS2NWMOVVGHI3IUI",
+        secretAccessKey: "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",
+    },
 });
 
 const sendPrompt = async (prompt) => {
@@ -18,8 +26,61 @@ const sendPrompt = async (prompt) => {
 
     const command = new InvokeModelCommand(input);
     const response = await client.send(command);
-
-    return JSON.parse(Buffer.from(response.body).toString()).completions;
+    const bufferData = Buffer.from(response.body, "utf-8"); // Use the correct encoding
+    const jsonString = bufferData.toString("utf-8"); // Convert Buffer to string
+    const parsedData = JSON.parse(jsonString);
+    const completions = parsedData.completions;
+    return completions;
 };
 
-Promise.resolve(sendPrompt("Please generate a funny Haiku about software engineering.")).then(console.log);
+const multiVarPrompt = (category) => `
+Instructions: Return a list of items that relate to the category provided. The list must have atleast 10 item. Follow the format of the example response. Note the format is in json.
+Context: Example response: 'animals' => 
+[
+    {"name": "Tiger"},
+    {"name": "Raccoon"},
+    {"name": "Swordfish"},
+    {"name": "Lion"},
+    {"name": "Hippo"},
+    {"name": "Giraffe"},
+    {"name": "Spider"},
+    {"name": "Alligator"},
+    {"name": "Turtle"},
+    {"name": "Rabbit"},
+    {"name": "Crow"},
+    {"name": "Snake"},
+    {"name": "Polar Bear"},
+    {"name": "Chimpanzee"},
+    {"name": "Horse"},
+    {"name": "Unicorn"},
+    {"name": "Whale"},
+    {"name": "Deer"},
+    {"name": "Owl"},
+    {"name": "Butterfly"},
+    {"name": "Squirrel"},
+    {"name": "Squid"}
+  ]
+Input data: ${category}`;
+
+const generateDeck = async (category) => {
+    console.log("Testing");
+    console.log(category);
+    const prompt = multiVarPrompt(category);
+    try {
+        const apiResponse = await sendPrompt(prompt);
+
+        const jsonString = apiResponse[0].data.text.trim().replace(/\n/g, "");
+
+        const startIndex = jsonString.indexOf("[");
+        const lastIndex = jsonString.lastIndexOf(",");
+        const extractedSubstring = jsonString.substring(startIndex + 1, lastIndex);
+
+        const jsonData = JSON.parse(`[${extractedSubstring}]`);
+        return jsonData;
+    } catch (error) {
+        console.error("Error in generateDeck:", error);
+        throw error;
+    }
+};
+
+module.exports = generateDeck;
