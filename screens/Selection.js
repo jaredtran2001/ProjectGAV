@@ -1,12 +1,11 @@
-import {Component, React, useState} from "react";
-import {StyleSheet, Text, View, ScrollView, TextInput} from "react-native";
+import {React, useState, useEffect} from "react";
+import {StyleSheet, Text, View, ScrollView, TextInput, ActivityIndicator} from "react-native";
+import Toast from "react-native-toast-message";
 import PlayButton from "../components/PlayButton";
 import Champions from "../assets/wordSets/lolChampions.json";
 import Anime from "../assets/wordSets/anime.json";
 import Kpop from "../assets/wordSets/kpop.json";
 import Pokemon from "../assets/wordSets/pokemon.json";
-import Sex from "../assets/wordSets/sex.json";
-import Spanish from "../assets/wordSets/spanish.json";
 import {useFonts} from "expo-font";
 import Naruto from "../assets/wordSets/naruto.json";
 import Valorant from "../assets/wordSets/valorant.json";
@@ -23,11 +22,8 @@ import kpopImg from "../assets/images/bts.svg";
 import myHeroImg from "../assets/images/midoriya.svg";
 import narutoImg from "../assets/images/naruto.svg";
 import animeImg from "../assets/images/anya.svg";
-const generateDeck = require("../services/api.js");
 
-function populateSet(set, json) {
-    json.map((item) => set.add(item.name));
-}
+const generateDeck = require("../services/api.js");
 
 function jsonToSet(json) {
     let set = new Set();
@@ -35,36 +31,25 @@ function jsonToSet(json) {
     return set;
 }
 
-let first = true;
 const Selection = ({navigation}) => {
-    // ScreenOrientation.unlockAsync();
     async function fixOrientation() {
         await ScreenOrientation.unlockAsync();
         await ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.PORTRAIT_UP);
     }
-    if (first) {
-        first = false;
-        fixOrientation();
-    }
 
-    const [fontsLoaded] = useFonts({
-        Valorant: require("../assets/fonts/Valorant-Font.ttf"),
-    });
-    if (!fontsLoaded) {
-        return null;
-    }
+    useEffect(() => {
+        fixOrientation();
+    }, []);
 
     const animeSet = jsonToSet(Anime);
     const narutoSet = jsonToSet(Naruto);
     const onePieceSet = jsonToSet(OnePiece);
     const kPopSet = jsonToSet(Kpop);
     const pokemonSet = jsonToSet(Pokemon);
-    const sexSet = jsonToSet(Sex);
     const leagueSet = jsonToSet(Champions);
     const valorantSet = jsonToSet(Valorant);
     const kpopSongSet = jsonToSet(kPopSong);
     const myHeroSet = jsonToSet(MyHero);
-    const spanishSet = jsonToSet(Spanish);
 
     const defaultDecks = [
         {
@@ -125,19 +110,41 @@ const Selection = ({navigation}) => {
 
     const [text, setText] = useState("");
     const [decks, setDecks] = useState(defaultDecks);
+    const [loading, setLoading] = useState(false);
+    const [fontsLoaded] = useFonts({
+        Valorant: require("../assets/fonts/Valorant-Font.ttf"),
+    });
+    if (!fontsLoaded) {
+        return null;
+    }
+
+    const showToast = () => {
+        Toast.show({
+            type: "error",
+            text1: "Could not generate deck",
+            text2: "Try to be simple but concise i.e. soccer players",
+            position: "bottom",
+            visibilityTime: 5000,
+        });
+    };
 
     const handleInputChange = (inputText) => {
         setText(inputText);
-        console.log(inputText);
     };
 
     const handleAddDeck = async () => {
-        // Add a new box with the input value to the list of boxes
-        console.log("HandleAddDeck");
-        console.log("Sending the following: " + text);
+        setLoading(true);
         const deckJSON = await generateDeck(text);
-        console.log("deckJSON");
-        console.log(deckJSON);
+        // const deckJSON = null;
+        console.log(" handling deck");
+
+        if (!deckJSON) {
+            console.log("entered");
+            showToast();
+            setLoading(false);
+            setText("");
+            return;
+        }
         const newSet = jsonToSet(deckJSON);
         const newDeckDetails = {
             img: kpopImg,
@@ -145,8 +152,9 @@ const Selection = ({navigation}) => {
             description: "Your own custom deck. Let's give it a whirl",
             title: text,
         };
-
         setDecks([...decks, newDeckDetails]);
+        setText("");
+        setLoading(false);
     };
 
     return (
@@ -157,7 +165,7 @@ const Selection = ({navigation}) => {
                 </View>
                 <View style={[styles.horiLine, {marginBottom: 20}]} />
                 <View style={styles.form}>
-                    {/* Render the list of boxes dynamically */}
+                    {/* Render the list of decks dynamically */}
                     {decks.map((deckData, index) => (
                         <PlayButton
                             key={index}
@@ -175,16 +183,23 @@ const Selection = ({navigation}) => {
                         />
                     ))}
                 </View>
+                {loading ? (
+                    <ActivityIndicator size="small" color="#fff" />
+                ) : (
+                    <TextInput
+                        style={styles.textInput}
+                        type="text"
+                        placeholder="Create Deck"
+                        placeholderTextColor="#ff4656"
+                        value={text}
+                        onChangeText={handleInputChange}
+                        onSubmitEditing={handleAddDeck}
+                        textAlign={"center"}
+                    />
+                )}
+                <Toast />
+
                 <View style={[styles.horiLine, {marginTop: 20}]} />
-                <TextInput
-                    style={styles.textInput}
-                    type="text"
-                    placeholder="Create Deck"
-                    placeholderTextColor="white"
-                    value={text}
-                    onChangeText={handleInputChange}
-                    onSubmitEditing={handleAddDeck}
-                />
                 <View style={styles.footer} />
             </ScrollView>
         </View>
@@ -197,7 +212,6 @@ const styles = StyleSheet.create({
         justifyContent: "flex-start",
         alignItems: "center",
         backgroundColor: "#1f2326",
-        // backgroundColor: "#364966"
     },
     scrollContainer: {
         alignItems: "center",
@@ -205,7 +219,6 @@ const styles = StyleSheet.create({
     horiLine: {
         borderBottomWidth: 1,
         borderColor: "#ff4656",
-        // borderColor: "#b38c8f",
         width: "60%",
     },
     header: {
@@ -213,7 +226,6 @@ const styles = StyleSheet.create({
         width: "100%",
         justifyContent: "center",
         alignItems: "center",
-        // backgroundColor: 'red',
         marginTop: "12%",
     },
     headerText: {
@@ -235,11 +247,14 @@ const styles = StyleSheet.create({
     },
     textInput: {
         height: 40,
-        borderColor: "gray",
         borderWidth: 1,
-        marginBottom: 16,
+        margin: 16,
         paddingHorizontal: 10,
-        color: "white",
+        color: "#ff4656",
+        width: "80%", // Set the width of the input
+        borderColor: "#ccc", // Add a border color for visual separation
+        borderWidth: 1, // Add a border width
+        borderRadius: 5, // Add border radius for rounded corners
     },
 });
 

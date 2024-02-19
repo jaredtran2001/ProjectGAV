@@ -16,7 +16,7 @@ const sendPrompt = async (prompt) => {
     const input = {
         body: JSON.stringify({
             prompt,
-            maxTokens: 300,
+            maxTokens: 600,
             temperature: 0.5,
             topP: 0.9,
         }),
@@ -34,7 +34,8 @@ const sendPrompt = async (prompt) => {
 };
 
 const multiVarPrompt = (category) => `
-Instructions: Return a list of items that relate to the category provided. The list must have atleast 10 item. Follow the format of the example response. Note the format is in json.
+Instructions: Return a list of unique items that relate to the category provided. The list must have atleast 10 item and have some priority in relevancy to the category provided. 
+Ensure that variations of entries referring to the same thing are treated as duplicates. Follow the format of the example response. Note the format is in json.
 Context: Example response: 'animals' => 
 [
     {"name": "Tiger"},
@@ -76,11 +77,14 @@ const generateDeck = async (category) => {
         const extractedSubstring = jsonString.substring(startIndex + 1, lastIndex);
 
         const jsonData = JSON.parse(`[${extractedSubstring}]`);
+        console.log(jsonData);
         return jsonData;
     } catch (error) {
         console.error("Error in generateDeck:", error);
         throw error;
     }
 };
+
+// generateDeck("soccer players");
 
 module.exports = generateDeck;

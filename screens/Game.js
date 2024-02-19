@@ -1,21 +1,28 @@
 import {Component, React, useState, useEffect} from "react";
 import {StyleSheet, Text, View, Button} from "react-native";
-// import Header from './components/Header';
 import CountDown from "react-native-countdown-fixed";
 import {DeviceMotion} from "expo-sensors";
-// import * as ScreenOrientation from 'expo-screen-orientation';
 import * as Haptics from "expo-haptics";
 import {Audio} from "expo-av";
 import ExitButton from "../components/ExitButton";
 
-// import {Audio} from 'expo-av';
-
 let number = 0;
 let result = [];
 
+const skip = (gamma, flip) => {
+    return ((gamma > -0.75 && gamma < -0.01) || (gamma < 0.75 && gamma > 0.01)) && !flip
+}
+
+const correct = (gamma, flip) => {
+    return ((gamma < -2.25 && gamma > -2.99) || (gamma > 2.25 && gamma < 2.99)) && !flip
+}
+
+const neutral = (gamma, flip) => {
+    return ((gamma < -1.1 && gamma > -1.9) || (gamma > 1.1 && gamma < 1.9)) && flip;
+}
+
 const Game = ({route, navigation}) => {
     const [sound, setSound] = useState();
-    // const [sound2, setSound2] = useState();
 
     async function playSuccessSound(path) {
         const {sound} = await Audio.Sound.createAsync(path);
@@ -56,13 +63,6 @@ const Game = ({route, navigation}) => {
         setOutput(generateWord());
     }
 
-    //Immediate function that rotates the screen
-    // async function lockScreen() {
-    //   await ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.LANDSCAPE_RIGHT);
-    // }
-    // lockScreen();
-
-    // Required to start listener
     useEffect(() => {
         _subscribe();
         return () => {
@@ -83,8 +83,6 @@ const Game = ({route, navigation}) => {
         number = 0;
         Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Heavy);
         _unsubscribe();
-        // ScreenOrientation.unlockAsync();
-        // ScreenOrientation.unlockAsync();
         navigation.push("Results", {
             result: tempResult,
             num: tempNum,
@@ -115,32 +113,23 @@ const Game = ({route, navigation}) => {
         if (set.size == 0) {
             return;
         }
-
         let {gamma} = data;
-        // console.log(gamma);
-        if (((gamma > -0.75 && gamma < -0.01) || (gamma < 0.75 && gamma > 0.01)) && !flip) {
-            //NOOO
-            // console.log("no");
-            let input = [output, 0];
-            result.push(input);
+        if (skip(gamma, flip)) {
+            result.push([output, 0]);
             setFlip(true);
             setOutput("Passed");
             setColor("#E14749");
             Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Heavy);
             playSuccessSound(require("../assets/failure.mp3"));
-        } else if (((gamma < -2.25 && gamma > -2.99) || (gamma > 2.25 && gamma < 2.99)) && !flip) {
-            //Yess
-            // console.log("yes");
-            let input = [output, 1];
-            result.push(input);
+        } else if (correct(gamma, flip)) {
+            result.push([output, 1]);
             number += 1;
             setFlip(true);
             setOutput("Correct");
             setColor("#3CAE75");
             Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
             playSuccessSound(require("../assets/success.mp3"));
-        } else if (((gamma < -1.1 && gamma > -1.9) || (gamma > 1.1 && gamma < 1.9)) && flip) {
-            // console.log("Neutral and flip is equal to " + flip);
+        } else if (neutral(gamma, flip)) {
             setFlip(false);
             setOutput(generateWord());
             setColor("#1f2326");
@@ -174,20 +163,6 @@ const Game = ({route, navigation}) => {
                     <Text style={{position: "absolute", top: 23, right: 85, color: "black", fontSize: 30, fontWeight: "bold"}}>:</Text>
                     <Text style={{position: "absolute", top: 26, right: 99, color: "black", fontSize: 30, fontWeight: "bold"}}>{min}</Text>
                 </>
-                // :
-                // <>
-                // <View style={{position: "absolute", top: 15, right: 30, width: 100}}>
-                //   <CountDown
-                //     onFinish={handleFinish}
-                //     timeToShow = {['S']}
-                //     until = {time}
-                //     size = {20}
-                //     timeLabels={{s: ''}}
-                //     showSeperator = {true}
-                //     digitStyle={{backgroundColor: "#ff4656", width:"100%", height: 60, }}
-                //   />
-                // </View>
-                // </>
             }
 
             <View style={[styles.horiLine, {margin: 10}]} />

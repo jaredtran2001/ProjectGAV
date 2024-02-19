@@ -15,12 +15,11 @@ const Results = ({route, navigation}) => {
         setTimeout(() => Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success), 500);
         setTimeout(() => Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success), 1000);
     }, []);
-    // ScreenOrientation.unlockAsync();
-    // console.log(ScreenOrientation.getOrientationLockAsync());
-    if (first) {
-        first = false;
+
+    useEffect(() => {
         fixOrientation();
-    }
+    }, []);
+
     const {result, num, currSet, time} = route.params;
     let copySet = new Set(currSet);
 
@@ -32,8 +31,6 @@ const Results = ({route, navigation}) => {
         first = true;
         navigation.navigate("Selection");
     };
-    // console.log(result);
-    // let test = [["test", 0], ["test", 1], ["test", 1], ["test", 0], ["test", 1], ["test", 1], ["test", 1], ["test", 1], ["test", 1], ["test", 1], ["test", 1], ["test", 1], ["test", 1], ["test", 1], ["test", 1]]
 
     return (
         <View style={styles.container}>
