@@ -10,16 +10,16 @@ let number = 0;
 let result = [];
 
 const skip = (gamma, flip) => {
-    return ((gamma > -0.75 && gamma < -0.01) || (gamma < 0.75 && gamma > 0.01)) && !flip
-}
+    return ((gamma > -0.75 && gamma < -0.01) || (gamma < 0.75 && gamma > 0.01)) && !flip;
+};
 
 const correct = (gamma, flip) => {
-    return ((gamma < -2.25 && gamma > -2.99) || (gamma > 2.25 && gamma < 2.99)) && !flip
-}
+    return ((gamma < -2.25 && gamma > -2.99) || (gamma > 2.25 && gamma < 2.99)) && !flip;
+};
 
 const neutral = (gamma, flip) => {
     return ((gamma < -1.1 && gamma > -1.9) || (gamma > 1.1 && gamma < 1.9)) && flip;
-}
+};
 
 const Game = ({route, navigation}) => {
     const [sound, setSound] = useState();

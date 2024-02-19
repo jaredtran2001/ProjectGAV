@@ -33,28 +33,3 @@ const App = () => {
 };
 
 export default App;
-
-// export default function App() {
-//   return (
-//     <NavigationContainer>
-//       <View style={styles.container}>
-//         <Header/>
-//         <PlayButton/>
-//       </View>
-//     </NavigationContainer>
-
-//   );
-// }
-
-// const styles = StyleSheet.create({
-//   container: {
-//     flex: 1,
-//     paddingTop: 60,
-//     alignItems: 'center',
-//   },
-//   container2: {
-//     flex: 2,
-//     justifyContent: 'center',
-//     alignItems: 'center',
-//   }
-// });

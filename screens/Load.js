@@ -6,17 +6,13 @@ import CountDown from "react-native-countdown-fixed";
 import * as ScreenOrientation from "expo-screen-orientation";
 import * as Haptics from "expo-haptics";
 import {useFonts} from "expo-font";
+import {landscape} from "../services/orientationService";
 
 const RSG = ["READY", "SET", "GO!!"];
 
 const Load = ({route, navigation}) => {
-    async function fixOrientation() {
-        await ScreenOrientation.unlockAsync();
-        await ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.LANDSCAPE);
-    }
-
     useEffect(() => {
-        fixOrientation();
+        landscape();
     }, []);
 
     const {set, time} = route.params;
@@ -33,7 +29,6 @@ const Load = ({route, navigation}) => {
     const handleFinish = () => {
         let copySet = new Set(set);
         let copyTime = time;
-        first = true;
         navigation.push("Game", {set: copySet, time: copyTime});
     };
     const handleChange = () => {

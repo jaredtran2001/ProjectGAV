@@ -12,7 +12,8 @@ const client = new BedrockRuntimeClient({
     },
 });
 
-const sendPrompt = async (prompt) => {
+// const sendPrompt = async (prompt) => {
+async function sendPrompt(prompt) {
     const input = {
         body: JSON.stringify({
             prompt,
@@ -31,7 +32,7 @@ const sendPrompt = async (prompt) => {
     const parsedData = JSON.parse(jsonString);
     const completions = parsedData.completions;
     return completions;
-};
+}
 
 const multiVarPrompt = (category) => `
 Instructions: Return a list of unique items that relate to the category provided. The list must have atleast 10 item and have some priority in relevancy to the category provided. 
@@ -63,7 +64,8 @@ Context: Example response: 'animals' =>
   ]
 Input data: ${category}`;
 
-const generateDeck = async (category) => {
+// const generateDeck = async (category) => {
+export async function generateDeck(category) {
     console.log("Testing");
     console.log(category);
     const prompt = multiVarPrompt(category);
@@ -83,8 +85,4 @@ const generateDeck = async (category) => {
         console.error("Error in generateDeck:", error);
         throw error;
     }
-};
-
-// generateDeck("soccer players");
-
-module.exports = generateDeck;
+}

@@ -2,6 +2,7 @@ import {React, useState, useEffect} from "react";
 import {StyleSheet, Text, View, ScrollView, TextInput, ActivityIndicator} from "react-native";
 import Toast from "react-native-toast-message";
 import PlayButton from "../components/PlayButton";
+//Default Sets
 import Champions from "../assets/wordSets/lolChampions.json";
 import Anime from "../assets/wordSets/anime.json";
 import Kpop from "../assets/wordSets/kpop.json";
@@ -13,6 +14,8 @@ import OnePiece from "../assets/wordSets/onePiece.json";
 import kPopSong from "../assets/wordSets/kpopSong.json";
 import MyHero from "../assets/wordSets/myHero.json";
 import * as ScreenOrientation from "expo-screen-orientation";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+
 //imgs
 import pokemonImg from "../assets/images/pikachu.svg";
 import leagueImg from "../assets/images/league.svg";
@@ -23,7 +26,9 @@ import myHeroImg from "../assets/images/midoriya.svg";
 import narutoImg from "../assets/images/naruto.svg";
 import animeImg from "../assets/images/anya.svg";
 
-const generateDeck = require("../services/api.js");
+// const generateDeck = require("../services/api.js");
+import {generateDeck} from "../services/api.js";
+import {portraitUp} from "../services/orientationService.js";
 
 function jsonToSet(json) {
     let set = new Set();
@@ -32,13 +37,8 @@ function jsonToSet(json) {
 }
 
 const Selection = ({navigation}) => {
-    async function fixOrientation() {
-        await ScreenOrientation.unlockAsync();
-        await ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.PORTRAIT_UP);
-    }
-
     useEffect(() => {
-        fixOrientation();
+        portraitUp();
     }, []);
 
     const animeSet = jsonToSet(Anime);
@@ -118,6 +118,25 @@ const Selection = ({navigation}) => {
         return null;
     }
 
+    const saveCard = async (key, cardData) => {
+        try {
+            await AsyncStorage.setItem(key, JSON.stringify(cardData));
+        } catch (error) {
+            console.error("Error saving card:", error);
+        }
+    };
+
+    const deleteCard = async (key) => {
+        try {
+            await AsyncStorage.removeItem(key);
+        } catch (error) {
+            console.error("Error deleting card:", error);
+        }
+    };
+
+    // Example usage:
+    deleteCard("uniqueKeyForCardToDelete");
+
     const showToast = () => {
         Toast.show({
             type: "error",
@@ -173,7 +192,7 @@ const Selection = ({navigation}) => {
                             onPress={() => {
                                 first = true;
                                 navigation.push("Description", {
-                                    set: deckData.set,
+                                    set: Array.from(deckData.set),
                                     description: deckData.description,
                                     category: deckData.title,
                                     img: deckData.img,

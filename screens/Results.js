@@ -3,13 +3,9 @@ import {StyleSheet, Text, View, Button, ScrollView} from "react-native";
 import ResultButton from "../components/ResultButton";
 import * as ScreenOrientation from "expo-screen-orientation";
 import * as Haptics from "expo-haptics";
+import {portraitUp} from "../services/orientationService";
 
-let first = true;
 const Results = ({route, navigation}) => {
-    async function fixOrientation() {
-        await ScreenOrientation.unlockAsync();
-        await ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.PORTRAIT_UP);
-    }
     useEffect(() => {
         Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
         setTimeout(() => Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success), 500);
@@ -17,18 +13,16 @@ const Results = ({route, navigation}) => {
     }, []);
 
     useEffect(() => {
-        fixOrientation();
+        portraitUp();
     }, []);
 
     const {result, num, currSet, time} = route.params;
     let copySet = new Set(currSet);
 
     const handlePlayAgainFinish = () => {
-        first = true;
         navigation.push("Load", {set: copySet, time: time});
     };
     const handleAllDecksFinish = () => {
-        first = true;
         navigation.navigate("Selection");
     };
 
