@@ -1,28 +1,14 @@
 import {React} from "react";
-import {StyleSheet, Text, TouchableOpacity, View, ImageBackground} from "react-native";
+import {StyleSheet, Text, TouchableOpacity, View, ImageBackground, Image} from "react-native";
 
-// const App = () => {
-//     const onPress = () => console.log("testtest");
-
-//     return (
-//         <TouchableOpacity style={styles.button} onPress={onPress}>
-//           <Text>testing</Text>
-//         </TouchableOpacity>
-//     );
-// };
-
-const PlayButton = (props) => {
-    // console.log(props)
-    // const img = require('../assets/images/pokemon.png');
-    let PassedImg = props.img;
+const PlayButton = ({img, onPress, title}) => {
+    const PassedImg = img;
     return (
-        <TouchableOpacity style={styles.container} onPress={props.onPress}>
+        <TouchableOpacity style={styles.container} onPress={onPress}>
             <View style={styles.imgctr}>
                 <PassedImg width={"100%"} height={"100%"} />
             </View>
-            {/* <ImageBackground source = {props.img} style={styles.image}> */}
-            <Text style={styles.text}>{props.title}</Text>
-            {/* </ImageBackground>  */}
+            <Text style={styles.text}>{title}</Text>
         </TouchableOpacity>
     );
 };

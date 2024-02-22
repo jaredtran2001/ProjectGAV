@@ -5,6 +5,7 @@ import {StyleSheet, Text, View, Animated} from "react-native";
 import {useFonts} from "expo-font";
 
 import * as SplashScreen from "expo-splash-screen";
+import {initializeDecks} from "../services/storageService";
 
 const Home = ({navigation}) => {
     SplashScreen.preventAutoHideAsync();
@@ -17,14 +18,20 @@ const Home = ({navigation}) => {
 
     useEffect(() => {
         fadeIn();
-        // setTimeout(()=> setOutput("GAV"), 1500);
+        const fetchData = async () => {
+            try {
+                initializeDecks();
+            } catch (error) {
+                console.error("Error fetching data:", error);
+            }
+        };
+        fetchData();
         setTimeout(() => navigation.navigate("Instruction"), 3500);
-    });
+    }, []);
     if (!fontsLoaded) {
         return null;
     }
     function fadeIn() {
-        // Will change fadeAnim value to 1 in 5 seconds
         Animated.timing(fadeAnim, {
             toValue: 1,
             duration: 5000,

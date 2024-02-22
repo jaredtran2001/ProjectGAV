@@ -5,10 +5,11 @@ import MinusButton from "../components/MinusButton";
 import GameTimeButton from "../components/GameTimeButton";
 import ExitButton from "../components/ExitButton";
 import {useFonts} from "expo-font";
+import {getImage} from "../services/imageService.js";
 
 const Description = ({route, navigation}) => {
-    const {set, description, category, img} = route.params;
-    let Display = img;
+    const {set, description, category} = route.params;
+    const Display = getImage(category);
     let copySet = new Set(set);
     const [time, setTime] = useState(60);
     const [displayTime, setdisplayTime] = useState("1:00");
