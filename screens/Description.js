@@ -10,7 +10,6 @@ import {getImage} from "../services/imageService.js";
 const Description = ({route, navigation}) => {
     const {set, description, category} = route.params;
     const Display = getImage(category);
-    let copySet = new Set(set);
     const [time, setTime] = useState(60);
     const [displayTime, setdisplayTime] = useState("1:00");
     const [fontsLoaded] = useFonts({
@@ -18,7 +17,6 @@ const Description = ({route, navigation}) => {
     });
 
     useEffect(() => {
-        // if(time >= 60) {
         let min = "" + Math.floor(time / 60);
         let sec = time % 60;
         if (sec < 10) {
@@ -27,9 +25,6 @@ const Description = ({route, navigation}) => {
             sec = "" + sec;
         }
         setdisplayTime(min + ":" + sec);
-        // } else {
-        //   setdisplayTime(time + "");
-        // }
     }, [time]);
 
     if (!fontsLoaded) {
@@ -77,7 +72,7 @@ const Description = ({route, navigation}) => {
                 </View>
                 <View style={styles.start}>
                     {/* <View style = {styles.startBox}> */}
-                    <GameTimeButton onPress={() => navigation.push("Load", {set: copySet, time: time})} />
+                    <GameTimeButton onPress={() => navigation.push("Load", {set: set, time: time})} />
                     {/* </View> */}
                 </View>
             </View>

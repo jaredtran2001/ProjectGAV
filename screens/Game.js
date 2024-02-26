@@ -39,8 +39,8 @@ const Game = ({route, navigation}) => {
     }, [sound]);
 
     //Grabbing the provided word set and function to produce a new word from it
-    const {set, time} = route.params;
-    let copySet = new Set(set);
+    const {gameSet, time} = route.params;
+    const set = new Set(gameSet);
     const [min, setMin] = useState(Math.floor(time / 60));
     const [totalSec, setTS] = useState(time);
     const generateWord = () => {
@@ -86,7 +86,7 @@ const Game = ({route, navigation}) => {
         navigation.push("Results", {
             result: tempResult,
             num: tempNum,
-            currSet: copySet,
+            currSet: gameSet,
             time: time,
         });
     };

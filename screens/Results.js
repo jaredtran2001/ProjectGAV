@@ -17,10 +17,9 @@ const Results = ({route, navigation}) => {
     }, []);
 
     const {result, num, currSet, time} = route.params;
-    let copySet = new Set(currSet);
 
     const handlePlayAgainFinish = () => {
-        navigation.push("Load", {set: copySet, time: time});
+        navigation.push("Load", {set: currSet, time: time});
     };
     const handleAllDecksFinish = () => {
         navigation.navigate("Selection");

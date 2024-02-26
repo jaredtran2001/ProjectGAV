@@ -27,9 +27,8 @@ const Load = ({route, navigation}) => {
     }
 
     const handleFinish = () => {
-        let copySet = new Set(set);
         let copyTime = time;
-        navigation.push("Game", {set: copySet, time: copyTime});
+        navigation.push("Game", {gameSet: set, time: copyTime});
     };
     const handleChange = () => {
         setDisplay(RSG[index + 1]);

@@ -1,11 +1,11 @@
 import {React, useState, useEffect} from "react";
-import {StyleSheet, Text, View, ScrollView, TextInput, ActivityIndicator} from "react-native";
+import {StyleSheet, Text, View, ScrollView, TextInput, ActivityIndicator, KeyboardAvoidingView} from "react-native";
 import Toast from "react-native-toast-message";
 import PlayButton from "../components/PlayButton";
 import {useFonts} from "expo-font";
 import {generateDeck} from "../services/api.js";
 import {portraitUp} from "../services/orientationService.js";
-import {getSavedDecks, deleteDeck, saveDeck, jsonToSet} from "../services/storageService.js";
+import {getSavedDecks, deleteDeck, saveDeck, jsonToSet, generateUniqueKey} from "../services/storageService.js";
 import {getImage} from "../services/imageService.js";
 
 const Selection = ({navigation}) => {
@@ -17,8 +17,8 @@ const Selection = ({navigation}) => {
             try {
                 const response = await getSavedDecks();
                 setDecks(response);
+                // console.log(decks)
             } catch (error) {
-                console.error("Error fetching data:", error);
                 showToast("NO DECKS?!", "Could not fetch decks");
             }
         };
@@ -50,77 +50,98 @@ const Selection = ({navigation}) => {
 
     const handleAddDeck = async () => {
         setLoading(true);
-        const deckJSON = await generateDeck(text);
-        console.log("handling deck");
-
-        if (!deckJSON) {
-            console.log("entered");
+        try {
+            const deckJSON = Array.from(await generateDeck(text));
+            if (!deckJSON) {
+                showToast("Could not generate deck", "Try to be simple but concise i.e. soccer players");
+                setLoading(false);
+                setText("");
+                return;
+            }
+            const newSet = jsonToSet(deckJSON);
+            const newDeckDetails = {
+                set: Array.from(newSet),
+                description: "Your own custom deck. Let's give it a whirl",
+                title: text,
+                key: generateUniqueKey(),
+            };
+            saveDeck(newDeckDetails.key, newDeckDetails);
+            setDecks([...decks, newDeckDetails]);
+            setText("");
+            setLoading(false);
+        } catch (error) {
             showToast("Could not generate deck", "Try to be simple but concise i.e. soccer players");
             setLoading(false);
             setText("");
-            return;
+            throw error;
         }
-        const newSet = jsonToSet(deckJSON);
-        const newDeckDetails = {
-            set: newSet,
-            description: "Your own custom deck. Let's give it a whirl",
-            title: text,
-        };
-        setDecks([...decks, newDeckDetails]);
-        setText("");
-        setLoading(false);
+    };
+
+    const handleDelete = (key) => {
+        deleteDeck(key);
+        const updatedDecks = decks.filter((deck) => deck.key !== key);
+        setDecks(updatedDecks);
     };
 
     return (
-        <View style={styles.container}>
-            <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={styles.scrollContainer}>
-                <View style={styles.header}>
-                    <Text style={styles.headerText}>Subtle Asian Charades</Text>
-                </View>
-                <View style={[styles.horiLine, {marginBottom: 20}]} />
-                <View style={styles.form}>
-                    {/* Render the list of decks dynamically */}
-                    {decks.length > 0 ? (
-                        decks.map((deckData, index) => (
-                            <PlayButton
-                                key={index}
-                                img={getImage(deckData.title)}
-                                onPress={() => {
-                                    first = true;
-                                    navigation.push("Description", {
-                                        set: Array.from(deckData.set),
-                                        description: deckData.description,
-                                        category: deckData.title,
-                                        // img: imageMapping[deckData.title],
-                                    });
-                                }}
-                                title={deckData.title}
-                            />
-                        ))
-                    ) : (
-                        <Text>No decks available.</Text>
-                    )}
-                </View>
-                {loading ? (
-                    <ActivityIndicator size="small" color="#fff" />
-                ) : (
-                    <TextInput
-                        style={styles.textInput}
-                        type="text"
-                        placeholder="Create Deck"
-                        placeholderTextColor="#ff4656"
-                        value={text}
-                        onChangeText={handleInputChange}
-                        onSubmitEditing={handleAddDeck}
-                        textAlign={"center"}
-                    />
-                )}
-                <Toast />
+        <KeyboardAvoidingView behavior={"padding"} style={styles.keyboardContainer}>
+            <View style={styles.container}>
+                <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={styles.scrollContainer}>
+                    <View style={styles.header}>
+                        <Text style={styles.headerText}>Subtle Asian Charades</Text>
+                    </View>
+                    <View style={[styles.horiLine, {marginBottom: 20}]} />
 
-                <View style={[styles.horiLine, {marginTop: 20}]} />
-                <View style={styles.footer} />
-            </ScrollView>
-        </View>
+                    {loading ? (
+                        <View style={styles.loadingContainer}>
+                            <ActivityIndicator size="small" color="#fff" />
+                        </View>
+                    ) : (
+                        // <ActivityIndicator size="small" color="#fff" />
+                        <TextInput
+                            style={styles.textInput}
+                            type="text"
+                            placeholder="Create Deck (NBA Teams)"
+                            placeholderTextColor="#ff4656"
+                            value={text}
+                            onChangeText={handleInputChange}
+                            onSubmitEditing={handleAddDeck}
+                            textAlign={"center"}
+                            maxLength={20}
+                        />
+                    )}
+                    {decks.length > 0 ? (
+                        <View style={styles.form}>
+                            {decks.map((deckData, index) => (
+                                <PlayButton
+                                    key={index}
+                                    img={getImage(deckData.title)}
+                                    onPress={() => {
+                                        first = true;
+                                        navigation.push("Description", {
+                                            set: Array.from(deckData.set),
+                                            description: deckData.description,
+                                            category: deckData.title,
+                                        });
+                                    }}
+                                    title={deckData.title}
+                                    onDelete={handleDelete}
+                                    uniqueKey={deckData.key}
+                                />
+                            ))}
+                        </View>
+                    ) : (
+                        <View>
+                            <ActivityIndicator size="small" color="#fff" />
+                            <Text>Loading Decks</Text>
+                        </View>
+                    )}
+                    <Toast />
+                    <View style={[styles.horiLine, {marginTop: 20}]} />
+                    <View style={styles.footer} />
+                </ScrollView>
+            </View>
+        </KeyboardAvoidingView>
     );
 };
 
@@ -161,7 +182,7 @@ const styles = StyleSheet.create({
     },
     footer: {
         width: "100%",
-        height: 50,
+        height: 100,
     },
     textInput: {
         height: 40,
@@ -169,10 +190,22 @@ const styles = StyleSheet.create({
         margin: 16,
         paddingHorizontal: 10,
         color: "#ff4656",
-        width: "80%", // Set the width of the input
+        width: "90%", // Set the width of the input
         borderColor: "#ccc", // Add a border color for visual separation
         borderWidth: 1, // Add a border width
         borderRadius: 5, // Add border radius for rounded corners
+        marginTop: 0,
+    },
+    keyboardContainer: {
+        flex: 1,
+        // justifyContent: "center",
+        // padding: 16,
+    },
+
+    loadingContainer: {
+        alignItems: "center",
+        justifyContent: "center",
+        margin: 16,
     },
 });
 

@@ -11,11 +11,10 @@ const imageMapping = {
     ANIME: animeImg,
     NARUTO: narutoImg,
     "ONE PIECE": luffyImg,
-    "KPOP GROUPS": kpopImg,
+    "KPOP GROUPS": kDanceImg,
     POKEMON: pokemonImg,
     LOL: leagueImg,
     VALORANT: leagueImg,
-    "KPOP DANCE": kDanceImg,
     "MY HERO": myHeroImg,
     DEFAULT: kpopImg,
 };
