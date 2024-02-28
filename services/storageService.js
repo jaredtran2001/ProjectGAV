@@ -14,7 +14,7 @@ import MyHero from "../assets/wordSets/myHero.json";
 export async function initializeDecks() {
     try {
         // Check if decks are already in AsyncStorage
-        await AsyncStorage.clear();
+        // await AsyncStorage.clear();
         const keys = await AsyncStorage.getAllKeys();
         const decksExist = keys.some((key) => key.startsWith("deck"));
 

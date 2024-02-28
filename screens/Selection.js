@@ -39,7 +39,7 @@ const Selection = ({navigation}) => {
             type: "error",
             text1: header,
             text2: text,
-            position: "bottom",
+            position: "top",
             visibilityTime: 5000,
         });
     };
@@ -52,7 +52,7 @@ const Selection = ({navigation}) => {
         setLoading(true);
         try {
             const deckJSON = Array.from(await generateDeck(text));
-            if (!deckJSON) {
+            if (!deckJSON || !deckJSON.length) {
                 showToast("Could not generate deck", "Try to be simple but concise i.e. soccer players");
                 setLoading(false);
                 setText("");

@@ -20,9 +20,11 @@ async function sendPrompt(prompt) {
             maxTokens: 600,
             temperature: 0.5,
             topP: 0.9,
+            stream: false,
         }),
         contentType: "application/json",
-        modelId: "ai21.j2-mid-v1",
+        modelId: "cohere.command-light-text-v14",
+        // modelId: "ai21.j2-mid-v1",
     };
 
     const command = new InvokeModelCommand(input);
@@ -31,37 +33,46 @@ async function sendPrompt(prompt) {
     const jsonString = bufferData.toString("utf-8"); // Convert Buffer to string
     const parsedData = JSON.parse(jsonString);
     const completions = parsedData.completions;
+    console.log("Got here");
     return completions;
 }
 
 const multiVarPrompt = (category) => `
-Instructions: Return a list of unique items that relate to the category provided. The list must have atleast 10 item and have some priority in relevancy to the category provided. 
-Ensure that variations of entries referring to the same thing are treated as duplicates. Follow the format of the example response. Note the format is in json.
-Context: Example response: 'animals' => 
-[
-    {"name": "Tiger"},
-    {"name": "Raccoon"},
-    {"name": "Swordfish"},
-    {"name": "Lion"},
-    {"name": "Hippo"},
-    {"name": "Giraffe"},
-    {"name": "Spider"},
-    {"name": "Alligator"},
-    {"name": "Turtle"},
-    {"name": "Rabbit"},
-    {"name": "Crow"},
-    {"name": "Snake"},
-    {"name": "Polar Bear"},
-    {"name": "Chimpanzee"},
-    {"name": "Horse"},
-    {"name": "Unicorn"},
-    {"name": "Whale"},
-    {"name": "Deer"},
-    {"name": "Owl"},
-    {"name": "Butterfly"},
-    {"name": "Squirrel"},
-    {"name": "Squid"}
-  ]
+Instructions: 
+1. Return a list of unique items that relate to the category provided. 
+2. The list must have atleast 10 items and have some priority in relevancy to the category provided. 
+3. Make sure that you understand what the input is and these items in the response are valid answers. If you can not gather items that are relevant to the prompt or do not understand the input, then respond with: 'Not able to generate deck'
+4. Ensure that variations of entries referring to the same thing are treated as duplicates. 
+    a. You can ensure that this does not happen by reviewing the output you have and thinking step by step if the item is synonymous with the other item
+        For example bunny and rabbit are synonymous so only one of them is included in the example output
+5. Follow the format of the example response output. Note the format is in json.
+Context: Example response: 
+        \n\n Human: Animals
+        \n\n Assistant: 
+        [
+            {"name": "Tiger"},
+            {"name": "Raccoon"},
+            {"name": "Swordfish"},
+            {"name": "Lion"},
+            {"name": "Hippo"},
+            {"name": "Giraffe"},
+            {"name": "Spider"},
+            {"name": "Alligator"},
+            {"name": "Turtle"},
+            {"name": "Rabbit"},
+            {"name": "Crow"},
+            {"name": "Snake"},
+            {"name": "Polar Bear"},
+            {"name": "Chimpanzee"},
+            {"name": "Horse"},
+            {"name": "Unicorn"},
+            {"name": "Whale"},
+            {"name": "Deer"},
+            {"name": "Owl"},
+            {"name": "Butterfly"},
+            {"name": "Squirrel"},
+            {"name": "Squid"}
+        ]
 Input data: ${category}`;
 
 // const generateDeck = async (category) => {
