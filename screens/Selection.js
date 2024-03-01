@@ -17,7 +17,6 @@ const Selection = ({navigation}) => {
             try {
                 const response = await getSavedDecks();
                 setDecks(response);
-                // console.log(decks)
             } catch (error) {
                 showToast("NO DECKS?!", "Could not fetch decks");
             }
@@ -54,8 +53,7 @@ const Selection = ({navigation}) => {
             const deckJSON = Array.from(await generateDeck(text));
             if (!deckJSON || !deckJSON.length) {
                 showToast("Could not generate deck", "Try to be simple but concise i.e. soccer players");
-                setLoading(false);
-                setText("");
+                resetInputText();
                 return;
             }
             const newSet = jsonToSet(deckJSON);
@@ -67,14 +65,17 @@ const Selection = ({navigation}) => {
             };
             saveDeck(newDeckDetails.key, newDeckDetails);
             setDecks([...decks, newDeckDetails]);
-            setText("");
-            setLoading(false);
+            resetInputText();
         } catch (error) {
             showToast("Could not generate deck", "Try to be simple but concise i.e. soccer players");
-            setLoading(false);
-            setText("");
+            resetInputText();
             throw error;
         }
+    };
+
+    const resetInputText = () => {
+        setLoading(false);
+        setText("");
     };
 
     const handleDelete = (key) => {
@@ -97,18 +98,20 @@ const Selection = ({navigation}) => {
                             <ActivityIndicator size="small" color="#fff" />
                         </View>
                     ) : (
-                        // <ActivityIndicator size="small" color="#fff" />
-                        <TextInput
-                            style={styles.textInput}
-                            type="text"
-                            placeholder="Create Deck (NBA Teams)"
-                            placeholderTextColor="#ff4656"
-                            value={text}
-                            onChangeText={handleInputChange}
-                            onSubmitEditing={handleAddDeck}
-                            textAlign={"center"}
-                            maxLength={20}
-                        />
+                        <View style={styles.generateDeckView}>
+                            <Text style={{color: "white", fontWeight: "bold", fontSize: 20, fontFamily: "Valorant"}}>CREATE DECK</Text>
+                            <TextInput
+                                style={styles.textInput}
+                                type="text"
+                                placeholder="e.g. NBA Teams"
+                                placeholderTextColor="#ff4656"
+                                value={text}
+                                onChangeText={handleInputChange}
+                                onSubmitEditing={handleAddDeck}
+                                textAlign={"center"}
+                                maxLength={20}
+                            />
+                        </View>
                     )}
                     {decks.length > 0 ? (
                         <View style={styles.form}>
@@ -187,25 +190,28 @@ const styles = StyleSheet.create({
     textInput: {
         height: 40,
         borderWidth: 1,
-        margin: 16,
+        width: "100%",
         paddingHorizontal: 10,
         color: "#ff4656",
-        width: "90%", // Set the width of the input
         borderColor: "#ccc", // Add a border color for visual separation
         borderWidth: 1, // Add a border width
         borderRadius: 5, // Add border radius for rounded corners
-        marginTop: 0,
+        marginTop: 8,
+    },
+    generateDeckView: {
+        justifyContent: "center",
+        alignItems: "center",
+        flex: 1,
+        width: "90%",
+        marginBottom: 16,
     },
     keyboardContainer: {
         flex: 1,
-        // justifyContent: "center",
-        // padding: 16,
     },
-
     loadingContainer: {
         alignItems: "center",
         justifyContent: "center",
-        margin: 16,
+        marginBottom: 16,
     },
 });
 

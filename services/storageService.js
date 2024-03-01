@@ -16,6 +16,7 @@ export async function initializeDecks() {
         // Check if decks are already in AsyncStorage
         // await AsyncStorage.clear();
         const keys = await AsyncStorage.getAllKeys();
+        console.log(keys);
         const decksExist = keys.some((key) => key.startsWith("deck"));
 
         // If decks don't exist, add default decks to AsyncStorage
@@ -47,56 +48,55 @@ function generateDefaultDeck() {
     const pokemonSet = jsonToSet(Pokemon);
     const leagueSet = jsonToSet(Champions);
     const valorantSet = jsonToSet(Valorant);
-    // const kpopSongSet = jsonToSet(kPopSong);
     const myHeroSet = jsonToSet(MyHero);
     const defaultDecks = {
-        deck1: {
+        deck_00: {
             set: Array.from(animeSet),
             description: "SLICE THROUGH THIS ASSORTMENT OF ANIME'S RANGING FROM ALL SORTS OF POPULARITY!",
             title: "ANIME",
-            key: "deck1",
+            key: "deck_00",
         },
-        deck2: {
+        deck_01: {
             set: Array.from(narutoSet),
             description: "IT'S MY NINJA WAY TO GUESS MY FAVORITE NARUTO CHARACTERS",
             title: "NARUTO",
-            key: "deck2",
+            key: "deck_01",
         },
-        deck3: {
+        deck_02: {
             set: Array.from(onePieceSet),
             description: "GUESS THE MOST POPULAR ONE PIECE CHARACTERS TO BECOME THE PIRATE KING!",
             title: "ONE PIECE",
-            key: "deck3",
+            key: "deck_02",
         },
-        deck4: {
+        deck_03: {
             set: Array.from(kPopSet),
             description: "TEST YOUR KNOWLEDGE ON THE MOST POPULAR KPOP GROUPS 2000 AND UP!",
             title: "KPOP GROUPS",
-            key: "deck4",
+            key: "deck_03",
         },
-        deck5: {
+        deck_04: {
             set: Array.from(pokemonSet),
             description: "DO YOU KNOW YOUR FIRST GEN POKEMON?? BETTER GO FAST AND MAKE SURE YOU'RE NOT A SLOW-POKE",
             title: "POKEMON",
-            key: "deck5",
+            key: "deck_04",
         },
-        deck6: {
+        deck_05: {
             set: Array.from(leagueSet),
             description: "HOW MUCH MORE DEGENERATE COULD WE BE IF WE DIDN'T HAVE A LEAGUE OF LEGENDS CATEGORY ON ALMOST ALL CHAMPIONS",
             title: "LOL",
-            key: "deck6",
+            key: "deck_05",
         },
-        deck7: {
+        deck_06: {
             set: Array.from(valorantSet),
             description: "BLAZE THROUGH YOUR FAVORITE VALORANT CHARACTER'S ABILITIES AND RISE TO THE RANKS OF IMMORTAL",
             title: "VALORANT",
-            key: "deck7",
+            key: "deck_06",
         },
-        deck8: {
+        deck_07: {
             set: Array.from(myHeroSet),
             description: "PLUS ULTRAAA GUESS THE VILLAINS, HEROES, AND STUDENTS OF MY HERO ACADEMIA",
             title: "MY HERO",
-            key: "deck9",
+            key: "deck_07",
         },
     };
     return defaultDecks;
@@ -126,7 +126,9 @@ export async function getSavedDecks() {
             return JSON.parse(deckData);
         });
         const decks = await Promise.all(deckPromises);
-        return decks.filter((deck) => deck !== null);
+        const sortedDecks = decks.filter((deck) => deck !== null).sort((a, b) => a.key.localeCompare(b.key));
+        // console.log(sortedDecks);
+        return sortedDecks.filter((deck) => deck !== null);
     } catch (error) {
         console.error("Error retrieving decks:", error);
         return [];

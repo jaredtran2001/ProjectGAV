@@ -1,7 +1,6 @@
 const {BedrockRuntimeClient, InvokeModelCommand} = require("@aws-sdk/client-bedrock-runtime");
 const AWS = require("aws-sdk");
 const Buffer = require("buffer/").Buffer;
-
 require("react-native-get-random-values");
 
 const client = new BedrockRuntimeClient({
@@ -20,11 +19,9 @@ async function sendPrompt(prompt) {
             maxTokens: 600,
             temperature: 0.5,
             topP: 0.9,
-            stream: false,
         }),
         contentType: "application/json",
-        modelId: "cohere.command-light-text-v14",
-        // modelId: "ai21.j2-mid-v1",
+        modelId: "ai21.j2-mid-v1",
     };
 
     const command = new InvokeModelCommand(input);
@@ -39,14 +36,15 @@ async function sendPrompt(prompt) {
 
 const multiVarPrompt = (category) => `
 Instructions: 
-1. Return a list of unique items that relate to the category provided. 
-2. The list must have atleast 10 items and have some priority in relevancy to the category provided. 
-3. Make sure that you understand what the input is and these items in the response are valid answers. If you can not gather items that are relevant to the prompt or do not understand the input, then respond with: 'Not able to generate deck'
-4. Ensure that variations of entries referring to the same thing are treated as duplicates. 
+1. Work Step by Step
+2. Generate a list of unique items that relate to the category provided. 
+3. The list must have atleast 10 items and have some priority in relevancy to the category provided. 
+4. Make sure that you understand what the input is and these items in the response are valid answers. If you can not gather items that are relevant to the prompt or do not understand the input, then respond with: 'Not able to generate deck'
+5. Ensure that variations of entries referring to the same thing are treated as duplicates. 
     a. You can ensure that this does not happen by reviewing the output you have and thinking step by step if the item is synonymous with the other item
         For example bunny and rabbit are synonymous so only one of them is included in the example output
-5. Follow the format of the example response output. Note the format is in json.
-Context: Example response: 
+6. Follow the format of the example response output. Note the format of the response is in json and follows this exact format.
+Example response: 
         \n\n Human: Animals
         \n\n Assistant: 
         [
@@ -82,7 +80,6 @@ export async function generateDeck(category) {
     const prompt = multiVarPrompt(category);
     try {
         const apiResponse = await sendPrompt(prompt);
-
         const jsonString = apiResponse[0].data.text.trim().replace(/\n/g, "");
 
         const startIndex = jsonString.indexOf("[");
