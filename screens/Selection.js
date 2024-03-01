@@ -110,6 +110,7 @@ const Selection = ({navigation}) => {
                                 onSubmitEditing={handleAddDeck}
                                 textAlign={"center"}
                                 maxLength={20}
+                                autoCapitalize={"characters"}
                             />
                         </View>
                     )}

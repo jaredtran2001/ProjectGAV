@@ -38,12 +38,12 @@ const multiVarPrompt = (category) => `
 Instructions: 
 1. Work Step by Step
 2. Generate a list of unique items that relate to the category provided. 
-3. The list must have atleast 10 items and have some priority in relevancy to the category provided. 
-4. Make sure that you understand what the input is and these items in the response are valid answers. If you can not gather items that are relevant to the prompt or do not understand the input, then respond with: 'Not able to generate deck'
-5. Ensure that variations of entries referring to the same thing are treated as duplicates. 
+3. The list must have atleast 10 items but try to get as many valid answers as possible and have some priority in relevancy to the category provided. 
+4. Ensure that variations of entries referring to the same thing are treated as duplicates. 
     a. You can ensure that this does not happen by reviewing the output you have and thinking step by step if the item is synonymous with the other item
         For example bunny and rabbit are synonymous so only one of them is included in the example output
-6. Follow the format of the example response output. Note the format of the response is in json and follows this exact format.
+5. Follow the format of the example response output. Note the format of the response is in json and follows this exact format.
+    a. After you have a list of the items that are related to the category seperate each item using the following format: {"name": <item>}, as shown below
 Example response: 
         \n\n Human: Animals
         \n\n Assistant: 
@@ -85,7 +85,7 @@ export async function generateDeck(category) {
         const startIndex = jsonString.indexOf("[");
         const lastIndex = jsonString.lastIndexOf(",");
         const extractedSubstring = jsonString.substring(startIndex + 1, lastIndex);
-
+        console.log(extractedSubstring);
         const jsonData = JSON.parse(`[${extractedSubstring}]`);
         console.log(jsonData);
         return jsonData;
