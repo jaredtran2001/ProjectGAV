@@ -69,9 +69,7 @@ const Description = ({route, navigation}) => {
                     <Text style={styles.descriptionText}>ADJUST DURATION</Text>
                 </View>
                 <View style={styles.start}>
-                    {/* <View style = {styles.startBox}> */}
                     <GameTimeButton onPress={() => navigation.push("Load", {set: set, time: time})} />
-                    {/* </View> */}
                 </View>
             </View>
         </View>
@@ -86,13 +84,10 @@ const styles = StyleSheet.create({
         backgroundColor: "#1f2326",
     },
     exit: {
-        // height: "10%",
-        // width: "100%",
         position: "absolute",
         right: "6%",
         top: "8%",
         zIndex: 10000,
-        // backgroundColor: "purple"
     },
     description: {
         flex: 2,
@@ -102,14 +97,10 @@ const styles = StyleSheet.create({
         justifyContent: "space-evenly",
         alignItems: "center",
         marginTop: "10%",
-
-        // backgroundColor: "blue"
     },
     imgctr: {
         width: "50%",
         height: "40%",
-        // marginBottom: 30,
-        // backgroundColor: "blue"
     },
     textCtr: {
         flexDirection: "column",
@@ -131,7 +122,6 @@ const styles = StyleSheet.create({
         fontWeight: "bold",
         marginLeft: 30,
         marginRight: 30,
-        //backgroundColor: "green"
     },
     timer: {
         height: "25%",
@@ -140,7 +130,6 @@ const styles = StyleSheet.create({
     },
     timerCtr: {
         flex: 1,
-        // backgroundColor: 'green',
         flexDirection: "column",
         justifyContent: "space-evenly",
         alignItems: "center",

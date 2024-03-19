@@ -2,7 +2,6 @@ import {React} from "react";
 import {StyleSheet, Text, TouchableOpacity, View} from "react-native";
 
 const PlusButton = (props) => {
-    // console.log(props)
     return (
         <TouchableOpacity style={styles.container} onPress={props.onPress}>
             <Text style={styles.text}>-</Text>
