@@ -1,4 +1,4 @@
-import {Component, React, useState, useEffect} from "react";
+import {React, useState, useEffect} from "react";
 import {StyleSheet, Text, View, Button} from "react-native";
 import CountDown from "react-native-countdown-fixed";
 import {DeviceMotion} from "expo-sensors";
@@ -18,7 +18,7 @@ const correct = (gamma, flip) => {
 };
 
 const neutral = (gamma, flip) => {
-    return ((gamma < -1.1 && gamma > -1.9) || (gamma > 1.1 && gamma < 1.9)) && flip;
+    return ((gamma < -1.0 && gamma > -2.0) || (gamma > 1.0 && gamma < 2.0)) && flip;
 };
 
 const Game = ({route, navigation}) => {
@@ -41,6 +41,7 @@ const Game = ({route, navigation}) => {
     //Grabbing the provided word set and function to produce a new word from it
     const {gameSet, time} = route.params;
     const set = new Set(gameSet);
+    const [usedWords, setUsedWords] = useState(new Set());
     const [min, setMin] = useState(Math.floor(time / 60));
     const [totalSec, setTS] = useState(time);
     const generateWord = () => {
@@ -131,7 +132,14 @@ const Game = ({route, navigation}) => {
             playSuccessSound(require("../assets/success.mp3"));
         } else if (neutral(gamma, flip)) {
             setFlip(false);
-            setOutput(generateWord());
+            let newWord;
+            do {
+                newWord = generateWord();
+            } while (usedWords.has(newWord));
+
+            setUsedWords((prevUsedWords) => new Set(prevUsedWords).add(newWord));
+
+            setOutput(newWord);
             setColor("#1f2326");
         }
     }, [data]);

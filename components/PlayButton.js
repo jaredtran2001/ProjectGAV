@@ -3,7 +3,7 @@ import {StyleSheet, Text, TouchableOpacity, View, Button, Modal} from "react-nat
 
 const PlayButton = ({img, onPress, title, onDelete, uniqueKey}) => {
     const [isModalVisible, setModalVisible] = useState(false);
-    const defaultKeys = new Set(["deck1", "deck2", "deck3", "deck4", "deck5", "deck6", "deck7", "deck8"]);
+    const defaultKeys = new Set(["deck_01", "deck_02", "deck_03", "deck_04", "deck_05", "deck_06", "deck_07", "deck_00"]);
     const handleOnLongPress = () => {
         if (!defaultKeys.has(uniqueKey)) {
             setModalVisible(true);
@@ -53,7 +53,6 @@ const styles = StyleSheet.create({
         alignItems: "center",
     },
     text: {
-        // color: '#ff4656',
         color: "white",
         fontSize: 20,
         fontWeight: "bold",

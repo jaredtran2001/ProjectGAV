@@ -8,13 +8,11 @@ import Pokemon from "../assets/wordSets/pokemon.json";
 import Naruto from "../assets/wordSets/naruto.json";
 import Valorant from "../assets/wordSets/valorant.json";
 import OnePiece from "../assets/wordSets/onePiece.json";
-// import kPopSong from "../assets/wordSets/kpopSong.json";
 import MyHero from "../assets/wordSets/myHero.json";
 
 export async function initializeDecks() {
     try {
         // Check if decks are already in AsyncStorage
-        // await AsyncStorage.clear();
         const keys = await AsyncStorage.getAllKeys();
         console.log(keys);
         const decksExist = keys.some((key) => key.startsWith("deck"));

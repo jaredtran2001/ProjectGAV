@@ -51,7 +51,7 @@ const Selection = ({navigation}) => {
         setLoading(true);
         try {
             const deckJSON = Array.from(await generateDeck(text));
-            if (!deckJSON || !deckJSON.length) {
+            if (!deckJSON || !deckJSON.length || deckJSON.length < 5) {
                 showToast("Could not generate deck", "Try to be simple but concise i.e. soccer players");
                 resetInputText();
                 return;
@@ -67,9 +67,7 @@ const Selection = ({navigation}) => {
             setDecks([...decks, newDeckDetails]);
             resetInputText();
         } catch (error) {
-            showToast("Could not generate deck", "Try to be simple but concise i.e. soccer players");
             resetInputText();
-            throw error;
         }
     };
 

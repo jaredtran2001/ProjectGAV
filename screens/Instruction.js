@@ -1,8 +1,6 @@
-import {Component, React, useState, useEffect, useRef} from "react";
-import {StyleSheet, Text, View, Animated, Image} from "react-native";
-// import Header from './components/Header';
+import {React} from "react";
+import {StyleSheet, Text, View} from "react-native";
 import {useFonts} from "expo-font";
-// import AppLoading from 'expo-app-loading';
 import ExitButton from "../components/ExitButton";
 import Turn from "../assets/images/coolturn.svg";
 import Correct from "../assets/images/coolcorrect.svg";

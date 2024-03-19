@@ -1,9 +1,6 @@
-import {Component, React, useEffect, useState} from "react";
+import {React, useEffect, useState} from "react";
 import {StyleSheet, Text, View, Button} from "react-native";
-// import Header from './components/Header';
-import PlayButton from "../components/PlayButton";
 import CountDown from "react-native-countdown-fixed";
-import * as ScreenOrientation from "expo-screen-orientation";
 import * as Haptics from "expo-haptics";
 import {useFonts} from "expo-font";
 import {landscape} from "../services/orientationService";

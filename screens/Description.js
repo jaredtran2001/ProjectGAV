@@ -1,5 +1,5 @@
-import {Component, React, useEffect, useState} from "react";
-import {StyleSheet, Text, View, Button, ScrollView} from "react-native";
+import {React, useEffect, useState} from "react";
+import {StyleSheet, Text, View} from "react-native";
 import PlusButton from "../components/PlusButton";
 import MinusButton from "../components/MinusButton";
 import GameTimeButton from "../components/GameTimeButton";
@@ -57,7 +57,6 @@ const Description = ({route, navigation}) => {
                 </View>
             </View>
             <View style={styles.timerCtr}>
-                {/* <View style={styles.timerBox}> */}
                 <View style={styles.timer}>
                     <MinusButton onPress={handleMinus} />
                     <View style={styles.timeTextBox}>
@@ -65,7 +64,6 @@ const Description = ({route, navigation}) => {
                     </View>
                     <PlusButton onPress={handlePlus} />
                 </View>
-                {/* </View> */}
 
                 <View style={styles.caption}>
                     <Text style={styles.descriptionText}>ADJUST DURATION</Text>
@@ -164,12 +162,10 @@ const styles = StyleSheet.create({
         width: "100%",
         justifyContent: "center",
         alignItems: "center",
-        // backgroundColor: "black"
     },
     start: {
         height: "25%",
         width: "90%",
-        //backgroundColor: "red",
         flexDirection: "row",
     },
 });

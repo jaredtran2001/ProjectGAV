@@ -1,11 +1,10 @@
-import {Component, React, useState, useEffect, useRef} from "react";
+import {React, useState, useEffect, useRef} from "react";
 import {StyleSheet, Text, View, Animated} from "react-native";
-// import Header from './components/Header';
-// import PlayButton from '../components/PlayButton';
 import {useFonts} from "expo-font";
 
 import * as SplashScreen from "expo-splash-screen";
 import {initializeDecks} from "../services/storageService";
+import {portraitUp} from "../services/orientationService.js";
 
 const Home = ({navigation}) => {
     SplashScreen.preventAutoHideAsync();
@@ -17,6 +16,7 @@ const Home = ({navigation}) => {
     });
 
     useEffect(() => {
+        portraitUp();
         fadeIn();
         const fetchData = async () => {
             try {

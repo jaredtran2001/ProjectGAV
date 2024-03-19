@@ -1,15 +1,12 @@
-import {Component, React, useEffect} from "react";
-import {StyleSheet, Text, View, Button, ScrollView} from "react-native";
+import {React, useEffect} from "react";
+import {StyleSheet, Text, View, Button, ScrollView, Vibration} from "react-native";
 import ResultButton from "../components/ResultButton";
-import * as ScreenOrientation from "expo-screen-orientation";
-import * as Haptics from "expo-haptics";
 import {portraitUp} from "../services/orientationService";
 
 const Results = ({route, navigation}) => {
     useEffect(() => {
-        Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
-        setTimeout(() => Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success), 500);
-        setTimeout(() => Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success), 1000);
+        Vibration.vibrate();
+        setTimeout(() => Vibration.vibrate(), 600);
     }, []);
 
     useEffect(() => {

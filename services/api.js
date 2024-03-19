@@ -1,79 +1,79 @@
-const {BedrockRuntimeClient, InvokeModelCommand} = require("@aws-sdk/client-bedrock-runtime");
-const AWS = require("aws-sdk");
-const Buffer = require("buffer/").Buffer;
-require("react-native-get-random-values");
+const {OpenAI} = require("openai");
+import {REACT_APP_API_KEY} from "@env";
+import Toast from "react-native-toast-message";
 
-const client = new BedrockRuntimeClient({
-    region: "us-west-2",
-    credentials: {
-        accessKeyId: "AKIAYS2NWMOVVGHI3IUI",
-        secretAccessKey: "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",
-    },
+const apiKey = REACT_APP_API_KEY;
+const instructions = `Instructions: 
+Step 1: Work step by step
+Step 2: Generate a list of unique items that classify as whatever category that is provided by the user 
+Step 3: The list must have as many valid answers as possible without repeats  and have priority in relevancy as the category provided based on the newest data. 
+Step 4: Do not respond if you do not understand the provided category or can't find items  for the category or the input data is invalid
+Step 5: Ensure that variations of entries referring to the same thing are treated as duplicates and should not exist. 
+    a. For example bunny and rabbit are synonymous so only one of them is included in the example output
+Step 6: The response needs to be in a comma separated list such as: <item1>, <item2>, <item3>`;
+
+const exampleResponse =
+    "Dog, Cat, Fish, Bird, Rabbit, Hamster, Turtle, Guinea Pig, Horse, Chicken, Cow, Pig, Sheep, Duck, Goat, Mouse, Rat, Snake, Lizard, Frog, Spider, Butterfly, Bee, Ant, Elephant, Tiger, Lion, Bear, Giraffe, Monkey, Dolphin, Whale, Penguin, Koala, Kangaroo, Fox, Deer, Squirrel, Bat, Owl, Eagle, Duck, Parrot, Turkey, Goldfish, Shark, Crab, Lobster, Shrimp, Octopus, Jellyfish, Bee, Butterfly, Ladybug, Beetle, Mosquito, Dragonfly, Caterpillar";
+const openai = new OpenAI({
+    apiKey: apiKey, // This is the default and can be omitted
 });
 
-// const sendPrompt = async (prompt) => {
-async function sendPrompt(prompt) {
-    const input = {
-        body: JSON.stringify({
-            prompt,
-            maxTokens: 600,
-            temperature: 0.5,
-            topP: 0.9,
-        }),
-        contentType: "application/json",
-        modelId: "ai21.j2-mid-v1",
-    };
+const showToast = (header, text) => {
+    Toast.show({
+        type: "error",
+        text1: header,
+        text2: text,
+        position: "top",
+        visibilityTime: 5000,
+    });
+};
 
-    const command = new InvokeModelCommand(input);
-    const response = await client.send(command);
-    const bufferData = Buffer.from(response.body, "utf-8"); // Use the correct encoding
-    const jsonString = bufferData.toString("utf-8"); // Convert Buffer to string
-    const parsedData = JSON.parse(jsonString);
-    const completions = parsedData.completions;
-    console.log("Got here");
-    return completions;
+async function sendPrompt(prompt) {
+    try {
+        const chatCompletion = await openai.chat.completions.create({
+            messages: [
+                {role: "system", content: "Answer in a consistent style."},
+                {role: "user", content: instructions},
+                {role: "user", content: "Animals"},
+                {role: "user", content: exampleResponse},
+                {role: "user", content: prompt},
+            ],
+            model: "gpt-3.5-turbo",
+            temperature: 0.5,
+            response_format: {type: "text"},
+            seed: 1,
+        });
+        return chatCompletion.choices[0].message.content;
+    } catch (error) {
+        // Check if the error is due to no internet connection
+        if (error.code === "ENOTFOUND" || error.code === "ENETUNREACH") {
+            showToast("No Internet Connection", "AI Generation requires Internet");
+            throw new Error("No internet connection. Please check your network.");
+        } else {
+            showToast("Could not generate deck", "Try to be simple but concise i.e. soccer players");
+            throw new Error("Error in sendPrompt: Unable to make API call");
+        }
+    }
 }
 
-const multiVarPrompt = (category) => `
-Instructions: 
-1. Work Step by Step
-2. Generate a list of unique items that relate to the category provided. 
-3. The list must have atleast 10 items but try to get as many valid answers as possible and have some priority in relevancy to the category provided. 
-4. Ensure that variations of entries referring to the same thing are treated as duplicates. 
-    a. You can ensure that this does not happen by reviewing the output you have and thinking step by step if the item is synonymous with the other item
-        For example bunny and rabbit are synonymous so only one of them is included in the example output
-5. Follow the format of the example response output. Note the format of the response is in json and follows this exact format.
-    a. After you have a list of the items that are related to the category seperate each item using the following format: {"name": <item>}, as shown below
-Example response: 
-        \n\n Human: Animals
-        \n\n Assistant: 
-        [
-            {"name": "Tiger"},
-            {"name": "Raccoon"},
-            {"name": "Swordfish"},
-            {"name": "Lion"},
-            {"name": "Hippo"},
-            {"name": "Giraffe"},
-            {"name": "Spider"},
-            {"name": "Alligator"},
-            {"name": "Turtle"},
-            {"name": "Rabbit"},
-            {"name": "Crow"},
-            {"name": "Snake"},
-            {"name": "Polar Bear"},
-            {"name": "Chimpanzee"},
-            {"name": "Horse"},
-            {"name": "Unicorn"},
-            {"name": "Whale"},
-            {"name": "Deer"},
-            {"name": "Owl"},
-            {"name": "Butterfly"},
-            {"name": "Squirrel"},
-            {"name": "Squid"}
-        ]
-Input data: ${category}`;
+function parseResponse(apiResponse) {
+    try {
+        let extractedSubstring = apiResponse.trim().replace(/\n/g, "");
+        if (extractedSubstring.endsWith(",") || extractedSubstring.endsWith(".")) {
+            extractedSubstring = extractedSubstring.slice(0, -1);
+        }
+        const extractedArray = extractedSubstring.split(",");
+        const jsonFormatedExtractedArray = extractedArray.map((team) => `{"name": "${team}"}`);
+        const resultString = jsonFormatedExtractedArray.join(", ");
+        const jsonData = JSON.parse(`[${resultString}]`);
+        console.log(jsonData);
+        return jsonData;
+    } catch (error) {
+        showToast("Could not generate deck", "Try to be simple but concise i.e. soccer players");
+        throw new Error("Error in sendPrompt: Unable to make API call");
+    }
+}
 
-// const generateDeck = async (category) => {
 export async function generateDeck(category) {
     console.log("Testing");
     console.log(category);
@@ -90,7 +90,6 @@ export async function generateDeck(category) {
         console.log(jsonData);
         return jsonData;
     } catch (error) {
-        console.error("Error in generateDeck:", error);
-        throw error;
+        throw new Error("Error in generating Deck");
     }
 }
