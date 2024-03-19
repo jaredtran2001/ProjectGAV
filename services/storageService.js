@@ -50,19 +50,19 @@ function generateDefaultDeck() {
     const defaultDecks = {
         deck_00: {
             set: Array.from(animeSet),
-            description: "SLICE THROUGH THIS ASSORTMENT OF ANIME'S RANGING FROM ALL SORTS OF POPULARITY!",
+            description: "C-ANYA GUESS ALL THESE POPULAR ANIMES!!!",
             title: "ANIME",
             key: "deck_00",
         },
         deck_01: {
             set: Array.from(narutoSet),
-            description: "IT'S MY NINJA WAY TO GUESS MY FAVORITE NARUTO CHARACTERS",
+            description: "CONTAINS ALL THE BEST CHARACTERS FROM PERVY SAGE TO ITACHI (SAKURA NOT INCLUDED)",
             title: "NARUTO",
             key: "deck_01",
         },
         deck_02: {
             set: Array.from(onePieceSet),
-            description: "GUESS THE MOST POPULAR ONE PIECE CHARACTERS TO BECOME THE PIRATE KING!",
+            description: "ACE ALL THESE ONE PIECE CHARACTERS OR DIE :(",
             title: "ONE PIECE",
             key: "deck_02",
         },
@@ -74,19 +74,19 @@ function generateDefaultDeck() {
         },
         deck_04: {
             set: Array.from(pokemonSet),
-            description: "DO YOU KNOW YOUR FIRST GEN POKEMON?? BETTER GO FAST AND MAKE SURE YOU'RE NOT A SLOW-POKE",
+            description: "DO YOU KNOW YOUR FIRST GEN POKEMON?? DON'T BEA SLOW-POKE, TIMES TICKING",
             title: "POKEMON",
             key: "deck_04",
         },
         deck_05: {
             set: Array.from(leagueSet),
-            description: "HOW MUCH MORE DEGENERATE COULD WE BE IF WE DIDN'T HAVE A LEAGUE OF LEGENDS CATEGORY ON ALMOST ALL CHAMPIONS",
+            description: "CALLING ALL LEAGUE DEGENS. THIS DECK CONTAINS ALL LEAGUE OF LEGENDS CHAMPIONS",
             title: "LOL",
             key: "deck_05",
         },
         deck_06: {
             set: Array.from(valorantSet),
-            description: "BLAZE THROUGH YOUR FAVORITE VALORANT CHARACTER'S ABILITIES AND RISE TO THE RANKS OF IMMORTAL",
+            description: "SHOOT THROUGH THIS ASSORTMENT OF VALORANT AGENTS AND WEAPONS",
             title: "VALORANT",
             key: "deck_06",
         },
