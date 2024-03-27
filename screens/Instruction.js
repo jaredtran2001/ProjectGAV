@@ -17,9 +17,7 @@ const Instruction = ({navigation}) => {
     return (
         <View style={styles.container}>
             <View style={styles.exit}>
-                {/* <View style = {styles.exitBox}> */}
                 <ExitButton onPress={() => navigation.navigate("Selection")} />
-                {/* </View> */}
             </View>
             <View style={styles.header}>
                 <Text style={styles.headerText}>HOW TO PLAY</Text>
@@ -37,7 +35,6 @@ const Instruction = ({navigation}) => {
                         <Correct width={"80%"} height={"60%"} />
                     </View>
                     <Text style={styles.descriptionText}>TILT DOWN == CORRECT</Text>
-                    {/* <Image source = {correct}></Image> */}
                 </View>
                 <View style={styles.description_box}>
                     <View style={styles.icon}>
@@ -56,19 +53,15 @@ const styles = StyleSheet.create({
         justifyContent: "flex-start",
         alignItems: "center",
         backgroundColor: "#1f2326",
-        // backgroundColor: "#364966"
     },
     header: {
-        // borderWidth: 1,
         width: "100%",
         justifyContent: "flex-end",
         alignItems: "center",
-        // backgroundColor: 'green',
         flex: 1,
     },
     description_ctnr: {
         flexDirection: "column",
-        // backgroundColor: 'red',
         flex: 4,
         justifyContent: "space-evenly",
         marginTop: 30,
@@ -76,20 +69,17 @@ const styles = StyleSheet.create({
     },
     description_box: {
         flex: 1,
-        // backgroundColor: 'orange'
     },
     descriptionText: {
         textAlign: "center",
         color: "white",
         fontSize: 20,
         fontWeight: "bold",
-        // marginBottom: 0,
         marginLeft: 20,
         marginRight: 20,
         marginTop: 10,
     },
     icon: {
-        // backgroundColor: 'green',
         justifyContent: "center",
         alignItems: "center",
         width: "100%",
@@ -97,17 +87,10 @@ const styles = StyleSheet.create({
     },
     exit: {
         position: "absolute",
-        // backgroundColor: 'purple',
         right: "6%",
         top: "8%",
         zIndex: 10000,
     },
-    // exitBox: {
-    //   width: "15%",
-    //   height: "50%",
-    //   alightItems: 'center',
-    //   justifyContent: 'center',
-    // },
     headerText: {
         fontSize: 37,
         fontWeight: "bold",

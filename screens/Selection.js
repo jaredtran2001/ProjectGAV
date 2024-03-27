@@ -1,12 +1,15 @@
 import {React, useState, useEffect} from "react";
-import {StyleSheet, Text, View, ScrollView, TextInput, ActivityIndicator, KeyboardAvoidingView} from "react-native";
+import {StyleSheet, Text, View, ScrollView, ActivityIndicator, KeyboardAvoidingView, TouchableOpacity, Modal, TouchableWithoutFeedback} from "react-native";
 import Toast from "react-native-toast-message";
-import PlayButton from "../components/PlayButton";
 import {useFonts} from "expo-font";
 import {generateDeck} from "../services/api.js";
 import {portraitUp} from "../services/orientationService.js";
 import {getSavedDecks, deleteDeck, saveDeck, jsonToSet, generateUniqueKey} from "../services/storageService.js";
-import {getImage} from "../services/imageService.js";
+import Instruction from "../assets/images/instructionIcon.svg";
+import {TabView, SceneMap, TabBar} from "react-native-tab-view";
+import ColorButton from "../components/ColorButton.js";
+import ModalContent from "../components/ModalContent.js";
+import DecksView from "../components/DecksView.js";
 
 const Selection = ({navigation}) => {
     const [decks, setDecks] = useState([]);
@@ -24,6 +27,8 @@ const Selection = ({navigation}) => {
         retrieveDecks();
     }, []);
 
+    const defaultKeys = new Set(["deck_01", "deck_02", "deck_03", "deck_04", "deck_05", "deck_06", "deck_07", "deck_00"]);
+    const [modalVisible, setModalVisible] = useState(false);
     const [text, setText] = useState("");
     const [loading, setLoading] = useState(false);
     const [fontsLoaded] = useFonts({
@@ -32,6 +37,42 @@ const Selection = ({navigation}) => {
     if (!fontsLoaded) {
         return null;
     }
+    const [index, setIndex] = useState(0);
+    const [routes] = useState([
+        {key: "first", title: "Default"},
+        {key: "second", title: "Custom"},
+    ]);
+
+    const FirstRoute = () => (
+        <ScrollView style={styles.defaultView} howsVerticalScrollIndicator={false} contentContainerStyle={{flexGrow: 1, minWidth: "100%"}}>
+            <DecksView decks={decks} filter={isDefaultDeck} handleDelete={handleDelete} navigation={navigation}></DecksView>
+            <View style={{height: 250}}></View>
+        </ScrollView>
+    );
+    const SecondRoute = () => (
+        <ScrollView style={styles.defaultView} howsVerticalScrollIndicator={false} contentContainerStyle={{flexGrow: 1, minWidth: "100%"}}>
+            <View style={styles.generateDeckView}>
+                <ColorButton
+                    text="CREATE DECK"
+                    backgroundColor="#ff4656"
+                    borderColor="white"
+                    onPress={() => {
+                        setModalVisible(true);
+                    }}
+                ></ColorButton>
+            </View>
+            <DecksView decks={decks} filter={isNotDefaultDeck} handleDelete={handleDelete} navigation={navigation}></DecksView>
+            <View style={{height: 250}}></View>
+        </ScrollView>
+    );
+
+    const renderScene = SceneMap({
+        first: FirstRoute,
+        second: SecondRoute,
+    });
+    const renderTabBar = (props) => (
+        <TabBar {...props} indicatorStyle={{backgroundColor: "white"}} style={{backgroundColor: "#1f2326"}} labelStyle={{fontFamily: "Valorant"}} />
+    );
 
     const showToast = (header, text) => {
         Toast.show({
@@ -64,7 +105,7 @@ const Selection = ({navigation}) => {
                 key: generateUniqueKey(),
             };
             saveDeck(newDeckDetails.key, newDeckDetails);
-            setDecks([...decks, newDeckDetails]);
+            setDecks([newDeckDetails, ...decks]);
             resetInputText();
         } catch (error) {
             resetInputText();
@@ -74,6 +115,7 @@ const Selection = ({navigation}) => {
     const resetInputText = () => {
         setLoading(false);
         setText("");
+        setModalVisible(false);
     };
 
     const handleDelete = (key) => {
@@ -82,66 +124,59 @@ const Selection = ({navigation}) => {
         setDecks(updatedDecks);
     };
 
-    return (
-        <KeyboardAvoidingView behavior={"padding"} style={styles.keyboardContainer}>
-            <View style={styles.container}>
-                <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={styles.scrollContainer}>
-                    <View style={styles.header}>
-                        <Text style={styles.headerText}>Subtle Asian Charades</Text>
-                    </View>
-                    <View style={[styles.horiLine, {marginBottom: 20}]} />
+    const isDefaultDeck = (key) => {
+        if (defaultKeys.has(key)) {
+            return true;
+        }
+        return false;
+    };
+    const isNotDefaultDeck = (key) => {
+        if (defaultKeys.has(key)) {
+            return false;
+        }
+        return true;
+    };
 
-                    {loading ? (
-                        <View style={styles.loadingContainer}>
-                            <ActivityIndicator size="small" color="#fff" />
+    return (
+        <KeyboardAvoidingView behavior={"padding"} style={{flex: 1}}>
+            <View style={styles.container}>
+                <View style={styles.header}>
+                    <Text style={styles.headerText}>Subtle Asian Charades</Text>
+                </View>
+                <View style={styles.settingsContainer}>
+                    <TouchableOpacity onPress={() => navigation.navigate("Instruction")} style={styles.instructionButton}>
+                        <Instruction width={"100%"} height={"100%"} />
+                    </TouchableOpacity>
+                </View>
+                <View style={{flexGrow: 1}}>
+                    <TabView
+                        navigationState={{index, routes}}
+                        renderScene={renderScene}
+                        onIndexChange={setIndex}
+                        initialLayout={{width: "100%"}}
+                        style={{flex: 1}}
+                        sceneContainerStyle={{height: "130%"}}
+                        renderTabBar={renderTabBar}
+                    />
+                </View>
+                <Modal visible={modalVisible} animationType="slide" transparent={true}>
+                    <TouchableWithoutFeedback
+                        onPress={() => {
+                            console.log("Closing modal");
+                            resetInputText();
+                        }}
+                    >
+                        <View style={styles.modalContainer}>
+                            {loading ? (
+                                <ActivityIndicator size="large" color="#fff" />
+                            ) : (
+                                <ModalContent text={text} handleInputChange={handleInputChange} handleAddDeck={handleAddDeck}></ModalContent>
+                            )}
                         </View>
-                    ) : (
-                        <View style={styles.generateDeckView}>
-                            <Text style={{color: "white", fontWeight: "bold", fontSize: 20, fontFamily: "Valorant"}}>CREATE DECK</Text>
-                            <TextInput
-                                style={styles.textInput}
-                                type="text"
-                                placeholder="e.g. NBA Teams"
-                                placeholderTextColor="#ff4656"
-                                value={text}
-                                onChangeText={handleInputChange}
-                                onSubmitEditing={handleAddDeck}
-                                textAlign={"center"}
-                                maxLength={20}
-                                autoCapitalize={"characters"}
-                            />
-                        </View>
-                    )}
-                    {decks.length > 0 ? (
-                        <View style={styles.form}>
-                            {decks.map((deckData, index) => (
-                                <PlayButton
-                                    key={index}
-                                    img={getImage(deckData.title)}
-                                    onPress={() => {
-                                        first = true;
-                                        navigation.push("Description", {
-                                            set: Array.from(deckData.set),
-                                            description: deckData.description,
-                                            category: deckData.title,
-                                        });
-                                    }}
-                                    title={deckData.title}
-                                    onDelete={handleDelete}
-                                    uniqueKey={deckData.key}
-                                />
-                            ))}
-                        </View>
-                    ) : (
-                        <View>
-                            <ActivityIndicator size="small" color="#fff" />
-                            <Text>Loading Decks</Text>
-                        </View>
-                    )}
-                    <Toast />
-                    <View style={[styles.horiLine, {marginTop: 20}]} />
-                    <View style={styles.footer} />
-                </ScrollView>
+                    </TouchableWithoutFeedback>
+                </Modal>
+                <Toast />
+                <View style={{height: 50}} />
             </View>
         </KeyboardAvoidingView>
     );
@@ -150,24 +185,13 @@ const Selection = ({navigation}) => {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        justifyContent: "flex-start",
-        alignItems: "center",
         backgroundColor: "#1f2326",
     },
-    scrollContainer: {
-        alignItems: "center",
-    },
-    horiLine: {
-        borderBottomWidth: 1,
-        borderColor: "#ff4656",
-        width: "60%",
-    },
     header: {
-        height: "10%",
         width: "100%",
         justifyContent: "center",
         alignItems: "center",
-        marginTop: "12%",
+        marginTop: 80,
     },
     headerText: {
         fontSize: 45,
@@ -176,41 +200,32 @@ const styles = StyleSheet.create({
         fontFamily: "Valorant",
         textAlign: "center",
     },
-    form: {
-        flexDirection: "row",
-        justifyContent: "center",
-        flexWrap: "wrap",
-        width: "100%",
-    },
-    footer: {
-        width: "100%",
-        height: 100,
-    },
-    textInput: {
-        height: 40,
-        borderWidth: 1,
-        width: "100%",
-        paddingHorizontal: 10,
-        color: "#ff4656",
-        borderColor: "#ccc", // Add a border color for visual separation
-        borderWidth: 1, // Add a border width
-        borderRadius: 5, // Add border radius for rounded corners
-        marginTop: 8,
-    },
     generateDeckView: {
-        justifyContent: "center",
-        alignItems: "center",
-        flex: 1,
         width: "90%",
         marginBottom: 16,
+        alignSelf: "center",
     },
-    keyboardContainer: {
+    instructionButton: {
+        width: 50,
+        height: 50,
+        padding: 10,
+    },
+    settingsContainer: {
+        position: "absolute",
+        right: 0,
+        top: 100,
+    },
+    defaultView: {
+        paddingTop: 20,
         flex: 1,
     },
-    loadingContainer: {
-        alignItems: "center",
+    modalContainer: {
+        flex: 1,
         justifyContent: "center",
-        marginBottom: 16,
+        alignItems: "center",
+        backgroundColor: "rgba(0, 0, 0, 0.5)",
+        justifySelf: "center",
+        zIndex: 1,
     },
 });
 

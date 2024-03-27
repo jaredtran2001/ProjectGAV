@@ -13,7 +13,7 @@ Step 5: Ensure that variations of entries referring to the same thing are treate
 Step 6: The response needs to be in a comma separated list such as: <item1>, <item2>, <item3>`;
 
 const exampleResponse =
-    "Dog, Cat, Fish, Bird, Rabbit, Hamster, Turtle, Guinea Pig, Horse, Chicken, Cow, Pig, Sheep, Duck, Goat, Mouse, Rat, Snake, Lizard, Frog, Spider, Butterfly, Bee, Ant, Elephant, Tiger, Lion, Bear, Giraffe, Monkey, Dolphin, Whale, Penguin, Koala, Kangaroo, Fox, Deer, Squirrel, Bat, Owl, Eagle, Duck, Parrot, Turkey, Goldfish, Shark, Crab, Lobster, Shrimp, Octopus, Jellyfish, Bee, Butterfly, Ladybug, Beetle, Mosquito, Dragonfly, Caterpillar";
+    "Luke Combs, Morgan Wallen, Kane Brown, Maren Morris, Thomas Rhett, Jon Pardi, Chris Stapleton, Florida Georgia Line, Dan + Shay, Kelsea Ballerini, Luke Bryan, Old Dominion, Sam Hunt, Blake Shelton, Carrie Underwood, Eric Church, Miranda Lambert, Jason Aldean, Brett Young, Lauren Alaina, Brothers Osborne, Carly Pearce, Russell Dickerson, Jimmie Allen, Ingrid Andress, Ashley McBryde, Hardy, Gabby Barrett, Riley Green, Tenille Townes, Parker McCollum, Morgan Evans, Lindsay Ell, Ryan Hurd, Lainey Wilson, Mitchell Tenpenny, Priscilla Block, Breland, Blanco Brown, Mickey Guyton, Jordan Davis, Travis Denning, Ashley McBryde, Caylee Hammack, Tyler Rich, Hailey Whitters, Dylan Scott, Jon Langston, Chris Lane, Adam Doleac, Matt Stell, Runaway June, Filmore, Niko Moon, Jameson Rodgers, Drew Parker, Chris Bandi, Jordan Rager, Teddy Robb, Ian Munsick, Brandon Lay, Levi Hummon, Seaforth, Ryan Griffin, Matt Thomas, Gone West, Ryan Montgomery";
 const openai = new OpenAI({
     apiKey: apiKey, // This is the default and can be omitted
 });
@@ -34,12 +34,16 @@ async function sendPrompt(prompt) {
             messages: [
                 {role: "system", content: "Answer in a consistent style."},
                 {role: "user", content: instructions},
-                {role: "user", content: "Animals"},
-                {role: "user", content: exampleResponse},
+                {role: "user", content: "Country Artists"},
+                {role: "assistant", content: exampleResponse},
+                {role: "user", content: ""},
+                {role: "assistant", content: "Unable to create a valid response from this input"},
+                {role: "user", content: "jaksd"},
+                {role: "assistant", content: "Unable to create a valid response from this input"},
                 {role: "user", content: prompt},
             ],
             model: "gpt-3.5-turbo",
-            temperature: 0.5,
+            temperature: 1.0,
             response_format: {type: "text"},
             seed: 1,
         });
@@ -66,7 +70,6 @@ function parseResponse(apiResponse) {
         const jsonFormatedExtractedArray = extractedArray.map((team) => `{"name": "${team}"}`);
         const resultString = jsonFormatedExtractedArray.join(", ");
         const jsonData = JSON.parse(`[${resultString}]`);
-        console.log(jsonData);
         return jsonData;
     } catch (error) {
         showToast("Could not generate deck", "Try to be simple but concise i.e. soccer players");
@@ -75,20 +78,9 @@ function parseResponse(apiResponse) {
 }
 
 export async function generateDeck(category) {
-    console.log("Testing");
-    console.log(category);
-    const prompt = multiVarPrompt(category);
     try {
-        const apiResponse = await sendPrompt(prompt);
-        const jsonString = apiResponse[0].data.text.trim().replace(/\n/g, "");
-
-        const startIndex = jsonString.indexOf("[");
-        const lastIndex = jsonString.lastIndexOf(",");
-        const extractedSubstring = jsonString.substring(startIndex + 1, lastIndex);
-        console.log(extractedSubstring);
-        const jsonData = JSON.parse(`[${extractedSubstring}]`);
-        console.log(jsonData);
-        return jsonData;
+        const apiResponse = await sendPrompt(category);
+        return parseResponse(apiResponse);
     } catch (error) {
         throw new Error("Error in generating Deck");
     }

@@ -107,7 +107,6 @@ const styles = StyleSheet.create({
         flexWrap: "wrap",
         alignItems: "center",
         justifyContent: "center",
-        // backgroundColor: "#042e27"
     },
     headerText: {
         fontSize: 37,

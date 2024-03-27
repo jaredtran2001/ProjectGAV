@@ -3,14 +3,15 @@ import {StyleSheet, Text, View, Animated} from "react-native";
 import {useFonts} from "expo-font";
 
 import * as SplashScreen from "expo-splash-screen";
-import {initializeDecks} from "../services/storageService";
+import {initializeDecks, checkFirstTime} from "../services/storageService";
 import {portraitUp} from "../services/orientationService.js";
+import {check} from "prettier";
 
 const Home = ({navigation}) => {
     SplashScreen.preventAutoHideAsync();
     setTimeout(SplashScreen.hideAsync, 1000);
     const fadeAnim = useRef(new Animated.Value(0)).current;
-    const [output, setOutput] = useState("GAV");
+    const [output] = useState("GAV");
     const [fontsLoaded] = useFonts({
         Valorant: require("../assets/fonts/Valorant-Font.ttf"),
     });
@@ -26,7 +27,14 @@ const Home = ({navigation}) => {
             }
         };
         fetchData();
-        setTimeout(() => navigation.navigate("Instruction"), 3500);
+        setTimeout(async () => {
+            const check = await checkFirstTime();
+            if (check) {
+                navigation.navigate("Instruction");
+            } else {
+                navigation.navigate("Selection");
+            }
+        }, 3500);
     }, []);
     if (!fontsLoaded) {
         return null;
@@ -55,7 +63,6 @@ const styles = StyleSheet.create({
         justifyContent: "center",
         alignItems: "center",
         backgroundColor: "#1f2326",
-        // backgroundColor: "#364966"
     },
     text: {
         fontSize: 70,
