@@ -2,7 +2,7 @@
   "expo": {
     "name": "Subtle Asian Charades",
     "slug": "ProjectGAV",
-    "version": "1.0.2",
+    "version": "2.0.0",
     "splash": {
       "image": "./assets/images/splash1.png",
       "resizeMode": "contain",
@@ -17,7 +17,10 @@
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "com.jaredtran2001.ProjectGAV",
-      "buildNumber": "7"
+      "buildNumber": "13",
+      "infoPlist":  {
+        "NSMicrophoneUsageDescription": "Our app does not request this permission or utilize this functionality but it is included in our info.plist since ourapp utilizes expo-av library, which references this permission in its code."
+      }
     },
     "android": {
       "adaptiveIcon": {

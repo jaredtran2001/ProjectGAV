@@ -1,8 +1,7 @@
 const {OpenAI} = require("openai");
-import {REACT_APP_API_KEY} from "@env";
 import Toast from "react-native-toast-message";
 
-const apiKey = REACT_APP_API_KEY;
+const apiKey = process.env.API_KEY;
 const instructions = `Instructions: 
 Step 1: Work step by step
 Step 2: Generate a list of unique items that classify as whatever category that is provided by the user 
