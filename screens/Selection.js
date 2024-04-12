@@ -101,7 +101,7 @@ const Selection = ({navigation}) => {
             const newDeckDetails = {
                 set: Array.from(newSet),
                 description: "Your own custom deck. Let's give it a whirl",
-                title: text,
+                title: text.toUpperCase(),
                 key: generateUniqueKey(),
             };
             saveDeck(newDeckDetails.key, newDeckDetails);
@@ -209,12 +209,12 @@ const styles = StyleSheet.create({
         width: 50,
         height: 50,
         padding: 10,
-        zIndex: 3,
     },
     settingsContainer: {
         position: "absolute",
         right: 0,
         top: 100,
+        zIndex: 3,
     },
     defaultView: {
         paddingTop: 20,

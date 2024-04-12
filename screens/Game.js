@@ -60,10 +60,6 @@ const Game = ({route, navigation}) => {
     const [flip, setFlip] = useState(false);
     const [color, setColor] = useState("#1f2326");
 
-    if (output == null) {
-        setOutput(generateWord());
-    }
-
     useEffect(() => {
         _subscribe();
         return () => {
@@ -130,7 +126,7 @@ const Game = ({route, navigation}) => {
             setColor("#3CAE75");
             Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
             playSuccessSound(require("../assets/success.mp3"));
-        } else if (neutral(gamma, flip)) {
+        } else if (neutral(gamma, flip) || output == null) {
             setFlip(false);
             let newWord;
             do {

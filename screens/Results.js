@@ -5,12 +5,9 @@ import {portraitUp} from "../services/orientationService";
 
 const Results = ({route, navigation}) => {
     useEffect(() => {
+        portraitUp();
         Vibration.vibrate();
         setTimeout(() => Vibration.vibrate(), 600);
-    }, []);
-
-    useEffect(() => {
-        portraitUp();
     }, []);
 
     const {result, num, currSet, time} = route.params;
