@@ -12,7 +12,7 @@ const Load = ({route, navigation}) => {
         landscape();
     }, []);
 
-    const {set, time} = route.params;
+    const {set, time, id} = route.params;
 
     const [index, setIndex] = useState(0);
     const [display, setDisplay] = useState(RSG[0]);
@@ -25,7 +25,7 @@ const Load = ({route, navigation}) => {
 
     const handleFinish = () => {
         let copyTime = time;
-        navigation.push("Game", {gameSet: set, time: copyTime});
+        navigation.push("Game", {gameSet: set, time: copyTime, id: id});
     };
     const handleChange = () => {
         setDisplay(RSG[index + 1]);

@@ -2,21 +2,30 @@ import {React, useEffect} from "react";
 import {StyleSheet, Text, View, Button, ScrollView, Vibration} from "react-native";
 import ResultButton from "../components/ResultButton";
 import {portraitUp} from "../services/orientationService";
+import {updatePR} from "../services/storageService";
 
 const Results = ({route, navigation}) => {
     useEffect(() => {
         portraitUp();
         Vibration.vibrate();
         setTimeout(() => Vibration.vibrate(), 600);
+        const update = async () => {
+            try {
+                await updatePR(id, num);
+            } catch (error) {
+                
+            }
+        };
+        update();
     }, []);
 
-    const {result, num, currSet, time} = route.params;
+    const {result, num, currSet, time, id} = route.params;
 
     const handlePlayAgainFinish = () => {
-        navigation.push("Load", {set: currSet, time: time});
+        navigation.push("Load", {set: currSet, time: time, id: id});
     };
     const handleAllDecksFinish = () => {
-        navigation.navigate("Selection");
+        navigation.push("Selection");
     };
 
     return (

@@ -5,7 +5,7 @@ const apiKey = process.env.API_KEY;
 const instructions = `Instructions: 
 Step 1: Work step by step
 Step 2: Generate a list of unique items that classify as whatever category that is provided by the user 
-Step 3: The list must have as many valid answers as possible without repeats  and have priority in relevancy as the category provided based on the newest data. 
+Step 3: The list must have as many valid answers as possible without repeats and have priority in relevancy as the category provided based on the newest data. 
 Step 4: Do not respond if you do not understand the provided category or can't find items  for the category or the input data is invalid
 Step 5: Ensure that variations of entries referring to the same thing are treated as duplicates and should not exist. 
     a. For example bunny and rabbit are synonymous so only one of them is included in the example output
@@ -64,8 +64,9 @@ function parseResponse(apiResponse) {
         let extractedSubstring = apiResponse.trim().replace(/\n/g, "");
         if (extractedSubstring.endsWith(",") || extractedSubstring.endsWith(".")) {
             extractedSubstring = extractedSubstring.slice(0, -1);
-        }
-        const extractedArray = extractedSubstring.split(",");
+        } 
+        extractedSubstring = extractedSubstring.split('"').join('');
+        const extractedArray = extractedSubstring.split(", ");
         const jsonFormatedExtractedArray = extractedArray.map((team) => `{"name": "${team}"}`);
         const resultString = jsonFormatedExtractedArray.join(", ");
         const jsonData = JSON.parse(`[${resultString}]`);

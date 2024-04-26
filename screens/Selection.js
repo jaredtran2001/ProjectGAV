@@ -159,10 +159,9 @@ const Selection = ({navigation}) => {
                         renderTabBar={renderTabBar}
                     />
                 </View>
-                <Modal visible={modalVisible} animationType="slide" transparent={true}>
+                <Modal visible={modalVisible} animationType="fade" transparent={true}>
                     <TouchableWithoutFeedback
                         onPress={() => {
-                            console.log("Closing modal");
                             resetInputText();
                         }}
                     >

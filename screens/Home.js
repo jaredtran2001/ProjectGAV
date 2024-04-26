@@ -5,7 +5,6 @@ import {useFonts} from "expo-font";
 import * as SplashScreen from "expo-splash-screen";
 import {initializeDecks, checkFirstTime} from "../services/storageService";
 import {portraitUp} from "../services/orientationService.js";
-import {check} from "prettier";
 
 const Home = ({navigation}) => {
     SplashScreen.preventAutoHideAsync();

@@ -8,7 +8,7 @@ import {useFonts} from "expo-font";
 import {getImage} from "../services/imageService.js";
 
 const Description = ({route, navigation}) => {
-    const {set, description, category} = route.params;
+    const {set, description, category, id} = route.params;
     const Display = getImage(category);
     const [time, setTime] = useState(60);
     const [displayTime, setdisplayTime] = useState("1:00");
@@ -69,7 +69,7 @@ const Description = ({route, navigation}) => {
                     <Text style={styles.descriptionText}>ADJUST DURATION</Text>
                 </View>
                 <View style={styles.start}>
-                    <GameTimeButton onPress={() => navigation.push("Load", {set: set, time: time})} />
+                    <GameTimeButton onPress={() => navigation.push("Load", {set: set, time: time, id: id})} />
                 </View>
             </View>
         </View>

@@ -53,48 +53,59 @@ function generateDefaultDeck() {
             description: "C-ANYA GUESS ALL THESE POPULAR ANIMES!!!",
             title: "ANIME",
             key: "deck_07",
+            pr: 0,
         },
         deck_06: {
             set: Array.from(narutoSet),
             description: "CONTAINS ALL THE BEST CHARACTERS FROM PERVY SAGE TO ITACHI (SAKURA NOT INCLUDED)",
             title: "NARUTO",
             key: "deck_06",
+            pr: 0,
+
         },
         deck_05: {
             set: Array.from(onePieceSet),
             description: "ACE ALL THESE ONE PIECE CHARACTERS OR DIE :(",
             title: "ONE PIECE",
             key: "deck_05",
+            pr: 0,
+
         },
         deck_04: {
             set: Array.from(kPopSet),
             description: "TEST YOUR KNOWLEDGE ON THE MOST POPULAR KPOP GROUPS 2000 AND UP!",
             title: "KPOP GROUPS",
             key: "deck_04",
+            pr: 0,
+
         },
         deck_03: {
             set: Array.from(pokemonSet),
             description: "DO YOU KNOW YOUR FIRST GEN POKEMON?? DON'T BEA SLOW-POKE, TIMES TICKING",
             title: "POKEMON",
             key: "deck_03",
+            pr: 0,
         },
         deck_02: {
             set: Array.from(leagueSet),
             description: "CALLING ALL LEAGUE DEGENS. THIS DECK CONTAINS ALL LEAGUE OF LEGENDS CHAMPIONS",
             title: "LOL",
             key: "deck_02",
+            pr: 0,
         },
         deck_01: {
             set: Array.from(valorantSet),
             description: "SHOOT THROUGH THIS ASSORTMENT OF VALORANT AGENTS AND WEAPONS",
             title: "VALORANT",
             key: "deck_01",
+            pr: 0,
         },
         deck_00: {
             set: Array.from(myHeroSet),
             description: "PLUS ULTRAAA GUESS THE VILLAINS, HEROES, AND STUDENTS OF MY HERO ACADEMIA",
             title: "MY HERO",
             key: "deck_00",
+            pr: 0,
         },
     };
     return defaultDecks;
@@ -145,5 +156,23 @@ export async function checkFirstTime() {
         return true;
     } else {
         return false;
+    }
+}
+
+export async function updatePR(key, pr) {
+    try {
+        const deckData = await AsyncStorage.getItem(key);
+        console.log(deckData);
+        const parsedData = JSON.parse(deckData);
+
+        if(pr > parsedData.pr) {
+            parsedData.pr = pr;
+            const updatedData = JSON.stringify(parsedData);
+            await AsyncStorage.setItem(key, updatedData);
+            console.log("updated PR");
+        }
+    } catch (error) {
+        console.error("Error updating PR", error);
+        return [];
     }
 }

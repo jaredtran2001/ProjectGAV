@@ -5,7 +5,7 @@ import ColorButton from "./ColorButton";
 const ModalContent = ({textValue, handleInputChange, handleAddDeck}) => {
     return (
         <View style={styles.modalContent}>
-            <Text style={{color: "white", fontWeight: "bold", fontSize: 20}}>DESCRIBE YOUR NEW DECK</Text>
+            <Text style={{color: "white", fontWeight: "bold", fontSize: 20}}>DESCRIBE YOUR DECK</Text>
             <View style={styles.textInputContainer}>
                 <TextInput
                     style={styles.textInput}
@@ -16,7 +16,7 @@ const ModalContent = ({textValue, handleInputChange, handleAddDeck}) => {
                     onChangeText={handleInputChange}
                     onSubmitEditing={handleAddDeck}
                     textAlign={"center"}
-                    maxLength={20}
+                    maxLength={30}
                     autoCapitalize={"characters"}
                 />
                 <ColorButton text="SUBMIT" backgroundColor="#ff4656" borderColor="white" onPress={handleAddDeck}></ColorButton>

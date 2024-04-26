@@ -8,13 +8,16 @@ import ExitButton from "../components/ExitButton";
 
 let number = 0;
 let result = [];
+let initialized = false;
+let set;
 
-const skip = (gamma, flip) => {
-    return ((gamma > -0.75 && gamma < -0.01) || (gamma < 0.75 && gamma > 0.01)) && !flip;
+
+const skip = (gamma, flip, output) => {
+    return ((gamma > -0.75 && gamma < -0.01) || (gamma < 0.75 && gamma > 0.01)) && !flip && output !== "Ran out of words :(";
 };
 
-const correct = (gamma, flip) => {
-    return ((gamma < -2.25 && gamma > -2.99) || (gamma > 2.25 && gamma < 2.99)) && !flip;
+const correct = (gamma, flip, output) => {
+    return ((gamma < -2.25 && gamma > -2.99) || (gamma > 2.25 && gamma < 2.99)) && !flip  && output !== "Ran out of words :(";
 };
 
 const neutral = (gamma, flip) => {
@@ -39,11 +42,14 @@ const Game = ({route, navigation}) => {
     }, [sound]);
 
     //Grabbing the provided word set and function to produce a new word from it
-    const {gameSet, time} = route.params;
-    const set = new Set(gameSet);
-    const [usedWords, setUsedWords] = useState(new Set());
+    const {gameSet, time, id} = route.params;
+    if(!initialized) {
+        set = new Set(gameSet);
+        initialized = true;
+    }
     const [min, setMin] = useState(Math.floor(time / 60));
     const [totalSec, setTS] = useState(time);
+    const [running, setRunning] = useState(true); 
     const generateWord = () => {
         if (set.size == 0) {
             return "Ran out of words :(";
@@ -69,6 +75,7 @@ const Game = ({route, navigation}) => {
 
     //Handles when the timer runs out of time
     const handleFinish = () => {
+        setRunning(false);
         if (output !== "Passed" && output !== "Correct") {
             let input = [output, 0];
             result.push(input);
@@ -78,6 +85,7 @@ const Game = ({route, navigation}) => {
         //resetting values
         result = [];
         number = 0;
+        initialized = false;
         Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Heavy);
         _unsubscribe();
         navigation.push("Results", {
@@ -85,6 +93,7 @@ const Game = ({route, navigation}) => {
             num: tempNum,
             currSet: gameSet,
             time: time,
+            id: id,
         });
     };
 
@@ -107,18 +116,15 @@ const Game = ({route, navigation}) => {
 
     // Functions to handle getting a new word when motion is detected
     useEffect(() => {
-        if (set.size == 0) {
-            return;
-        }
         let {gamma} = data;
-        if (skip(gamma, flip)) {
+        if (skip(gamma, flip, output)) {
             result.push([output, 0]);
             setFlip(true);
             setOutput("Passed");
             setColor("#E14749");
             Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Heavy);
             playSuccessSound(require("../assets/failure.mp3"));
-        } else if (correct(gamma, flip)) {
+        } else if (correct(gamma, flip, output)) {
             result.push([output, 1]);
             number += 1;
             setFlip(true);
@@ -128,12 +134,7 @@ const Game = ({route, navigation}) => {
             playSuccessSound(require("../assets/success.mp3"));
         } else if (neutral(gamma, flip) || output == null) {
             setFlip(false);
-            let newWord;
-            do {
-                newWord = generateWord();
-            } while (usedWords.has(newWord));
-
-            setUsedWords((prevUsedWords) => new Set(prevUsedWords).add(newWord));
+            const newWord = generateWord();
 
             setOutput(newWord);
             setColor("#1f2326");
@@ -162,6 +163,7 @@ const Game = ({route, navigation}) => {
                             digitStyle={{backgroundColor: "#ff4656", width: "100%", height: 60}}
                             digitTxtStyle={{left: 20, color: "black"}}
                             onChange={timeChange}
+                            running={running}
                         />
                     </View>
                     <Text style={{position: "absolute", top: 23, right: 85, color: "black", fontSize: 30, fontWeight: "bold"}}>:</Text>
