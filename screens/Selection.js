@@ -1,7 +1,6 @@
 import {React, useState, useEffect} from "react";
 import {StyleSheet, Text, View, ScrollView, ActivityIndicator, KeyboardAvoidingView, TouchableOpacity, Modal, TouchableWithoutFeedback} from "react-native";
 import Toast from "react-native-toast-message";
-import {useFonts} from "expo-font";
 import {generateDeck} from "../services/api.js";
 import {portraitUp} from "../services/orientationService.js";
 import {getSavedDecks, deleteDeck, saveDeck, jsonToSet, generateUniqueKey} from "../services/storageService.js";
@@ -31,12 +30,6 @@ const Selection = ({navigation}) => {
     const [modalVisible, setModalVisible] = useState(false);
     const [text, setText] = useState("");
     const [loading, setLoading] = useState(false);
-    const [fontsLoaded] = useFonts({
-        Valorant: require("../assets/fonts/Valorant-Font.ttf"),
-    });
-    if (!fontsLoaded) {
-        return null;
-    }
     const [index, setIndex] = useState(0);
     const [routes] = useState([
         {key: "first", title: "Default"},
@@ -103,6 +96,7 @@ const Selection = ({navigation}) => {
                 description: "Your own custom deck. Let's give it a whirl",
                 title: text.toUpperCase(),
                 key: generateUniqueKey(),
+                pr: 0,
             };
             saveDeck(newDeckDetails.key, newDeckDetails);
             setDecks([newDeckDetails, ...decks]);

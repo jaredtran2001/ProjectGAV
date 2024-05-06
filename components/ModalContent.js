@@ -5,7 +5,7 @@ import ColorButton from "./ColorButton";
 const ModalContent = ({textValue, handleInputChange, handleAddDeck}) => {
     return (
         <View style={styles.modalContent}>
-            <Text style={{color: "white", fontWeight: "bold", fontSize: 20}}>DESCRIBE YOUR DECK</Text>
+            <Text style={{color: "white", fontWeight: "bold", fontSize: 20, fontFamily: "Valorant"}}>DESCRIBE YOUR DECK</Text>
             <View style={styles.textInputContainer}>
                 <TextInput
                     style={styles.textInput}

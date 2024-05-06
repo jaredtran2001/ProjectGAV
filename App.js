@@ -13,10 +13,17 @@ import LoadScreen from "./screens/Load";
 import ResultsScreen from "./screens/Results";
 import DescriptionScreen from "./screens/Description";
 import InstructionScreen from "./screens/Instruction";
+import { useFonts } from 'expo-font';
 
 const Stack = createNativeStackNavigator();
 
 const App = () => {
+    const [fontsLoaded] = useFonts({
+        Valorant: require("./assets/fonts/Valorant-Font.ttf"),
+    });
+    if (!fontsLoaded) {
+        return null;
+    }
     return (
         <NavigationContainer>
             <Stack.Navigator screenOptions={{headerShown: false, initialRouteName: "Home"}}>

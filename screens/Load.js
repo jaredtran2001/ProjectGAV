@@ -2,7 +2,6 @@ import {React, useEffect, useState} from "react";
 import {StyleSheet, Text, View, Button} from "react-native";
 import CountDown from "react-native-countdown-fixed";
 import * as Haptics from "expo-haptics";
-import {useFonts} from "expo-font";
 import {landscape} from "../services/orientationService";
 
 const RSG = ["READY", "SET", "GO!!"];
@@ -16,13 +15,7 @@ const Load = ({route, navigation}) => {
 
     const [index, setIndex] = useState(0);
     const [display, setDisplay] = useState(RSG[0]);
-    const [fontsLoaded] = useFonts({
-        Valorant: require("../assets/fonts/Valorant-Font.ttf"),
-    });
-    if (!fontsLoaded) {
-        return null;
-    }
-
+    
     const handleFinish = () => {
         let copyTime = time;
         navigation.push("Game", {gameSet: set, time: copyTime, id: id});

@@ -14,8 +14,21 @@ export async function initializeDecks() {
     try {
         // Check if decks are already in AsyncStorage
         const keys = await AsyncStorage.getAllKeys();
-        console.log(keys);
         const decksExist = keys.some((key) => key.startsWith("deck"));
+
+        //Update any decks that don't have PR
+        if(decksExist) {
+            const firstDeck = await AsyncStorage.getItem("deck_00");
+            const firstDeckObject = JSON.parse(firstDeck);
+            if(!("pr" in firstDeckObject)) {
+                const addPR =  JSON.stringify({
+                    pr: 0
+                });
+                for(key in keys) {
+                    await AsyncStorage.mergeItem(key, addPR);
+                }
+            }
+        }
 
         // If decks don't exist, add default decks to AsyncStorage
         if (!decksExist) {
@@ -162,15 +175,15 @@ export async function checkFirstTime() {
 export async function updatePR(key, pr) {
     try {
         const deckData = await AsyncStorage.getItem(key);
-        console.log(deckData);
         const parsedData = JSON.parse(deckData);
 
         if(pr > parsedData.pr) {
             parsedData.pr = pr;
             const updatedData = JSON.stringify(parsedData);
             await AsyncStorage.setItem(key, updatedData);
-            console.log("updated PR");
+            return true;
         }
+        return false;
     } catch (error) {
         console.error("Error updating PR", error);
         return [];

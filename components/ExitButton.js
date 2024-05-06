@@ -1,14 +1,7 @@
 import {React} from "react";
 import {StyleSheet, Text, TouchableOpacity, View} from "react-native";
-import {useFonts} from "expo-font";
 
 const ExitButton = (props) => {
-    const [fontsLoaded] = useFonts({
-        Valorant: require("../assets/fonts/Valorant-Font.ttf"),
-    });
-    if (!fontsLoaded) {
-        return null;
-    }
     return (
         <TouchableOpacity style={styles.container} onPress={props.onPress}>
             <Text style={styles.text}>X</Text>

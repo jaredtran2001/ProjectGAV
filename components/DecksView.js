@@ -19,13 +19,13 @@ const DecksView = ({decks, filter, handleDelete, navigation}) => {
                                     set: Array.from(deckData.set),
                                     description: deckData.description,
                                     category: deckData.title,
-                                    id: deckData.key
+                                    id: deckData.key,
+                                    pr: deckData.pr
                                 });
                             }}
                             title={deckData.title}
                             onDelete={handleDelete}
                             uniqueKey={deckData.key}
-                            record={deckData.pr || 0}
                         />
                     ),
             )}

@@ -1,7 +1,5 @@
 import {React, useState, useEffect, useRef} from "react";
 import {StyleSheet, Text, View, Animated} from "react-native";
-import {useFonts} from "expo-font";
-
 import * as SplashScreen from "expo-splash-screen";
 import {initializeDecks, checkFirstTime} from "../services/storageService";
 import {portraitUp} from "../services/orientationService.js";
@@ -11,9 +9,6 @@ const Home = ({navigation}) => {
     setTimeout(SplashScreen.hideAsync, 1000);
     const fadeAnim = useRef(new Animated.Value(0)).current;
     const [output] = useState("GAV");
-    const [fontsLoaded] = useFonts({
-        Valorant: require("../assets/fonts/Valorant-Font.ttf"),
-    });
 
     useEffect(() => {
         portraitUp();
@@ -35,9 +30,6 @@ const Home = ({navigation}) => {
             }
         }, 3500);
     }, []);
-    if (!fontsLoaded) {
-        return null;
-    }
     function fadeIn() {
         Animated.timing(fadeAnim, {
             toValue: 1,

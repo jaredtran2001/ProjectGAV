@@ -1,19 +1,11 @@
 import {React} from "react";
 import {StyleSheet, Text, View} from "react-native";
-import {useFonts} from "expo-font";
 import ExitButton from "../components/ExitButton";
 import Turn from "../assets/images/coolturn.svg";
 import Correct from "../assets/images/coolcorrect.svg";
 import Pass from "../assets/images/coolpass.svg";
 
 const Instruction = ({navigation}) => {
-    const [fontsLoaded] = useFonts({
-        Valorant: require("../assets/fonts/Valorant-Font.ttf"),
-    });
-    if (!fontsLoaded) {
-        return null;
-    }
-
     return (
         <View style={styles.container}>
             <View style={styles.exit}>

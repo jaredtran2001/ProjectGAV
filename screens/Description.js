@@ -4,18 +4,13 @@ import PlusButton from "../components/PlusButton";
 import MinusButton from "../components/MinusButton";
 import GameTimeButton from "../components/GameTimeButton";
 import ExitButton from "../components/ExitButton";
-import {useFonts} from "expo-font";
 import {getImage} from "../services/imageService.js";
 
 const Description = ({route, navigation}) => {
-    const {set, description, category, id} = route.params;
+    const {set, description, category, id, pr} = route.params;
     const Display = getImage(category);
     const [time, setTime] = useState(60);
     const [displayTime, setdisplayTime] = useState("1:00");
-    const [fontsLoaded] = useFonts({
-        Valorant: require("../assets/fonts/Valorant-Font.ttf"),
-    });
-
     useEffect(() => {
         let min = "" + Math.floor(time / 60);
         let sec = time % 60;
@@ -27,23 +22,20 @@ const Description = ({route, navigation}) => {
         setdisplayTime(min + ":" + sec);
     }, [time]);
 
-    if (!fontsLoaded) {
-        return null;
-    }
-
     function handlePlus() {
-        if (time < 150) {
-            setTime(time + 15);
+        if (time < 120) {
+            setTime(time + 30);
         }
     }
     function handleMinus() {
         if (time > 30) {
-            setTime(time - 15);
+            setTime(time - 30);
         }
     }
 
     return (
         <View style={styles.container}>
+            <Text style={styles.recordView}>{pr}</Text>
             <View style={styles.exit}>
                 <ExitButton onPress={() => navigation.navigate("Selection")} />
             </View>
@@ -157,6 +149,15 @@ const styles = StyleSheet.create({
         width: "90%",
         flexDirection: "row",
     },
+    recordView: {
+        zIndex: 5,
+        position: "absolute",
+        left: "6%",
+        top: "8%",
+        color: "white",
+        fontFamily: "Valorant",
+        fontSize: 30
+    }
 });
 
 export default Description;

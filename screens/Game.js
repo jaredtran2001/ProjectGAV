@@ -76,7 +76,7 @@ const Game = ({route, navigation}) => {
     //Handles when the timer runs out of time
     const handleFinish = () => {
         setRunning(false);
-        if (output !== "Passed" && output !== "Correct") {
+        if (output !== "Passed" && output !== "Correct" && output !== "Ran out of words :(") {
             let input = [output, 0];
             result.push(input);
         }
@@ -123,7 +123,7 @@ const Game = ({route, navigation}) => {
             setOutput("Passed");
             setColor("#E14749");
             Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Heavy);
-            playSuccessSound(require("../assets/failure.mp3"));
+            playSuccessSound(require("../assets/sounds/failure.mp3"));
         } else if (correct(gamma, flip, output)) {
             result.push([output, 1]);
             number += 1;
@@ -131,7 +131,7 @@ const Game = ({route, navigation}) => {
             setOutput("Correct");
             setColor("#3CAE75");
             Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
-            playSuccessSound(require("../assets/success.mp3"));
+            playSuccessSound(require("../assets/sounds/success.mp3"));
         } else if (neutral(gamma, flip) || output == null) {
             setFlip(false);
             const newWord = generateWord();
