@@ -8,8 +8,6 @@ import ExitButton from "../components/ExitButton";
 
 let number = 0;
 let result = [];
-let initialized = false;
-let set;
 
 
 const skip = (gamma, flip, output) => {
@@ -43,28 +41,28 @@ const Game = ({route, navigation}) => {
 
     //Grabbing the provided word set and function to produce a new word from it
     const {gameSet, time, id} = route.params;
-    if(!initialized) {
-        set = new Set(gameSet);
-        initialized = true;
-    }
+    //states
+    const [initialized, setInitialized] = useState(false);
+    const [wordSet, setWordSet] = useState(new Set());
     const [min, setMin] = useState(Math.floor(time / 60));
     const [totalSec, setTS] = useState(time);
     const [running, setRunning] = useState(true); 
-    const generateWord = () => {
-        if (set.size == 0) {
-            return "Ran out of words :(";
-        }
-        let items = Array.from(set);
-        let word = items[Math.floor(Math.random() * items.length)];
-        set.delete(word);
-        return word;
-    };
-
-    //states
     const [output, setOutput] = useState();
     const [data, setData] = useState({});
     const [flip, setFlip] = useState(false);
     const [color, setColor] = useState("#1f2326");
+    const textSize = (output && output.length) > 30 ? 45 : 60;
+
+    const generateWord = () => {
+        if (wordSet.size == 0) {
+            return "Ran out of words :(";
+        }
+        let items = Array.from(wordSet);
+        let word = items[Math.floor(Math.random() * items.length)];
+        wordSet.delete(word);
+        return word;
+    };
+
 
     useEffect(() => {
         _subscribe();
@@ -72,6 +70,14 @@ const Game = ({route, navigation}) => {
             _unsubscribe();
         };
     }, []);
+
+    useEffect(() => {
+        if (!initialized) {
+            const newSet = new Set(route.params.gameSet);
+            setWordSet(newSet);
+            setInitialized(true);
+        }
+    }, [initialized, route.params.gameSet]);
 
     //Handles when the timer runs out of time
     const handleFinish = () => {
@@ -85,7 +91,6 @@ const Game = ({route, navigation}) => {
         //resetting values
         result = [];
         number = 0;
-        initialized = false;
         Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Heavy);
         _unsubscribe();
         navigation.push("Results", {
@@ -116,6 +121,7 @@ const Game = ({route, navigation}) => {
 
     // Functions to handle getting a new word when motion is detected
     useEffect(() => {
+        if (!initialized) return;
         let {gamma} = data;
         if (skip(gamma, flip, output)) {
             result.push([output, 0]);
@@ -139,7 +145,7 @@ const Game = ({route, navigation}) => {
             setOutput(newWord);
             setColor("#1f2326");
         }
-    }, [data]);
+    }, [data, initialized]);
 
     const timeChange = () => {
         let nTime = totalSec - 1;
@@ -172,7 +178,7 @@ const Game = ({route, navigation}) => {
             }
 
             <View style={[styles.horiLine, {margin: 10}]} />
-            <Text style={styles.text}>{output}</Text>
+            <Text style={[styles.text, {fontSize: textSize}]}>{output}</Text>
             <View style={[styles.horiLine, {margin: 10}]} />
             <View style={{position: "absolute", top: 28, left: 30, width: 100}}>
                 <ExitButton onPress={handleFinish} />
@@ -193,6 +199,8 @@ const styles = StyleSheet.create({
         color: "white",
         textAlign: "center",
         textTransform: "uppercase",
+        paddingLeft: 50,
+        paddingRight: 50,
     },
     horiLine: {
         borderBottomWidth: 1,

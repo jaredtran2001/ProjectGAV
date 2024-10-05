@@ -20,7 +20,7 @@ const Results = ({route, navigation}) => {
             // Fade out animation
             Animated.timing(fadeAnim, {
                 toValue: 0,
-                duration: 5000, 
+                duration: 4000, 
                 useNativeDriver: true,
             }),
         ]).start();
@@ -28,24 +28,26 @@ const Results = ({route, navigation}) => {
     }
 
     useEffect(() => {
-        portraitUp();
-        Vibration.vibrate();
-        setTimeout(() => Vibration.vibrate(), 600);
-        const update = async () => {
+        const handleOrientationAndUpdate = async () => {
             try {
+                await new Promise(resolve => setTimeout(resolve, 300)); // 500ms delay
+                await portraitUp();
+                Vibration.vibrate();
+                setTimeout(() => Vibration.vibrate(), 600);
+                
                 const result = await updatePR(id, num);
-                if(result) {
+                if (result) {
                     fadeInOut();
                     setNewPR(true);
                 } else {
                     setIndex(0);
                 }
             } catch (error) {
-                
+                console.error("Error in orientation lock or update:", error);
             }
         };
-        update();
-    }, []);
+        handleOrientationAndUpdate();
+    }, [id, num]);
 
     const {result, num, currSet, time, id} = route.params;
 
@@ -55,11 +57,15 @@ const Results = ({route, navigation}) => {
     const handleAllDecksFinish = () => {
         navigation.push("Selection");
     };
+    const shortenResult =(word) => {
+        return word.length > 25 ? word.substring(0,25) + "...": word;
+    }
+
 
     return (
         <View style={styles.container}>
             <Animated.View style={[styles.centeredView, {zIndex: index}, {opacity: fadeAnim}]}>
-                {newPR && <ConfettiCannon count={200} origin={{x: -10, y: 1000}} explosionSpeed={5000} fallSpeed={2000} colors={["#ff4656", "#fc6872", "#ffffff"]}/>}
+                {newPR && <ConfettiCannon count={200} origin={{x: -10, y: 1000}} explosionSpeed={4000} fallSpeed={2000} colors={["#ff4656", "#fc6872", "#ffffff"]}/>}
                 <Text style={[styles.text, {color: "#ff4656"}]}>HIGH</Text>
                 <Text style={[styles.text, {color: "#ff4656"}]}>SCORE</Text>
             </Animated.View>
@@ -71,28 +77,29 @@ const Results = ({route, navigation}) => {
                 <View style={[styles.vertLine, {marginLeft: "3%"}]} />
                 <ScrollView contentContainerStyle={styles.scrollContainer}>
                     {result.map((word, index) => {
+                        const shortenWord = shortenResult(word[0]);
                         if (word[1] == 0 && index == 0) {
                             return (
                                 <Text key={word} style={[styles.resultText, {marginTop: 30, color: "gray"}]}>
-                                    {word[0]}
+                                    {shortenWord}
                                 </Text>
                             );
                         } else if (word[1] == 1 && index == 0) {
                             return (
                                 <Text key={word} style={[styles.resultText, {marginTop: 30}]}>
-                                    {word[0]}
+                                    {shortenWord}
                                 </Text>
                             );
                         } else if (word[1] == 0) {
                             return (
                                 <Text key={word} style={[styles.resultText, {color: "gray"}]}>
-                                    {word[0]}
+                                    {shortenWord}
                                 </Text>
                             );
                         } else {
                             return (
                                 <Text key={word} style={styles.resultText}>
-                                    {word[0]}
+                                    {shortenWord}
                                 </Text>
                             );
                         }

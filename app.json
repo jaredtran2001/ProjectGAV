@@ -2,7 +2,7 @@
   "expo": {
     "name": "Subtle Asian Charades",
     "slug": "ProjectGAV",
-    "version": "2.0.4",
+    "version": "2.3.1",
     "splash": {
       "image": "./assets/images/splash1.png",
       "resizeMode": "contain",
@@ -13,12 +13,14 @@
     "updates": {
       "fallbackToCacheTimeout": 0
     },
-    "assetBundlePatterns": ["**/*"],
+    "assetBundlePatterns": [
+      "**/*"
+    ],
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "com.jaredtran2001.ProjectGAV",
-      "buildNumber": "17",
-      "infoPlist":  {
+      "buildNumber": "23",
+      "infoPlist": {
         "NSMicrophoneUsageDescription": "Our app does not request this permission or utilize this functionality but it is included in our info.plist since ourapp utilizes expo-av library, which references this permission in its code."
       }
     },
@@ -35,6 +37,9 @@
       "eas": {
         "projectId": "549d32d7-71c7-4d87-bd0e-4104112cd959"
       }
-    }
+    },
+    "plugins": [
+      "expo-font"
+    ]
   }
 }

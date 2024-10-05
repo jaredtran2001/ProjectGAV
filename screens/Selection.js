@@ -26,7 +26,7 @@ const Selection = ({navigation}) => {
         retrieveDecks();
     }, []);
 
-    const defaultKeys = new Set(["deck_01", "deck_02", "deck_03", "deck_04", "deck_05", "deck_06", "deck_07", "deck_00"]);
+    const defaultKeys = new Set(["deck_01", "deck_02", "deck_03", "deck_04", "deck_05", "deck_06", "deck_07", "deck_00", "deck_08", "deck_09"]);
     const [modalVisible, setModalVisible] = useState(false);
     const [text, setText] = useState("");
     const [loading, setLoading] = useState(false);

@@ -9,6 +9,8 @@ import Naruto from "../assets/wordSets/naruto.json";
 import Valorant from "../assets/wordSets/valorant.json";
 import OnePiece from "../assets/wordSets/onePiece.json";
 import MyHero from "../assets/wordSets/myHero.json";
+import Jujutsu from "../assets/wordSets/jujutsukaisen.json"
+import Hunter from "../assets/wordSets/hunterxhunter.json"
 
 export async function initializeDecks() {
     try {
@@ -17,28 +19,26 @@ export async function initializeDecks() {
         const decksExist = keys.some((key) => key.startsWith("deck"));
 
         //Update any decks that don't have PR
-        if(decksExist) {
-            const firstDeck = await AsyncStorage.getItem("deck_00");
-            const firstDeckObject = JSON.parse(firstDeck);
-            if(!("pr" in firstDeckObject)) {
-                const addPR =  JSON.stringify({
-                    pr: 0
-                });
-                for(key in keys) {
+        if(decksExist && await beforePRUpdate()) {
+            const addPR =  JSON.stringify({
+                pr: 0
+            });
+            for(let i = 0; i < keys.length; i++) {
+                let key = keys[i];
+                if(key.startsWith("deck")) {
                     await AsyncStorage.mergeItem(key, addPR);
                 }
             }
         }
-
+        
         // If decks don't exist, add default decks to AsyncStorage
-        if (!decksExist) {
-            const defaultDecks = generateDefaultDeck();
-            await Promise.all(
-                Object.keys(defaultDecks).map(async (deckKey) => {
-                    const deckData = defaultDecks[deckKey];
-                    await AsyncStorage.setItem(deckKey, JSON.stringify(deckData));
-                }),
-            );
+        const defaultDecks = generateDefaultDeck();
+        for (const key in defaultDecks) {
+            if (defaultDecks.hasOwnProperty(key)) { // Ensure the key is an own property
+                if (!(key in keys)) {
+                    await AsyncStorage.setItem(key, JSON.stringify(defaultDecks[key]));
+                }
+            }
         }
     } catch (error) {
         console.error("Error initializing decks:", error);
@@ -51,6 +51,12 @@ export function jsonToSet(json) {
     return set;
 }
 
+async function beforePRUpdate() {
+    const firstDeck = await AsyncStorage.getItem("deck_00");
+    const firstDeckObject = JSON.parse(firstDeck);
+    return !("pr" in firstDeckObject)
+}
+
 function generateDefaultDeck() {
     const animeSet = jsonToSet(Anime);
     const narutoSet = jsonToSet(Naruto);
@@ -60,7 +66,23 @@ function generateDefaultDeck() {
     const leagueSet = jsonToSet(Champions);
     const valorantSet = jsonToSet(Valorant);
     const myHeroSet = jsonToSet(MyHero);
+    const jjkSet = jsonToSet(Jujutsu);
+    const hxhSet = jsonToSet(Hunter);
     const defaultDecks = {
+        deck_09: {
+            set: Array.from(jjkSet),
+            description: "Nah I'd win",
+            title: "JJK",
+            key: "deck_09",
+            pr: 0,
+        },
+        deck_08: {
+            set: Array.from(hxhSet),
+            description: "First step of becoming a hunter: guess these characters!!",
+            title: "HXH",
+            key: "deck_08",
+            pr: 0,
+        },
         deck_07: {
             set: Array.from(animeSet),
             description: "C-ANYA GUESS ALL THESE POPULAR ANIMES!!!",
@@ -74,7 +96,6 @@ function generateDefaultDeck() {
             title: "NARUTO",
             key: "deck_06",
             pr: 0,
-
         },
         deck_05: {
             set: Array.from(onePieceSet),
@@ -82,7 +103,6 @@ function generateDefaultDeck() {
             title: "ONE PIECE",
             key: "deck_05",
             pr: 0,
-
         },
         deck_04: {
             set: Array.from(kPopSet),
@@ -143,7 +163,7 @@ export async function deleteDeck(key) {
 export async function getSavedDecks() {
     try {
         let response = await AsyncStorage.getAllKeys();
-        const keys = response.filter((item) => item !== "hasVisitedBefore");
+        const keys = response.filter((item) => item.startsWith("deck"));
         const deckPromises = keys.map(async (key) => {
             const deckData = await AsyncStorage.getItem(key);
             return JSON.parse(deckData);

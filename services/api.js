@@ -4,7 +4,7 @@ import Toast from "react-native-toast-message";
 const apiKey = process.env.API_KEY;
 const instructions = `Instructions: 
 Step 1: Work step by step
-Step 2: Generate a list of unique items that classify as whatever category that is provided by the user 
+Step 2: Generate a list of as many unique items that classify as whatever category that is provided by the user 
 Step 3: The list must have as many valid answers as possible without repeats and have priority in relevancy as the category provided based on the newest data. 
 Step 4: Do not respond if you do not understand the provided category or can't find items  for the category or the input data is invalid
 Step 5: Ensure that variations of entries referring to the same thing are treated as duplicates and should not exist. 
